@@ -13,11 +13,9 @@
   <script>if(matchMedia('(hover:hover)and(pointer:fine)').matches)document.documentElement.classList.add('hover-device')</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollSmoother.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
 </head>
 <body>
-<div id="smooth-wrapper">
-  <div id="webgl-canvas"></div>
 
   <nav class="nav">
     <div class="nav-inner">
@@ -42,9 +40,9 @@
       </button>
     </div>
   </nav>
-<div id="smooth-content">
 
   <section class="page-hero" data-parallax="0.08">
+    <div id="webgl-canvas"></div>
     <div class="container">
       <span class="section-label reveal">About Us</span>
       <h1 data-split class="reveal reveal-delay-1">The Story Behind The Millennial Hub</h1>
@@ -334,8 +332,6 @@
     </div>
   </footer>
 
-</div><!-- /smooth-content -->
-</div><!-- /smooth-wrapper -->
   <script src="js/main.js"></script>
 </body>
 </html>

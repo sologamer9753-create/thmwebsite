@@ -41,21 +41,25 @@ document.addEventListener('DOMContentLoaded', function () {
   var DURATION = 0.9;
 
   // ============================================================
-  // 0. SCROLL SMOOTHER — GSAP native smooth scroll
+  // 0. LENIS — Smooth scroll (lightweight, zero wrapper req.)
   // ============================================================
   ;(function () {
-    if (isReduced || typeof ScrollSmoother === 'undefined' || !hasGSAP) return;
+    if (isReduced || typeof Lenis === 'undefined') return;
 
-    var wrapper = document.getElementById('smooth-wrapper');
-    var content = document.getElementById('smooth-content');
-    if (!wrapper || !content) return;
-
-    ScrollSmoother.create({
-      wrapper: wrapper,
-      content: content,
-      smooth: 1.2,
-      effects: true
+    var lenis = new Lenis({
+      duration: 1.2,
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smooth: true,
     });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Store globally for anchor-link scrolling
+    window.__lenis = lenis;
   })();
 
   // ============================================================
