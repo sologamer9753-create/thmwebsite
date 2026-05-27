@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var R = 7.5, r = 2.4;
 
-    // Torus-knot particles (cyan-blue)
+    // Torus-knot particles (red-white)
     for (var i = 0; i < KNOT_COUNT; i++) {
       var t = Math.random() * 2 * Math.PI;
       var theta = t * 2;
@@ -106,9 +106,9 @@ document.addEventListener('DOMContentLoaded', function () {
       positions[i * 3 + 2] = cz + (Math.random() - 0.5) * n;
 
       var mix = Math.random();
-      colors[i * 3] = 0.05 + 0.12 * mix;       // R: 0.05-0.17
-      colors[i * 3 + 1] = 0.78 + 0.22 * (1 - mix); // G: 0.78-1.0
-      colors[i * 3 + 2] = 0.88 + 0.12 * mix;      // B: 0.88-1.0
+      colors[i * 3] = 0.8 + 0.2 * mix;         // R: 0.8-1.0
+      colors[i * 3 + 1] = 0.05 + 0.2 * (1 - mix); // G: 0.05-0.25
+      colors[i * 3 + 2] = 0.05 + 0.2 * (1 - mix); // B: 0.05-0.25
     }
 
     // Ambient background particles (dimmer, scattered)
@@ -122,9 +122,9 @@ document.addEventListener('DOMContentLoaded', function () {
       positions[idx + 2] = radius * Math.cos(phi2);
 
       var dim = 0.15 + Math.random() * 0.35;
-      colors[idx] = 0.04 * dim;
-      colors[idx + 1] = 0.50 * dim;
-      colors[idx + 2] = 0.70 * dim;
+      colors[idx] = 0.3 * dim + 0.1;
+      colors[idx + 1] = 0.01;
+      colors[idx + 2] = 0.01;
     }
 
     var geom = new THREE.BufferGeometry();
@@ -329,8 +329,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Stagger grids: children fade + lift + scale down, domino stagger
     var gridSelectors = [
       '.grid-3', '.grid-4', '.grid-2', '.pricing-grid-alt',
-      '.card-stagger', '.masonry', '.values-grid', '.team-grid',
-      '.testimonial-grid', '.awards-grid', '.schedule-grid',
+      '.bento-grid', '.card-stagger', '.masonry', '.values-grid',
+      '.team-grid', '.testimonial-grid', '.awards-grid', '.schedule-grid',
       '.contact-details'
     ];
 
@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function () {
           '.glass-card, .pricing-tier, .service-card, .feature-card, ' +
           '.value-card, .team-card, .testimonial-card, .award-card, ' +
           '.schedule-card, .masonry-item, .contact-detail-card, ' +
-          '.program-card'
+          '.program-card, .bento-card'
         );
         if (items.length < 2) return;
         gsap.fromTo(items, {
@@ -713,7 +713,7 @@ document.addEventListener('DOMContentLoaded', function () {
           raf = null;
           var cx = lx * 100;
           var cy = ly * 100;
-          light.style.background = 'radial-gradient(600px circle at ' + cx + '% ' + cy + '%, rgba(18,214,231,0.12), rgba(123,97,255,0.04) 40%, transparent 65%)';
+          light.style.background = 'radial-gradient(600px circle at ' + cx + '% ' + cy + '%, rgba(230,0,0,0.12), rgba(200,0,0,0.04) 40%, transparent 65%)';
         });
       }
     });
@@ -843,7 +843,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (btn) {
         var original = btn.textContent;
         btn.textContent = '✓ Sent!';
-        btn.style.background = '#22c55e';
+        btn.style.background = '#E60000';
         setTimeout(function () {
           btn.textContent = original;
           btn.style.background = '';
@@ -854,7 +854,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.form-control').forEach(function (input) {
       input.addEventListener('focus', function () {
         this.style.borderColor = 'var(--accent)';
-        this.style.boxShadow = '0 0 24px rgba(18,214,231,0.12)';
+        this.style.boxShadow = '0 0 24px rgba(230,0,0,0.12)';
       });
       input.addEventListener('blur', function () {
         if (!this.value) {
@@ -927,7 +927,360 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 22. REFRESH ScrollTrigger after layout settles
+  // 22. CLIENT NETWORK GRAPH — Strict Boundaries + Responsive
+  // ============================================================
+  ;(function () {
+    var container = document.getElementById('client-network-container');
+    if (!container) return;
+
+    var clients = [
+      { label: 'The Sherlock\'s Group', initials: 'SG' },
+      { label: 'Grub Hop', initials: 'GH' },
+      { label: 'Rajamandry Kitchen', initials: 'RK' },
+      { label: 'Smart Kitchens', initials: 'SK' },
+      { label: 'AMAZON', initials: 'A' },
+      { label: 'De\u0938\u0940 Licious', initials: 'DL' },
+      { label: 'Bengaluru Cafe', initials: 'BC' },
+      { label: 'Creeme\u00e9 Riche Corner', initials: 'CRC' },
+      { label: 'Treehaus', initials: 'T' },
+      { label: 'Nimma Local', initials: 'NL' },
+      { label: 'Health Horizons', initials: 'HH' },
+      { label: 'Sthira Studio', initials: 'SS' },
+      { label: 'Indian Gymkhana Club', initials: 'IGC' },
+      { label: 'The Roxbury', initials: 'TR' },
+      { label: 'Happy Leading', initials: 'HL' },
+      { label: 'NYRC', initials: 'NY' },
+      { label: 'Sol Woodpegger', initials: 'SW' },
+      { label: 'Little Ville', initials: 'LV' },
+      { label: 'Blah Blah', initials: 'BB' },
+      { label: 'SL', initials: 'SL' }
+    ];
+
+    var total = clients.length;
+    var canvas = document.createElement('canvas');
+    canvas.setAttribute('aria-hidden', 'true');
+    container.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+
+    var W = 0, H = 0, cx = 0, cy = 0, orbitR = 0;
+    var nodes = [];
+    var mx = -9999, my = -9999;
+    var frame = null;
+    var running = true;
+
+    // Dynamic radii — shrink on narrow containers
+    var NODE_RADIUS = 44;
+    var SEPARATION = 60;
+    var PADDING = 14;
+    var CENTER_GRAVITY = 0.018;
+
+    function updateRadii() {
+      if (W < 640) {
+        NODE_RADIUS = 24;
+        SEPARATION = 56;
+      } else if (W < 820) {
+        NODE_RADIUS = 30;
+        SEPARATION = 60;
+      } else {
+        NODE_RADIUS = 44;
+        SEPARATION = 68;
+      }
+    }
+
+    // Mouse tracking (hover devices only)
+    if (document.documentElement.classList.contains('hover-device')) {
+      canvas.style.cursor = 'default';
+      function getPos(e) {
+        var rect = canvas.getBoundingClientRect();
+        mx = e.clientX - rect.left;
+        my = e.clientY - rect.top;
+      }
+      canvas.addEventListener('mousemove', getPos);
+      canvas.addEventListener('mouseleave', function () { mx = -9999; my = -9999; });
+    }
+
+    function initNodes(force) {
+      for (var i = 0; i < total; i++) {
+        if (!nodes[i] || force) {
+          nodes[i] = {
+            baseA: (Math.PI * 2 / total) * i + (Math.random() - 0.5) * 0.6,
+            baseR: orbitR * 0.45 + Math.random() * orbitR * 0.55,
+            speed: 0.00005 + Math.random() * 0.0003,
+            wave1Amp: 2 + Math.random() * 6,
+            wave1Freq: 0.0003 + Math.random() * 0.0005,
+            wave1Off: Math.random() * Math.PI * 2,
+            wave2Amp: 1.5 + Math.random() * 4,
+            wave2Freq: 0.0006 + Math.random() * 0.0005,
+            wave2Off: Math.random() * Math.PI * 2,
+            x: 0, y: 0,
+            vx: 0, vy: 0
+          };
+        }
+      }
+    }
+
+    function clampToBounds(n) {
+      var rad = NODE_RADIUS;
+      var minX = PADDING + rad;
+      var maxX = W - PADDING - rad;
+      var minY = PADDING + rad;
+      var maxY = H - PADDING - rad;
+      if (n.x < minX) { n.x = minX; n.vx = Math.abs(n.vx) * 0.3; }
+      if (n.x > maxX) { n.x = maxX; n.vx = -Math.abs(n.vx) * 0.3; }
+      if (n.y < minY) { n.y = minY; n.vy = Math.abs(n.vy) * 0.3; }
+      if (n.y > maxY) { n.y = maxY; n.vy = -Math.abs(n.vy) * 0.3; }
+    }
+
+    function resize() {
+      var rect = container.getBoundingClientRect();
+      if (rect.width < 10) {
+        if (frame) cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(function tick(t) {
+          var r2 = container.getBoundingClientRect();
+          if (r2.width > 10) { resize(); }
+          else frame = requestAnimationFrame(tick);
+        });
+        return;
+      }
+      W = rect.width;
+      H = rect.height;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cx = W / 2;
+      cy = H / 2;
+      orbitR = Math.min(W, H) * 0.46;
+      updateRadii();
+      initNodes(nodes.length === 0);
+    }
+
+    function drawBezierCurve(x0, y0, x1, y1, isHov) {
+      var midX = (x0 + x1) / 2;
+      var midY = (y0 + y1) / 2;
+      var dx = x1 - x0;
+      var dy = y1 - y0;
+      var len = Math.sqrt(dx * dx + dy * dy);
+      var nx = -dy / (len || 1);
+      var ny = dx / (len || 1);
+      var offset = Math.sin(len * 0.008) * 22;
+      var cpx = midX + nx * offset;
+      var cpy = midY + ny * offset;
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.quadraticCurveTo(cpx, cpy, x1, y1);
+      if (isHov) {
+        ctx.shadowBlur = 28;
+        ctx.shadowColor = 'rgba(230,0,0,0.4)';
+        ctx.strokeStyle = 'rgba(230,0,0,1)';
+        ctx.lineWidth = 3;
+      } else {
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = 'rgba(230,0,0,0.12)';
+        ctx.lineWidth = 0.8;
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    function findClosest(nodeList) {
+      if (!document.documentElement.classList.contains('hover-device')) return -1;
+      var best = -1;
+      var bestDist = NODE_RADIUS + 20;
+      for (var i = 0; i < nodeList.length; i++) {
+        var n = nodeList[i];
+        var dx = n.x - mx;
+        var dy = n.y - my;
+        var d = dx * dx + dy * dy;
+        if (d < bestDist * bestDist) {
+          bestDist = Math.sqrt(d);
+          best = i;
+        }
+      }
+      return best;
+    }
+
+    function draw(ts) {
+      if (!running) return;
+      frame = requestAnimationFrame(draw);
+      var t = ts || performance.now();
+
+      // ---- Physics tick ----
+      // 1. Orbital target + center gravity
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        var a = n.baseA + t * n.speed * 0.001;
+        var targetX = cx + Math.cos(a) * n.baseR;
+        var targetY = cy + Math.sin(a) * n.baseR;
+
+        // Center gravity: pull toward orbital target
+        var dx = targetX - n.x;
+        var dy = targetY - n.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 1) {
+          n.vx += (dx / dist) * dist * CENTER_GRAVITY * 0.02;
+          n.vy += (dy / dist) * dist * CENTER_GRAVITY * 0.02;
+        }
+
+        // Additional pull toward global center to prevent edge escape
+        var gx = cx - n.x;
+        var gy = cy - n.y;
+        var gd = Math.sqrt(gx * gx + gy * gy);
+        if (gd > orbitR * 0.8) {
+          n.vx += (gx / gd) * (gd - orbitR * 0.8) * 0.008;
+          n.vy += (gy / gd) * (gd - orbitR * 0.8) * 0.008;
+        }
+
+        // Ambient drifting (3 overlapping waves)
+        var w1 = Math.sin(t * n.wave1Freq + n.wave1Off) * n.wave1Amp * 0.03;
+        var w2 = Math.cos(t * n.wave2Freq + n.wave2Off) * n.wave2Amp * 0.025;
+        n.vx += w1;
+        n.vy += w2;
+
+        // Velocity damping
+        n.vx *= 0.92;
+        n.vy *= 0.92;
+
+        // Integrate position
+        n.x += n.vx;
+        n.y += n.vy;
+      }
+
+      // 2. Iterative collision repulsion (5 passes for stable separation)
+      var sepSq = SEPARATION * SEPARATION;
+      for (var iter = 0; iter < 5; iter++) {
+        for (var i = 0; i < nodes.length; i++) {
+          for (var j = i + 1; j < nodes.length; j++) {
+            var dx = nodes[j].x - nodes[i].x;
+            var dy = nodes[j].y - nodes[i].y;
+            var d2 = dx * dx + dy * dy;
+            if (d2 < sepSq && d2 > 0.1) {
+              var d = Math.sqrt(d2);
+              var overlap = (SEPARATION - d) * 0.5;
+              var normX = dx / d;
+              var normY = dy / d;
+              nodes[i].x -= normX * overlap;
+              nodes[i].y -= normY * overlap;
+              nodes[j].x += normX * overlap;
+              nodes[j].y += normY * overlap;
+              // Bounce velocity
+              nodes[i].vx -= normX * 0.3;
+              nodes[i].vy -= normY * 0.3;
+              nodes[j].vx += normX * 0.3;
+              nodes[j].vy += normY * 0.3;
+            }
+          }
+        }
+      }
+
+      // 3. Hard wall clamp — ALL viewports (not just mobile)
+      for (var i = 0; i < nodes.length; i++) {
+        clampToBounds(nodes[i]);
+      }
+
+      // ---- Render ----
+      ctx.clearRect(0, 0, W, H);
+
+      var hovered = findClosest(nodes);
+
+      // 4. Connection threads (center -> each satellite)
+      for (var i = 0; i < nodes.length; i++) {
+        var isHov = (i === hovered);
+        if (hovered >= 0 && !isHov) ctx.globalAlpha = 0.07;
+        else ctx.globalAlpha = 1;
+        drawBezierCurve(cx, cy, nodes[i].x, nodes[i].y, isHov);
+      }
+      ctx.globalAlpha = 1;
+
+      // 5. Satellite nodes
+      for (var i = 0; i < nodes.length; i++) {
+        var isHov = (i === hovered);
+        var n = nodes[i];
+        var c = clients[i];
+        var sc = isHov ? 1.25 : 1;
+        var rad = NODE_RADIUS * sc;
+
+        if (isHov) {
+          var pulseR = rad + 12 + Math.sin(t * 0.006) * 8;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, pulseR, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(230,0,0,0.12)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, rad, 0, Math.PI * 2);
+        ctx.fillStyle = isHov ? 'rgba(230,0,0,0.15)' : 'rgba(255,255,255,0.04)';
+        ctx.fill();
+        ctx.strokeStyle = isHov ? 'rgba(230,0,0,0.8)' : 'rgba(255,255,255,0.08)';
+        ctx.lineWidth = isHov ? 2 : 0.8;
+        ctx.stroke();
+        ctx.fillStyle = isHov ? 'rgba(230,0,0,0.95)' : 'rgba(255,255,255,0.45)';
+        ctx.font = '600 ' + Math.round(11 * sc) + 'px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(c.initials, n.x, n.y);
+        ctx.fillStyle = isHov ? 'rgba(255,255,255,0.7)' : (hovered >= 0 ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.22)');
+        ctx.font = '500 8px Inter, sans-serif';
+        ctx.textBaseline = 'top';
+        var labelWidth = ctx.measureText(c.label).width;
+        if (labelWidth < W * 0.18) {
+          ctx.fillText(c.label, n.x, n.y + rad + 5);
+        } else {
+          ctx.fillText(c.label.substring(0, 12) + '\u2026', n.x, n.y + rad + 5);
+        }
+      }
+
+      // 6. Center TMH hub
+      var glowR = Math.min(80, orbitR * 0.25);
+      var grad = ctx.createRadialGradient(cx, cy, 8, cx, cy, glowR);
+      grad.addColorStop(0, 'rgba(230,0,0,0.12)');
+      grad.addColorStop(0.5, 'rgba(230,0,0,0.04)');
+      grad.addColorStop(1, 'rgba(230,0,0,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, glowR, 0, Math.PI * 2);
+      ctx.fill();
+      var dashAngle = t * 0.00015;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 38, dashAngle, Math.PI * 1.5 + dashAngle);
+      ctx.strokeStyle = 'rgba(230,0,0,0.2)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([3, 8]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.arc(cx, cy, 32, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(230,0,0,0.08)';
+      ctx.strokeStyle = 'rgba(230,0,0,0.35)';
+      ctx.lineWidth = 1.5;
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#E60000';
+      ctx.font = '700 15px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('TMH', cx, cy);
+      ctx.fillStyle = hovered >= 0 ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.28)';
+      ctx.font = '500 8px Inter, sans-serif';
+      ctx.textBaseline = 'top';
+      ctx.fillText('The Millennial Hub', cx, cy + 42);
+    }
+
+    resize();
+    window.addEventListener('resize', function () {
+      var rect = container.getBoundingClientRect();
+      if (rect.width < 10) return;
+      resize();
+    });
+    frame = requestAnimationFrame(draw);
+    window.addEventListener('beforeunload', function () { running = false; cancelAnimationFrame(frame); });
+  })();
+
+  // ============================================================
+  // 23. REFRESH ScrollTrigger after layout settles
   // ============================================================
   if (hasGSAP) {
     setTimeout(function () { ScrollTrigger.refresh(); }, 400);
