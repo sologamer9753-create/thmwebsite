@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="css/style.css" />
   <script>if(matchMedia('(hover:hover)and(pointer:fine)').matches)document.documentElement.classList.add('hover-device')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -42,15 +43,59 @@
     </div>
   </nav>
 
-  <!-- ========== HERO ========== -->
+  <!-- ========== HERO — asymmetrical split, floating glass cards, flashlight ========== -->
   <section class="hero">
-    <div class="hero-glow"></div>
-    <div class="hero-badge">Premium Digital Solutions</div>
-    <h1>Building Powerful Digital Presence for <span class="highlight">Modern Brands</span></h1>
-    <p>The Millennial Hub helps brands grow through digital marketing, content creation, social media strategy, SEO, advertising, and behavioural training programs.</p>
-    <div class="hero-actions">
-      <a href="contact.html" class="hero-btn-primary">Let's Work Together</a>
-      <a href="services.html" class="hero-btn-secondary">Explore Services</a>
+    <div class="hero-flashlight" id="heroFlashlight"></div>
+    <div class="hero-grid-pattern"></div>
+
+    <div class="hero-grid">
+      <!-- Left: Cinematic typography -->
+      <div class="hero-left">
+        <div class="hero-badge">&#9679; Premium Digital Solutions</div>
+        <h1>Building Powerful Digital Presence for <span class="highlight">Modern Brands</span></h1>
+        <p>The Millennial Hub helps brands grow through digital marketing, content creation, social media strategy, SEO, advertising, and behavioural training programs.</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="hero-btn-primary">Let's Work Together</a>
+          <a href="services.html" class="hero-btn-secondary">Explore Services</a>
+        </div>
+      </div>
+
+      <!-- Right: Floating innovation elements -->
+      <div class="hero-right">
+        <!-- Card 1: Client Growth chart -->
+        <div class="hero-card hero-card-1">
+          <div class="hero-card-label">Client Growth</div>
+          <div class="hero-card-value">+340%</div>
+          <div class="hero-chart">
+            <svg viewBox="0 0 160 32" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="hero-chart-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#12D6E7"/>
+                  <stop offset="100%" stop-color="#12D6E7" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path class="hero-chart-line" d="M0 26 Q20 28 40 22 Q60 14 80 16 Q100 10 120 12 Q140 4 160 6"/>
+              <path class="hero-chart-fill" d="M0 26 Q20 28 40 22 Q60 14 80 16 Q100 10 120 12 Q140 4 160 6 L160 32 L0 32 Z"/>
+            </svg>
+          </div>
+          <div class="hero-card-tag">
+            <svg viewBox="0 0 12 12" fill="none">
+              <path d="M6 0L7.35 4.65L12 6L7.35 7.35L6 12L4.65 7.35L0 6L4.65 4.65Z" fill="#22c55e"/>
+            </svg>
+            YoY
+          </div>
+        </div>
+
+        <!-- Card 2: Active Campaigns -->
+        <div class="hero-card hero-card-2">
+          <div class="hero-card-label">Active Campaigns</div>
+          <div class="hero-card-value">42</div>
+          <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 6px;">
+            <span class="hero-card-pulse"></span>
+            <span style="font-size: 0.72rem; color: #22c55e;">Live now</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 

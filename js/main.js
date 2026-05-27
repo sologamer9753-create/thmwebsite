@@ -64,7 +64,110 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 1. HERO LOAD SEQUENCE (cinematic timeline)
+  // 1A. THREE.JS — WebGL particle torus-knot (hero background)
+  // ============================================================
+  ;(function () {
+    if (isReduced || typeof THREE === 'undefined') return;
+    var hero = document.querySelector('.hero');
+    if (!hero || hero.querySelector('.hero-canvas')) return;
+
+    var wrap = document.createElement('div');
+    wrap.className = 'hero-canvas';
+    hero.insertBefore(wrap, hero.firstChild);
+
+    var scene = new THREE.Scene();
+    var w = hero.clientWidth;
+    var h = hero.clientHeight;
+    var camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
+    camera.position.z = 22;
+
+    var renderer = new THREE.WebGLRenderer({
+      alpha: true, antialias: true
+    });
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    wrap.appendChild(renderer.domElement);
+
+    var COUNT = 4000;
+    var positions = new Float32Array(COUNT * 3);
+    var colors = new Float32Array(COUNT * 3);
+
+    var R = 8;
+    var r = 2.6;
+    var p = 3, q = 2;
+
+    for (var i = 0; i < COUNT; i++) {
+      var t = Math.random() * 2 * Math.PI;
+      var theta = t * q;
+      var phi = t * p;
+      var cx = (R + r * Math.cos(phi)) * Math.cos(theta);
+      var cy = (R + r * Math.cos(phi)) * Math.sin(theta);
+      var cz = r * Math.sin(phi);
+      var n = 0.5 + Math.random() * 1.2;
+      positions[i * 3] = cx + (Math.random() - 0.5) * n;
+      positions[i * 3 + 1] = cy + (Math.random() - 0.5) * n;
+      positions[i * 3 + 2] = cz + (Math.random() - 0.5) * n;
+
+      var mix = Math.random();
+      colors[i * 3] = 0.07 + 0.14 * mix;
+      colors[i * 3 + 1] = 0.84 - 0.35 * mix;
+      colors[i * 3 + 2] = 0.91 + 0.09 * mix;
+    }
+
+    var geom = new THREE.BufferGeometry();
+    geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    var mat = new THREE.PointsMaterial({
+      size: 0.11,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      sizeAttenuation: true
+    });
+
+    var pts = new THREE.Points(geom, mat);
+    scene.add(pts);
+
+    var mouseX = 0, mouseY = 0;
+    var curX = 0, curY = 0;
+
+    function onMove(e) {
+      var rect = hero.getBoundingClientRect();
+      mouseX = (e.clientX - rect.left) / rect.width * 2 - 1;
+      mouseY = (e.clientY - rect.top) / rect.height * 2 - 1;
+    }
+    wrap.addEventListener('mousemove', onMove);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      curX += (mouseX - curX) * 0.04;
+      curY += (mouseY - curY) * 0.04;
+      pts.rotation.x += 0.0006 + curY * 0.002;
+      pts.rotation.y += 0.0012 + curX * 0.002;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    function resize() {
+      var nw = hero.clientWidth;
+      var nh = hero.clientHeight;
+      camera.aspect = nw / nh;
+      camera.updateProjectionMatrix();
+      renderer.setSize(nw, nh);
+    }
+    window.addEventListener('resize', resize);
+    setTimeout(resize, 200);
+
+    // Clean observers for Three.js resize — avoid duplicate watching
+    var ro = new ResizeObserver(function () { resize(); });
+    ro.observe(hero);
+  })();
+
+  // ============================================================
+  // 1B. HERO LOAD SEQUENCE (cinematic timeline)
   // ============================================================
   ;(function () {
     if (isReduced || !hasGSAP) return;
@@ -76,13 +179,10 @@ document.addEventListener('DOMContentLoaded', function () {
       defaults: { ease: EASE, duration: DURATION }
     });
 
-    // 1a. Glow fades in
-    tl.fromTo('.hero-glow', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0);
-
-    // 1b. Badge slides down
+    // 1a. Badge slides down
     tl.fromTo('.hero-badge', { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.5 }, 0.15);
 
-    // 1c. Headline word-by-word reveal
+    // 1b. Headline word-by-word reveal
     var headline = hero.querySelector('h1');
     if (headline) {
       var words = headline.textContent.trim().split(/\s+/);
@@ -99,10 +199,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }, 0.25);
     }
 
-    // 1d. Subheadline fades + lifts
+    // 1c. Subheadline fades + lifts
     tl.fromTo('.hero p', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.15');
 
-    // 1e. CTA buttons scale in
+    // 1d. CTA buttons scale in
     tl.fromTo('.hero-actions a', {
       opacity: 0, scale: 0.92
     }, {
@@ -111,6 +211,22 @@ document.addEventListener('DOMContentLoaded', function () {
       stagger: 0.1,
       ease: EASE_SPRING
     }, '-=0.25');
+
+    // 1e. Right-column cards float in (GPU-safe: opacity + x only)
+    tl.fromTo('.hero-card-1', {
+      opacity: 0, x: 40
+    }, {
+      opacity: 1, x: 0,
+      duration: 0.9,
+      ease: EASE
+    }, '-=0.1');
+    tl.fromTo('.hero-card-2', {
+      opacity: 0, x: -30
+    }, {
+      opacity: 1, x: 0,
+      duration: 0.9,
+      ease: EASE
+    }, '-=0.05');
   })();
 
   // ============================================================
@@ -565,86 +681,30 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 12. PARTICLE CANVAS (Hero)
+  // 12. FLASHLIGHT CURSOR — radial gradient follows mouse in hero
   // ============================================================
   ;(function () {
-    if (isReduced) return;
+    if (isReduced || !isHoverDevice) return;
     var hero = document.querySelector('.hero');
-    if (!hero) return;
-    if (hero.querySelector('#particle-canvas')) return;
+    var light = document.getElementById('heroFlashlight');
+    if (!hero || !light) return;
 
-    var canvas = document.createElement('canvas');
-    canvas.id = 'particle-canvas';
-    canvas.style.cssText = 'position:absolute;inset:0;z-index:0;pointer-events:none;';
-    hero.insertBefore(canvas, hero.firstChild);
+    var lx = 0.5, ly = 0.5;
+    var raf = null;
 
-    var ctx = canvas.getContext('2d');
-    var W, H;
-    var particles = [];
-    var MAX = 45;
-    var colors = ['12,214,231', '54,124,255', '123,97,255'];
-
-    function resize() {
-      W = canvas.width = hero.offsetWidth;
-      H = canvas.height = hero.offsetHeight;
-    }
-
-    function createParticle() {
-      return {
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: 1.5 + Math.random() * 3,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4 - 0.15,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: 0.15 + Math.random() * 0.35,
-        life: Math.random(),
-        lifeSpeed: 0.004 + Math.random() * 0.006
-      };
-    }
-
-    for (var i = 0; i < MAX; i++) particles.push(createParticle());
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      for (var i = 0; i < particles.length; i++) {
-        var p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life += p.lifeSpeed;
-        if (p.life > 1) p.life = 0;
-        var fade = Math.sin(p.life * Math.PI);
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(' + p.color + ',' + (p.alpha * fade) + ')';
-        ctx.fill();
-        // Connection lines
-        for (var j = i + 1; j < particles.length; j++) {
-          var p2 = particles[j];
-          var dx = p.x - p2.x;
-          var dy = p.y - p2.y;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 150) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = 'rgba(12,214,231,' + (0.03 * (1 - dist / 150)) + ')';
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-        // Wrap
-        if (p.x < -10) p.x = W + 10;
-        if (p.x > W + 10) p.x = -10;
-        if (p.y < -10) p.y = H + 10;
-        if (p.y > H + 10) p.y = -10;
+    hero.addEventListener('mousemove', function (e) {
+      var rect = hero.getBoundingClientRect();
+      lx = (e.clientX - rect.left) / rect.width;
+      ly = (e.clientY - rect.top) / rect.height;
+      if (!raf) {
+        raf = requestAnimationFrame(function () {
+          raf = null;
+          var cx = lx * 100;
+          var cy = ly * 100;
+          light.style.background = 'radial-gradient(600px circle at ' + cx + '% ' + cy + '%, rgba(18,214,231,0.12), rgba(123,97,255,0.04) 40%, transparent 65%)';
+        });
       }
-      requestAnimationFrame(draw);
-    }
-
-    resize();
-    draw();
-    window.addEventListener('resize', resize);
+    });
   })();
 
   // ============================================================
