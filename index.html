@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,18 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Millennial Hub — A to Z of Digital Marketing</title>
   <meta name="description" content="The Millennial Hub helps brands grow through digital marketing, content creation, social media strategy, SEO, advertising, and behavioural training programs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="css/style.css" />
+  <script>if(matchMedia('(hover:hover)and(pointer:fine)').matches)document.documentElement.classList.add('hover-device')</script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-<body>
+<body class="hero-dark-bg">
 
+  <!-- ========== NAV ========== -->
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-          <rect width="32" height="32" rx="8" fill="#12D6E7" fill-opacity="0.15"/>
-          <path d="M8 22V10L16 18L24 10V22" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
+          <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        The&nbsp;Millennial&nbsp;Hub<span>.</span>
+        <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
       </a>
       <div class="nav-links">
         <a href="index.html" class="active">Home</a>
@@ -34,142 +42,140 @@
     </div>
   </nav>
 
+  <!-- ========== HERO ========== -->
   <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid">
-      <div class="hero-text">
-        <div class="hero-badge reveal">&#9679; Premium Digital Solutions</div>
-        <h1 class="reveal reveal-delay-1">
-          Building Powerful Digital Presence for<br/>
-          <span class="highlight">Modern Brands</span>
-        </h1>
-        <p class="reveal reveal-delay-2">The Millennial Hub helps brands grow through digital marketing, content creation, social media strategy, SEO, advertising, and behavioural training programs.</p>
-        <div class="hero-actions reveal reveal-delay-3">
-          <a href="contact.html" class="btn btn-primary btn-lg">Let's Work Together</a>
-          <a href="services.html" class="btn btn-secondary btn-lg">Explore Services</a>
-        </div>
-      </div>
-      <div class="hero-visual reveal reveal-delay-2">
-        <div class="hero-ring">
-          <div class="hero-dot"></div>
-          <div class="hero-dot"></div>
-          <div class="hero-dot"></div>
-          <div class="hero-dot"></div>
-        </div>
-      </div>
+    <div class="hero-glow"></div>
+    <div class="hero-badge">Premium Digital Solutions</div>
+    <h1>Building Powerful Digital Presence for <span class="highlight">Modern Brands</span></h1>
+    <p>The Millennial Hub helps brands grow through digital marketing, content creation, social media strategy, SEO, advertising, and behavioural training programs.</p>
+    <div class="hero-actions">
+      <a href="contact.html" class="hero-btn-primary">Let's Work Together</a>
+      <a href="services.html" class="hero-btn-secondary">Explore Services</a>
     </div>
   </section>
 
+  <!-- ========== TRUST BAR ========== -->
   <section class="marquee-wrap">
-    <p class="sr-only">Trusted By Growing Brands</p>
+    <div class="marquee-fade-left"></div>
+    <div class="marquee-fade-right"></div>
     <div class="marquee">
-      <span class="marquee-item"><span class="dot"></span>Stellar Eats</span>
-      <span class="marquee-item"><span class="dot"></span>Urban Nest Hotels</span>
-      <span class="marquee-item"><span class="dot"></span>Bloom Cosmetics</span>
-      <span class="marquee-item"><span class="dot"></span>Peak Fitness</span>
-      <span class="marquee-item"><span class="dot"></span>Artisan Brew Co</span>
-      <span class="marquee-item"><span class="dot"></span>GreenLeaf Organics</span>
-      <span class="marquee-item"><span class="dot"></span>Viva Spaces</span>
-      <span class="marquee-item"><span class="dot"></span>Catalyst Tech</span>
-      <span class="marquee-item"><span class="dot"></span>Stellar Eats</span>
-      <span class="marquee-item"><span class="dot"></span>Urban Nest Hotels</span>
-      <span class="marquee-item"><span class="dot"></span>Bloom Cosmetics</span>
-      <span class="marquee-item"><span class="dot"></span>Peak Fitness</span>
-      <span class="marquee-item"><span class="dot"></span>Artisan Brew Co</span>
-      <span class="marquee-item"><span class="dot"></span>GreenLeaf Organics</span>
-      <span class="marquee-item"><span class="dot"></span>Viva Spaces</span>
-      <span class="marquee-item"><span class="dot"></span>Catalyst Tech</span>
+      <span class="marquee-item">THE SHERLOCK'S GROUP</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">AMAZON</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">BENGALURU CAFE</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">NIMMA LOCAL</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">HEALTH HORIZONS</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">TREEHAUS</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">NYRC</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">THE SHERLOCK'S GROUP</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">AMAZON</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">BENGALURU CAFE</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">NIMMA LOCAL</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">HEALTH HORIZONS</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">TREEHAUS</span>
+      <span class="marquee-bullet">&bull;</span>
+      <span class="marquee-item">NYRC</span>
     </div>
   </section>
 
-  <section class="section">
+  <!-- ========== WHAT WE DO — Dark services section ========== -->
+  <section class="dark-section">
     <div class="container">
-      <div class="text-center mb-2 reveal">
+      <div class="text-center mb-2">
         <span class="section-label">What We Do</span>
         <h2>Full-Spectrum Digital Services</h2>
-        <p style="color: var(--muted); max-width: 540px; margin: 0.8rem auto 0; font-size: 0.95rem;">
+        <p style="color: rgba(199,208,217,0.6); max-width: 540px; margin: 0.4rem auto 0; font-size: 0.9rem;">
           From strategy to execution — every capability your brand needs to dominate digital.
         </p>
       </div>
-      <div class="grid-3 card-stagger">
-        <div class="service-card">
-          <div class="icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F4E1;</div>
+      <div class="grid-3">
+        <div class="glass-card" data-gsap="fade-lift" data-delay="0">
+          <div class="glass-icon" style="background: rgba(18,214,231,0.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#12D6E7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
           <h3>Digital Marketing</h3>
-          <p>Strategic brand presence across IG, FB, YT, Google My Business, and blog networks. Data-driven campaigns that convert.</p>
-          <div class="tags">
-            <span>Strategy</span><span>Management</span><span>Analytics</span>
-          </div>
+          <p>Strategic digital presence building and cross-platform management across Instagram, Facebook, YouTube, Google My Business, and Blogs.</p>
+          <a href="services.html" class="learn-link">Learn More &rarr;</a>
         </div>
-        <div class="service-card">
-          <div class="icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x1F4F7;</div>
-          <h3>Social Media</h3>
-          <p>Content planning, visual design, campaign execution, video &amp; GIF production with deep performance analytics.</p>
-          <div class="tags">
-            <span>Content</span><span>Campaigns</span><span>Analytics</span>
+        <div class="glass-card" data-gsap="fade-lift" data-delay="0.1">
+          <div class="glass-icon" style="background: rgba(54,124,255,0.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#367CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
           </div>
+          <h3>Social Media Management</h3>
+          <p>Page management, weekly content planning, visual designs, campaign creation, video/GIF content, audience optimisation, trend analysis, and top influencer engagement.</p>
+          <a href="services.html" class="learn-link">Learn More &rarr;</a>
         </div>
-        <div class="service-card">
-          <div class="icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F3A8;</div>
+        <div class="glass-card" data-gsap="fade-lift" data-delay="0.2">
+          <div class="glass-icon" style="background: rgba(123,97,255,0.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7B61FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
           <h3>Content Creation</h3>
-          <p>30+ monthly posts, professional photography, video production, branding assets, and full website creation.</p>
-          <div class="tags">
-            <span>Photography</span><span>Video</span><span>Branding</span>
-          </div>
+          <p>Over 30 posts per month, custom social designs, video production, photography, product/food shoots, offline designs (signage, posters), website creation, and Brand Book design.</p>
+          <a href="services.html" class="learn-link">Learn More &rarr;</a>
         </div>
-        <div class="service-card">
-          <div class="icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F50D;</div>
-          <h3>SEO Optimization</h3>
-          <p>Keyword research, competitor analysis, local &amp; on-page SEO, and link-building strategy for sustainable organic growth.</p>
-          <div class="tags">
-            <span>Keywords</span><span>Local SEO</span><span>Link Building</span>
+        <div class="glass-card" data-gsap="fade-lift" data-delay="0.3">
+          <div class="glass-icon" style="background: rgba(18,214,231,0.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#12D6E7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
+          <h3>SEO Optimisation</h3>
+          <p>Local market research, competitor research, keyword analysis, on-page optimization, content optimization, link building strategy, and local map listing.</p>
+          <a href="services.html" class="learn-link">Learn More &rarr;</a>
         </div>
-        <div class="service-card">
-          <div class="icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x1F4AD;</div>
-          <h3>Advertising</h3>
-          <p>Google, Facebook &amp; Instagram Ads with full campaign management plus out-of-home advertising (metro, bus, apartment).</p>
-          <div class="tags">
-            <span>PPC</span><span>Social Ads</span><span>OOH</span>
+        <div class="glass-card" data-gsap="fade-lift" data-delay="0.4">
+          <div class="glass-icon" style="background: rgba(54,124,255,0.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#367CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
+          <h3>Advertising Management</h3>
+          <p>Google Ads, Facebook Ads, Instagram Ads, event-based promotions, electronic screens, and offline advertising across Metros, Buses, Mobile, and Apartment.</p>
+          <a href="services.html" class="learn-link">Learn More &rarr;</a>
         </div>
-        <div class="service-card">
-          <div class="icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F3DB;</div>
-          <h3>Website Design</h3>
-          <p>Custom, conversion-optimised websites built for modern brands. Responsive, fast, and designed to tell your story.</p>
-          <div class="tags">
-            <span>UI/UX</span><span>Development</span><span>CRO</span>
+        <div class="glass-card" data-gsap="fade-lift" data-delay="0.5">
+          <div class="glass-icon" style="background: rgba(123,97,255,0.12);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7B61FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
+          <h3>Leadership &amp; Behavioural Training</h3>
+          <p>Modular workshops and bootcamps focusing on emotional intelligence, mindset transformation, stress management, team effectiveness, and first-time leaders.</p>
+          <a href="training.html" class="learn-link">Learn More &rarr;</a>
         </div>
-      </div>
-      <div class="text-center mt-3 reveal">
-        <a href="services.html" class="btn btn-outline">View All Services &rarr;</a>
       </div>
     </div>
   </section>
 
-  <section class="section" style="background: rgba(255,255,255,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <!-- ========== WHY TMH ========== -->
+  <section class="section" style="background: rgba(7,17,31,0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
     <div class="container">
       <div class="text-center mb-2 reveal">
         <span class="section-label">Why The Millennial Hub</span>
-        <h2>Built Different. Built Better.</h2>
+        <h2 data-split>Built Different. Built Better.</h2>
       </div>
       <div class="grid-4 card-stagger">
-        <div class="feature-card">
+        <div class="feature-card tilt-card">
           <div class="f-icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F9E0;</div>
           <h3>Strategic Thinking</h3>
           <p>Every campaign begins with deep research — audience, market, competitors — before a single creative brief is written.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card tilt-card">
           <div class="f-icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x2728;</div>
           <h3>Creative Execution</h3>
           <p>World-class design and copy that stops the scroll. We don't just fill space — we craft moments that convert.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card tilt-card">
           <div class="f-icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F4C8;</div>
           <h3>Brand Growth Focus</h3>
           <p>Every metric ties back to your bottom line. We optimise for revenue, not vanity — real results, real growth.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card tilt-card">
           <div class="f-icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F4E6;</div>
           <h3>Scalable Solutions</h3>
           <p>From startups to enterprises — our systems, team, and tech scale with you. No hand-off friction as you grow.</p>
@@ -178,11 +184,12 @@
     </div>
   </section>
 
+  <!-- ========== PROCESS — Card grid, no vertical line ========== -->
   <section class="section">
-    <div class="container container-narrow">
+    <div class="container">
       <div class="text-center mb-2 reveal">
         <span class="section-label">Our Process</span>
-        <h2>From Brief to Breakthrough</h2>
+        <h2 data-split>From Brief to Breakthrough</h2>
       </div>
       <div class="timeline">
         <div class="timeline-item reveal">
@@ -192,28 +199,28 @@
             <p>Deep dive into your brand, audience, market, competitors, and goals. We don't guess — we learn.</p>
           </div>
         </div>
-        <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-item reveal">
           <div class="timeline-dot">02</div>
           <div class="timeline-content">
             <h4>Strategy</h4>
             <p>Data-informed roadmap with clear KPIs, channel mix, content pillars, and budget allocation.</p>
           </div>
         </div>
-        <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-item reveal">
           <div class="timeline-dot">03</div>
           <div class="timeline-content">
             <h4>Execution</h4>
             <p>World-class creative production, platform management, and campaign deployment — on time, on brand.</p>
           </div>
         </div>
-        <div class="timeline-item reveal reveal-delay-3">
+        <div class="timeline-item reveal">
           <div class="timeline-dot">04</div>
           <div class="timeline-content">
             <h4>Optimization</h4>
             <p>Real-time performance monitoring, A/B testing, and iterative refinement to maximise every pound spent.</p>
           </div>
         </div>
-        <div class="timeline-item reveal reveal-delay-4">
+        <div class="timeline-item reveal">
           <div class="timeline-dot">05</div>
           <div class="timeline-content">
             <h4>Growth</h4>
@@ -224,26 +231,76 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="container container-narrow">
-      <div class="cta-banner reveal">
-        <h2>Let's Build Something Great Together</h2>
-        <p>Ready to take your brand to the next level? Tell us about your project and we'll craft a custom growth plan.</p>
-        <a href="contact.html" class="btn btn-primary btn-lg">Start Your Project</a>
+  <!-- ========== TESTIMONIALS ========== -->
+  <section class="section" style="background: rgba(7,17,31,0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="text-center mb-2 reveal">
+        <span class="section-label">What Clients Say</span>
+        <h2>Trusted by Brands That Grow</h2>
+      </div>
+      <div class="testimonial-grid card-stagger">
+        <div class="testimonial-card tilt-card">
+          <div class="quote">&ldquo;</div>
+          <p>The Millennial Hub transformed our entire digital strategy. Their team thinks like partners, not vendors. Our online orders grew 28% in six months and engagement is at an all-time high.</p>
+          <div class="author">
+            <div class="author-avatar">SE</div>
+            <div>
+              <div class="author-name">Sarah Chen</div>
+              <div class="author-role">Head of Marketing, Stellar Eats</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card tilt-card">
+          <div class="quote">&ldquo;</div>
+          <p>We interviewed five agencies before choosing The Millennial Hub. Their strategic approach and creative execution were in a different league. Bookings increased 64% year-on-year.</p>
+          <div class="author">
+            <div class="author-avatar">MK</div>
+            <div>
+              <div class="author-name">Michael Kors</div>
+              <div class="author-role">CEO, Urban Nest Hotels</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card tilt-card">
+          <div class="quote">&ldquo;</div>
+          <p>The behavioural training programme completely shifted how our leadership team communicates. We've seen a measurable improvement in cross-team collaboration and decision-making.</p>
+          <div class="author">
+            <div class="author-avatar">LR</div>
+            <div>
+              <div class="author-name">Lisa Richardson</div>
+              <div class="author-role">HR Director, Catalyst Tech</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+
+
+  <!-- ========== CTA SECTION — Aurora Glass ========== -->
+  <section class="cta-section">
+    <div class="cta-aurora"></div>
+    <div class="container container-narrow">
+      <div class="cta-banner">
+        <h2>Let's Build Something Great Together</h2>
+        <p>Ready to take your brand to the next level? Tell us about your project and we'll craft a custom growth plan.</p>
+        <a href="contact.html" class="btn-cta">Start Your Project</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="nav-logo" style="margin-bottom: 0.5rem;">
-            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-              <rect width="32" height="32" rx="8" fill="#12D6E7" fill-opacity="0.15"/>
-              <path d="M8 22V10L16 18L24 10V22" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
+              <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            The&nbsp;Millennial&nbsp;Hub<span>.</span>
+            <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
           </a>
           <p>The Millennial Hub delivers end-to-end digital marketing, content creation, advertising, and behavioural training — the A to Z of digital growth.</p>
           <div class="footer-social">
