@@ -4,10 +4,18 @@
    Stagger grids · Parallax · Magnetic · 3D tilt · Particles
    ============================================================ */
 
+// Hover-device detection — only devices with real hover get :hover effects
+(function () {
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.documentElement.classList.add('hover-device');
+  }
+})();
+
 document.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
   var isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var hasGSAP = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
   var EASE = 'power4.out';
   var EASE_SPRING = 'back.out(1.4)';
@@ -281,17 +289,16 @@ document.addEventListener('DOMContentLoaded', function () {
     if (isReduced || !hasGSAP) return;
 
     // Hero visuals, map, decorative blocks, and data-reveal="float"
+    // GPU-safe: only transform and opacity
     document.querySelectorAll('.hero-visual, .contact-map, [data-reveal="float"]').forEach(function (el) {
       gsap.fromTo(el, {
         opacity: 0,
         y: 80,
-        scale: 0.96,
-        filter: 'blur(10px)'
+        scale: 0.96
       }, {
         opacity: 1,
         y: 0,
         scale: 1,
-        filter: 'blur(0px)',
         duration: 1.2,
         ease: EASE,
         scrollTrigger: {
@@ -386,14 +393,18 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 8. MAGNETIC BUTTONS — smooth cursor follow
+  // 8. MAGNETIC BUTTONS — smooth cursor follow (hover devices only)
   // ============================================================
   ;(function () {
-    if (isReduced) return;
+    if (isReduced || !isHoverDevice) return;
     var btns = document.querySelectorAll('.btn');
     if (!btns.length) return;
 
-    btns.forEach(function (btn) {
+    var magData = [];
+    var magRaf = null;
+
+    btns.forEach(function (btn, i) {
+      magData[i] = { dx: 0, dy: 0, active: false };
       btn.addEventListener('mousemove', function (e) {
         var rect = btn.getBoundingClientRect();
         var x = e.clientX - rect.left - rect.width / 2;
@@ -402,44 +413,75 @@ document.addEventListener('DOMContentLoaded', function () {
         var maxDist = Math.max(rect.width, rect.height);
         var strength = Math.min(1, dist / (maxDist / 2));
         var pull = 10 * (1 - strength);
-        btn.style.transform = 'translate(' + (x / (rect.width / 2) * pull) + 'px, ' + (y / (rect.height / 2) * pull) + 'px)';
+        magData[i].dx = (x / (rect.width / 2) * pull);
+        magData[i].dy = (y / (rect.height / 2) * pull);
+        magData[i].active = true;
+        if (!magRaf) {
+          magRaf = requestAnimationFrame(function magFlush() {
+            magRaf = null;
+            for (var j = 0; j < magData.length; j++) {
+              if (magData[j].active) {
+                btns[j].style.transform = 'translate(' + magData[j].dx + 'px, ' + magData[j].dy + 'px)';
+                magData[j].active = false;
+              }
+            }
+          });
+        }
       });
 
       btn.addEventListener('mouseleave', function () {
+        magData[i].active = false;
         btn.style.transform = '';
       });
     });
   })();
 
   // ============================================================
-  // 9. 3D TILT ON HOVER (cards)
+  // 9. 3D TILT ON HOVER (cards) — hover devices only
   // ============================================================
   ;(function () {
-    if (isReduced) return;
+    if (isReduced || !isHoverDevice) return;
     var cards = document.querySelectorAll('.tilt-card');
     if (!cards.length) return;
 
-    cards.forEach(function (card) {
+    var tiltData = [];
+    var tiltRaf = null;
+
+    cards.forEach(function (card, i) {
+      tiltData[i] = { x: 0, y: 0, active: false };
       card.addEventListener('mousemove', function (e) {
         var rect = card.getBoundingClientRect();
-        var x = (e.clientX - rect.left) / rect.width;
-        var y = (e.clientY - rect.top) / rect.height;
-        var tiltX = (y - 0.5) * -12;
-        var tiltY = (x - 0.5) * 12;
-        card.style.transform = 'perspective(800px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) translateZ(4px)';
+        tiltData[i].x = (e.clientX - rect.left) / rect.width;
+        tiltData[i].y = (e.clientY - rect.top) / rect.height;
+        tiltData[i].active = true;
+        if (!tiltRaf) {
+          tiltRaf = requestAnimationFrame(function tiltFlush() {
+            tiltRaf = null;
+            for (var j = 0; j < tiltData.length; j++) {
+              if (tiltData[j].active) {
+                var p = tiltData[j];
+                var tx = (p.y - 0.5) * -12;
+                var ty = (p.x - 0.5) * 12;
+                cards[j].style.transform = 'perspective(800px) rotateX(' + tx + 'deg) rotateY(' + ty + 'deg) translateZ(4px)';
+                tiltData[j].active = false;
+              }
+            }
+          });
+        }
       });
 
       card.addEventListener('mouseleave', function () {
+        tiltData[i].active = false;
         card.style.transform = '';
       });
     });
   })();
 
   // ============================================================
-  // 10. CURSOR GLOW
+  // 10. CURSOR GLOW — hover devices only
   // ============================================================
   ;(function () {
-    if (isReduced) return;
+    if (isReduced || !isHoverDevice) return;
     var glow = document.querySelector('.cursor-glow');
     if (!glow) {
       glow = document.createElement('div');
@@ -447,13 +489,21 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.appendChild(glow);
     }
 
+    var glowX = -200, glowY = -200, glowRaf = null;
     var timer;
     document.addEventListener('mousemove', function (e) {
-      glow.style.opacity = '1';
-      glow.style.left = e.clientX + 'px';
-      glow.style.top = e.clientY + 'px';
+      glowX = e.clientX;
+      glowY = e.clientY;
       clearTimeout(timer);
       timer = setTimeout(function () { glow.style.opacity = '0'; }, 3000);
+      if (!glowRaf) {
+        glowRaf = requestAnimationFrame(function () {
+          glowRaf = null;
+          glow.style.opacity = '1';
+          glow.style.left = glowX + 'px';
+          glow.style.top = glowY + 'px';
+        });
+      }
     });
 
     document.addEventListener('mouseleave', function () {
@@ -726,7 +776,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 20. PRICING TIER HOVER — scale featured properly
   // ============================================================
   ;(function () {
-    if (!hasGSAP || isReduced) return;
+    if (!hasGSAP || isReduced || !isHoverDevice) return;
 
     document.querySelectorAll('.pricing-tier').forEach(function (tier) {
       tier.addEventListener('mouseenter', function () {
@@ -743,10 +793,10 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 21. GLASS CARD — magnetic learn link
+  // 21. GLASS CARD — magnetic learn link (hover devices only)
   // ============================================================
   ;(function () {
-    if (isReduced) return;
+    if (isReduced || !isHoverDevice) return;
 
     document.querySelectorAll('.glass-card').forEach(function (card) {
       var link = card.querySelector('.learn-link');
