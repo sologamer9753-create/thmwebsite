@@ -1,7 +1,8 @@
 /* ============================================================
    TMH — Cinematic Animation System
-   Lenis · GSAP ScrollTrigger · Text splits · Hero timeline ·
-   Stagger grids · Parallax · Magnetic · 3D tilt · Particles
+   GSAP ScrollTrigger · ScrollSmoother · Text splits ·
+   Hero timeline · Stagger grids · Parallax · Magnetic ·
+   3D tilt · Three.js particles
    ============================================================ */
 
 // Hover-device detection — only devices with real hover get :hover effects
@@ -40,27 +41,21 @@ document.addEventListener('DOMContentLoaded', function () {
   var DURATION = 0.9;
 
   // ============================================================
-  // 0. LENIS SMOOTH SCROLL
+  // 0. SCROLL SMOOTHER — GSAP native smooth scroll
   // ============================================================
   ;(function () {
-    if (isReduced || !hasGSAP || typeof Lenis === 'undefined') return;
+    if (isReduced || typeof ScrollSmoother === 'undefined' || !hasGSAP) return;
 
-    var lenis = new Lenis({
-      duration: 1.2,
-      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1
+    var wrapper = document.getElementById('smooth-wrapper');
+    var content = document.getElementById('smooth-content');
+    if (!wrapper || !content) return;
+
+    ScrollSmoother.create({
+      wrapper: wrapper,
+      content: content,
+      smooth: 1.2,
+      effects: true
     });
-
-    lenis.on('scroll', ScrollTrigger.update);
-
-    gsap.ticker.add(function (time) {
-      lenis.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0);
   })();
 
   // ============================================================
@@ -68,50 +63,64 @@ document.addEventListener('DOMContentLoaded', function () {
   // ============================================================
   ;(function () {
     if (isReduced || typeof THREE === 'undefined') return;
-    var hero = document.querySelector('.hero');
-    if (!hero || hero.querySelector('.hero-canvas')) return;
-
-    var wrap = document.createElement('div');
-    wrap.className = 'hero-canvas';
-    hero.insertBefore(wrap, hero.firstChild);
+    var canvas = document.getElementById('webgl-canvas');
+    if (!canvas || canvas.querySelector('canvas')) return;
 
     var scene = new THREE.Scene();
-    var w = hero.clientWidth;
-    var h = hero.clientHeight;
+    var w = window.innerWidth;
+    var h = window.innerHeight;
     var camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
-    camera.position.z = 22;
+    camera.position.z = 26;
 
     var renderer = new THREE.WebGLRenderer({
       alpha: true, antialias: true
     });
     renderer.setSize(w, h);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    wrap.appendChild(renderer.domElement);
+    renderer.setClearColor(0x000000, 0); // transparent background
+    canvas.appendChild(renderer.domElement);
 
-    var COUNT = 4000;
-    var positions = new Float32Array(COUNT * 3);
-    var colors = new Float32Array(COUNT * 3);
+    var KNOT_COUNT = 5000;
+    var BG_COUNT = 1500;
+    var TOTAL = KNOT_COUNT + BG_COUNT;
+    var positions = new Float32Array(TOTAL * 3);
+    var colors = new Float32Array(TOTAL * 3);
 
-    var R = 8;
-    var r = 2.6;
-    var p = 3, q = 2;
+    var R = 7.5, r = 2.4;
 
-    for (var i = 0; i < COUNT; i++) {
+    // Torus-knot particles (cyan-blue)
+    for (var i = 0; i < KNOT_COUNT; i++) {
       var t = Math.random() * 2 * Math.PI;
-      var theta = t * q;
-      var phi = t * p;
+      var theta = t * 2;
+      var phi = t * 3;
       var cx = (R + r * Math.cos(phi)) * Math.cos(theta);
       var cy = (R + r * Math.cos(phi)) * Math.sin(theta);
       var cz = r * Math.sin(phi);
-      var n = 0.5 + Math.random() * 1.2;
+      var n = 0.4 + Math.random() * 1.0;
       positions[i * 3] = cx + (Math.random() - 0.5) * n;
       positions[i * 3 + 1] = cy + (Math.random() - 0.5) * n;
       positions[i * 3 + 2] = cz + (Math.random() - 0.5) * n;
 
       var mix = Math.random();
-      colors[i * 3] = 0.07 + 0.14 * mix;
-      colors[i * 3 + 1] = 0.84 - 0.35 * mix;
-      colors[i * 3 + 2] = 0.91 + 0.09 * mix;
+      colors[i * 3] = 0.05 + 0.12 * mix;       // R: 0.05-0.17
+      colors[i * 3 + 1] = 0.78 + 0.22 * (1 - mix); // G: 0.78-1.0
+      colors[i * 3 + 2] = 0.88 + 0.12 * mix;      // B: 0.88-1.0
+    }
+
+    // Ambient background particles (dimmer, scattered)
+    for (var j = 0; j < BG_COUNT; j++) {
+      var idx = (KNOT_COUNT + j) * 3;
+      var radius = 5 + Math.random() * 18;
+      var theta2 = Math.random() * 2 * Math.PI;
+      var phi2 = Math.acos(2 * Math.random() - 1);
+      positions[idx] = radius * Math.sin(phi2) * Math.cos(theta2);
+      positions[idx + 1] = radius * Math.sin(phi2) * Math.sin(theta2);
+      positions[idx + 2] = radius * Math.cos(phi2);
+
+      var dim = 0.15 + Math.random() * 0.35;
+      colors[idx] = 0.04 * dim;
+      colors[idx + 1] = 0.50 * dim;
+      colors[idx + 2] = 0.70 * dim;
     }
 
     var geom = new THREE.BufferGeometry();
@@ -119,10 +128,10 @@ document.addEventListener('DOMContentLoaded', function () {
     geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     var mat = new THREE.PointsMaterial({
-      size: 0.11,
+      size: 0.28,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.95,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
       sizeAttenuation: true
@@ -135,35 +144,34 @@ document.addEventListener('DOMContentLoaded', function () {
     var curX = 0, curY = 0;
 
     function onMove(e) {
-      var rect = hero.getBoundingClientRect();
-      mouseX = (e.clientX - rect.left) / rect.width * 2 - 1;
-      mouseY = (e.clientY - rect.top) / rect.height * 2 - 1;
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
     }
-    wrap.addEventListener('mousemove', onMove);
+    canvas.addEventListener('mousemove', onMove);
 
     function animate() {
       requestAnimationFrame(animate);
-      curX += (mouseX - curX) * 0.04;
-      curY += (mouseY - curY) * 0.04;
-      pts.rotation.x += 0.0006 + curY * 0.002;
-      pts.rotation.y += 0.0012 + curX * 0.002;
+      curX += (mouseX - curX) * 0.03;
+      curY += (mouseY - curY) * 0.03;
+      pts.rotation.x += 0.0004 + curY * 0.0025;
+      pts.rotation.y += 0.0008 + curX * 0.0025;
       renderer.render(scene, camera);
     }
     animate();
 
     function resize() {
-      var nw = hero.clientWidth;
-      var nh = hero.clientHeight;
+      var nw = window.innerWidth;
+      var nh = window.innerHeight;
+      if (nw === 0 || nh === 0) return;
       camera.aspect = nw / nh;
       camera.updateProjectionMatrix();
       renderer.setSize(nw, nh);
     }
     window.addEventListener('resize', resize);
-    setTimeout(resize, 200);
+    setTimeout(resize, 300);
 
-    // Clean observers for Three.js resize — avoid duplicate watching
-    var ro = new ResizeObserver(function () { resize(); });
-    ro.observe(hero);
+    // Log success for debugging
+    console.log('TMH WebGL: ' + TOTAL + ' particles initialized');
   })();
 
   // ============================================================
@@ -801,7 +809,7 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 17. SMOOTH SCROLL FOR ANCHOR LINKS (with Lenis)
+  // 17. SMOOTH SCROLL FOR ANCHOR LINKS
   // ============================================================
   ;(function () {
     document.querySelectorAll('a[href^="#"]').forEach(function (a) {
