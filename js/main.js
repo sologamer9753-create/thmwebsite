@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
       defaults: { ease: EASE, duration: DURATION }
     });
 
-    // 1a. Background glow fades in
-    tl.fromTo('.hero-bg', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0);
+    // 1a. Glow fades in
+    tl.fromTo('.hero-glow', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0);
 
     // 1b. Badge slides down
     tl.fromTo('.hero-badge', { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.5 }, 0.15);
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
     tl.fromTo('.hero p', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.15');
 
     // 1e. CTA buttons scale in
-    tl.fromTo('.hero-actions .btn', {
+    tl.fromTo('.hero-actions a', {
       opacity: 0, scale: 0.92
     }, {
       opacity: 1, scale: 1,
@@ -93,17 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
       stagger: 0.1,
       ease: EASE_SPRING
     }, '-=0.25');
-
-    // 1f. Hero visual (ring + dots) fades in
-    tl.fromTo('.hero-visual', { opacity: 0, scale: 0.88 }, { opacity: 1, scale: 1, duration: 0.9 }, '-=0.4');
-
-    // 1g. Floating dots drift in
-    tl.fromTo('.hero-dot', { opacity: 0, scale: 0 }, {
-      opacity: 1, scale: 1,
-      duration: 0.5,
-      stagger: 0.12,
-      ease: EASE_SPRING
-    }, '-=0.3');
   })();
 
   // ============================================================
@@ -290,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Hero visuals, map, decorative blocks, and data-reveal="float"
     // GPU-safe: only transform and opacity
-    document.querySelectorAll('.hero-visual, .contact-map, [data-reveal="float"]').forEach(function (el) {
+    document.querySelectorAll('.contact-map, [data-reveal="float"]').forEach(function (el) {
       gsap.fromTo(el, {
         opacity: 0,
         y: 80,
@@ -377,19 +366,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    // Hero shapes parallax
-    document.querySelectorAll('.hero-shape-1, .hero-shape-2, .hero-shape-3').forEach(function (el) {
-      gsap.to(el, {
-        y: function () { return window.innerHeight * 0.12; },
-        ease: 'none',
-        scrollTrigger: {
-          trigger: el.closest('.hero') || document.body,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.2
-        }
-      });
-    });
   })();
 
   // ============================================================
