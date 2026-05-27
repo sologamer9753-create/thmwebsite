@@ -128,6 +128,8 @@ h4 { font-size: 1.15rem; }
 .hover-device .nav-links a:hover { color: var(--fg); }
 .hover-device .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
 .nav-cta { margin-left: 8px; }
+.nav-links .btn-primary.nav-cta { color: #07111F !important; }
+.hover-device .nav-links .btn-primary.nav-cta:hover { color: #07111F !important; }
 /* Dark hero bg: nav links are white at top, revert to light on scroll */
 .hero-dark-bg .nav:not(.nav-scrolled) .nav-links a,
 .hero-dark-bg .nav:not(.nav-scrolled) .nav-logo-text { color: rgba(255,255,255,0.7); }
@@ -168,8 +170,10 @@ h4 { font-size: 1.15rem; }
   .nav-links.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
   .nav-toggle { display: flex; }
   .nav-cta { display: none; }
-  .nav-links .nav-cta { display: inline-flex; margin-left: 0; }
-}
+    .nav-links .nav-cta { display: inline-flex; margin-left: 0; }
+    .nav-links .btn-primary.nav-cta { color: #07111F !important; }
+    .hover-device .nav-links .btn-primary.nav-cta:hover { color: #07111F !important; }
+  }
 
 /* ---- Buttons ---- */
 .btn {
