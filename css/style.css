@@ -779,12 +779,16 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 
-/* ---- Base reveal (handled by GSAP now) ---- */
-.reveal { opacity: 0; transform: translateY(40px); will-change: transform, opacity; }
-.reveal-spring { opacity: 0; transform: translateY(50px) scale(0.97); will-change: transform, opacity; }
-.reveal-scale { opacity: 0; transform: scale(0.92); will-change: transform, opacity; }
-.reveal-left { opacity: 0; transform: translateX(-60px); will-change: transform, opacity; }
-.reveal-right { opacity: 0; transform: translateX(60px); will-change: transform, opacity; }
+/* ---- Base reveal (animated by GSAP; scoped to .gsap-active so
+       content is visible by default and only hidden when GSAP is
+       ready to animate — prevents invisible content on mobile if
+       GSAP fails to load or is slow) ---- */
+.reveal { will-change: transform, opacity; }
+html.gsap-active .reveal { opacity: 0; transform: translateY(40px); }
+html.gsap-active .reveal-spring { opacity: 0; transform: translateY(50px) scale(0.97); }
+html.gsap-active .reveal-scale { opacity: 0; transform: scale(0.92); }
+html.gsap-active .reveal-left { opacity: 0; transform: translateX(-60px); }
+html.gsap-active .reveal-right { opacity: 0; transform: translateX(60px); }
 
 /* ---- Hero word-by-word entry ---- */
 .hero-word {
@@ -799,7 +803,7 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 /* ---- Card stagger entrance base ---- */
-.stagger-item {
+html.gsap-active .stagger-item {
   opacity: 0; transform: translateY(40px);
 }
 
@@ -860,7 +864,13 @@ html.lenis, html.lenis body { height: auto; }
 @media (prefers-reduced-motion) {
   .scroll-progress { display: none; }
   .reveal, .reveal-spring, .reveal-scale, .reveal-left, .reveal-right,
-  .stagger-item, .split-word, .hero-word { opacity: 1; transform: none; }
+  .stagger-item, .split-word, .hero-word,
+  html.gsap-active .reveal, html.gsap-active .reveal-spring,
+  html.gsap-active .reveal-scale, html.gsap-active .reveal-left,
+  html.gsap-active .reveal-right, html.gsap-active .stagger-item,
+  html.gsap-active .gsap-hidden, html.gsap-active .gsap-hidden-left,
+  html.gsap-active .gsap-hidden-right, html.gsap-active .gsap-hidden-scale
+  { opacity: 1; transform: none; }
   .marquee { animation: none; }
   .card:hover, .service-card:hover, .feature-card:hover,
   .tilt-card:hover { transform: none !important; }
@@ -1331,26 +1341,14 @@ html.lenis, html.lenis body { height: auto; }
 /* ============================================================
    SECTION 3: GSAP fade-lift animation base
    ============================================================ */
-.gsap-hidden {
-  opacity: 0;
-  transform: translateY(50px);
-  will-change: transform, opacity;
-}
-.gsap-hidden-left {
-  opacity: 0;
-  transform: translateX(-40px);
-  will-change: transform, opacity;
-}
-.gsap-hidden-right {
-  opacity: 0;
-  transform: translateX(40px);
-  will-change: transform, opacity;
-}
-.gsap-hidden-scale {
-  opacity: 0;
-  transform: scale(0.92);
-  will-change: transform, opacity;
-}
+.gsap-hidden { will-change: transform, opacity; }
+html.gsap-active .gsap-hidden { opacity: 0; transform: translateY(50px); }
+.gsap-hidden-left { will-change: transform, opacity; }
+html.gsap-active .gsap-hidden-left { opacity: 0; transform: translateX(-40px); }
+.gsap-hidden-right { will-change: transform, opacity; }
+html.gsap-active .gsap-hidden-right { opacity: 0; transform: translateX(40px); }
+.gsap-hidden-scale { will-change: transform, opacity; }
+html.gsap-active .gsap-hidden-scale { opacity: 0; transform: scale(0.92); }
 
 /* ============================================================
    SECTION 4: Reveal archetypes — Framer Motion–style

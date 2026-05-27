@@ -17,6 +17,24 @@ document.addEventListener('DOMContentLoaded', function () {
   var isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var hasGSAP = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
+  if (hasGSAP) document.documentElement.classList.add('gsap-active');
+  // Safety timeout: if gsap-active elements are still invisible after 3s,
+  // remove the class so CSS hidden rules no longer apply. This prevents
+  // permanent invisibility when ScrollTrigger fails to fire on mobile.
+  setTimeout(function () {
+    if (document.documentElement.classList.contains('gsap-active')) {
+      var hiddenCount = document.querySelectorAll('.reveal, .gsap-hidden, .stagger-item').length;
+      var visibleCount = 0;
+      document.querySelectorAll('.reveal, .gsap-hidden, .stagger-item').forEach(function (el) {
+        var style = window.getComputedStyle(el);
+        if (parseFloat(style.opacity) > 0.1) visibleCount++;
+      });
+      // If fewer than 20% of hidden elements have become visible, force-show everything
+      if (hiddenCount > 0 && visibleCount / hiddenCount < 0.2) {
+        document.documentElement.classList.remove('gsap-active');
+      }
+    }
+  }, 3000);
   var EASE = 'power4.out';
   var EASE_SPRING = 'back.out(1.4)';
   var DURATION = 0.9;
@@ -98,24 +116,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // ============================================================
   // 2. SCROLL REVEALS — Framer Motion–style sections with weight
   // ============================================================
+  // NOTE: Section-level fromTo was REMOVED because it set ALL sections
+  // to opacity:0 before ScrollTrigger fired. On mobile, this masked
+  // child .reveal animations (parent_opacity × child_opacity = 0),
+  // making every page except the footer invisible. Child .reveal
+  // and [data-gsap="fade-lift"] animations handle entrances instead.
   ;(function () {
     if (isReduced || !hasGSAP) return;
-
-    // Major sections — enhanced y distance, longer duration
-    var sections = document.querySelectorAll('.section, .page-hero, .cta-banner, .marquee-wrap, .dark-section');
-    sections.forEach(function (el) {
-      gsap.fromTo(el, { opacity: 0, y: 60 }, {
-        opacity: 1, y: 0,
-        duration: 1.0,
-        ease: EASE,
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 88%',
-          toggleActions: 'play none none none',
-          once: true
-        }
-      });
-    });
 
     // Data-attribute fade-lift (backward compat with existing HTML)
     document.querySelectorAll('[data-gsap="fade-lift"]').forEach(function (el) {
@@ -128,6 +135,56 @@ document.addEventListener('DOMContentLoaded', function () {
         scrollTrigger: {
           trigger: el,
           start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      });
+    });
+
+    // Reveal classes — text, labels, headings, timeline items, etc.
+    // Each .reveal element gets its own ScrollTrigger with variant-
+    // specific from state. This prevents the "invisible content" bug
+    // where .reveal { opacity: 0 } in CSS had no GSAP animation to
+    // undo it — content stayed invisible on every page.
+    var revealClasses = '.reveal, .reveal-spring, .reveal-scale, .reveal-left, .reveal-right';
+    document.querySelectorAll(revealClasses).forEach(function (el) {
+      var from;
+      if (el.classList.contains('reveal-spring')) from = { opacity: 0, y: 50, scale: 0.97 };
+      else if (el.classList.contains('reveal-scale')) from = { opacity: 0, scale: 0.92 };
+      else if (el.classList.contains('reveal-left')) from = { opacity: 0, x: -60 };
+      else if (el.classList.contains('reveal-right')) from = { opacity: 0, x: 60 };
+      else from = { opacity: 0, y: 40 };
+
+      var delay = parseFloat(el.getAttribute('data-delay')) || 0;
+      gsap.fromTo(el, from, {
+        opacity: 1, y: 0, x: 0, scale: 1,
+        duration: 0.9,
+        delay: delay,
+        ease: EASE,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      });
+    });
+
+    // GSAP-hidden classes — same pattern for inline fade-lift elements
+    document.querySelectorAll('.gsap-hidden, .gsap-hidden-left, .gsap-hidden-right, .gsap-hidden-scale').forEach(function (el) {
+      var from;
+      if (el.classList.contains('gsap-hidden-left')) from = { opacity: 0, x: -40 };
+      else if (el.classList.contains('gsap-hidden-right')) from = { opacity: 0, x: 40 };
+      else if (el.classList.contains('gsap-hidden-scale')) from = { opacity: 0, scale: 0.92 };
+      else from = { opacity: 0, y: 50 };
+
+      gsap.fromTo(el, from, {
+        opacity: 1, y: 0, x: 0, scale: 1,
+        duration: 0.9,
+        ease: EASE,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
           toggleActions: 'play none none none',
           once: true
         }
