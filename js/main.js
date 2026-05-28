@@ -764,14 +764,39 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 14. NAV SCROLL BEHAVIOR
+  // 14. NAV SCROLL BEHAVIOR — smart hide/reveal + scrolled class
   // ============================================================
   ;(function () {
     var nav = document.querySelector('.nav');
     if (!nav) return;
+    var lastScrollY = 0;
+    var threshold = 80;
+    var navHeight = nav.offsetHeight || 72;
 
     function updateNav() {
-      nav.classList.toggle('nav-scrolled', window.scrollY > 50);
+      var currentY = window.scrollY;
+      var isMobileOpen = document.querySelector('.nav-links.open');
+
+      // Toggle scrolled class for background/border styles
+      nav.classList.toggle('nav-scrolled', currentY > 50);
+
+      // Smart hide/reveal — skip when mobile menu is open
+      if (!isMobileOpen) {
+        if (currentY > threshold) {
+          if (currentY > lastScrollY) {
+            nav.style.transform = 'translateY(-100%)';
+          } else {
+            nav.style.transform = 'translateY(0)';
+          }
+        } else {
+          nav.style.transform = 'translateY(0)';
+        }
+      } else {
+        // Always show nav when mobile menu is open
+        nav.style.transform = 'translateY(0)';
+      }
+
+      lastScrollY = currentY;
     }
 
     window.addEventListener('scroll', updateNav, { passive: true });
@@ -784,10 +809,14 @@ document.addEventListener('DOMContentLoaded', function () {
   ;(function () {
     var toggle = document.querySelector('.nav-toggle');
     var navLinks = document.querySelector('.nav-links');
+    var nav = document.querySelector('.nav');
     if (!toggle || !navLinks) return;
 
     toggle.addEventListener('click', function () {
+      var opening = !navLinks.classList.contains('open');
       navLinks.classList.toggle('open');
+      // When opening mobile menu, ensure nav is visible
+      if (opening && nav) nav.style.transform = 'translateY(0)';
     });
 
     navLinks.querySelectorAll('a').forEach(function (a) {
