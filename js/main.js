@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 1A. THREE.JS — WebGL particle torus-knot (hero background)
+  // 1A. THREE.JS — WebGL dense Torus Knot particles (hero bg)
   // ============================================================
   ;(function () {
     if (isReduced || typeof THREE === 'undefined') return;
@@ -81,61 +81,29 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     renderer.setSize(w, h);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0); // transparent background
+    renderer.setClearColor(0x000000, 0);
     canvas.appendChild(renderer.domElement);
 
-    var KNOT_COUNT = 5000;
-    var BG_COUNT = 1500;
-    var TOTAL = KNOT_COUNT + BG_COUNT;
-    var positions = new Float32Array(TOTAL * 3);
-    var colors = new Float32Array(TOTAL * 3);
+    // Sample vertices from a dense TorusKnotGeometry
+    var knotGeom = new THREE.TorusKnotGeometry(6, 2, 200, 24);
+    var src = knotGeom.attributes.position.array;
+    var srcCount = src.length / 3;
+    var positions = new Float32Array(srcCount * 3);
 
-    var R = 7.5, r = 2.4;
-
-    // Torus-knot particles (cyan-blue)
-    for (var i = 0; i < KNOT_COUNT; i++) {
-      var t = Math.random() * 2 * Math.PI;
-      var theta = t * 2;
-      var phi = t * 3;
-      var cx = (R + r * Math.cos(phi)) * Math.cos(theta);
-      var cy = (R + r * Math.cos(phi)) * Math.sin(theta);
-      var cz = r * Math.sin(phi);
-      var n = 0.4 + Math.random() * 1.0;
-      positions[i * 3] = cx + (Math.random() - 0.5) * n;
-      positions[i * 3 + 1] = cy + (Math.random() - 0.5) * n;
-      positions[i * 3 + 2] = cz + (Math.random() - 0.5) * n;
-
-      var mix = Math.random();
-      colors[i * 3] = 0.05 + 0.12 * mix;       // R: 0.05-0.17
-      colors[i * 3 + 1] = 0.78 + 0.22 * (1 - mix); // G: 0.78-1.0
-      colors[i * 3 + 2] = 0.88 + 0.12 * mix;      // B: 0.88-1.0
-    }
-
-    // Ambient background particles (dimmer, scattered)
-    for (var j = 0; j < BG_COUNT; j++) {
-      var idx = (KNOT_COUNT + j) * 3;
-      var radius = 5 + Math.random() * 18;
-      var theta2 = Math.random() * 2 * Math.PI;
-      var phi2 = Math.acos(2 * Math.random() - 1);
-      positions[idx] = radius * Math.sin(phi2) * Math.cos(theta2);
-      positions[idx + 1] = radius * Math.sin(phi2) * Math.sin(theta2);
-      positions[idx + 2] = radius * Math.cos(phi2);
-
-      var dim = 0.15 + Math.random() * 0.35;
-      colors[idx] = 0.04 * dim;
-      colors[idx + 1] = 0.50 * dim;
-      colors[idx + 2] = 0.70 * dim;
+    for (var i = 0; i < srcCount; i++) {
+      positions[i * 3]     = src[i * 3]     + (Math.random() - 0.5) * 0.6;
+      positions[i * 3 + 1] = src[i * 3 + 1] + (Math.random() - 0.5) * 0.6;
+      positions[i * 3 + 2] = src[i * 3 + 2] + (Math.random() - 0.5) * 0.6;
     }
 
     var geom = new THREE.BufferGeometry();
     geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     var mat = new THREE.PointsMaterial({
-      size: 0.28,
-      vertexColors: true,
+      size: 0.15,
+      color: 0x12D6E7,
       transparent: true,
-      opacity: 0.95,
+      opacity: 0.9,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
       sizeAttenuation: true
@@ -157,8 +125,8 @@ document.addEventListener('DOMContentLoaded', function () {
       requestAnimationFrame(animate);
       curX += (mouseX - curX) * 0.03;
       curY += (mouseY - curY) * 0.03;
-      pts.rotation.x += 0.0004 + curY * 0.0025;
-      pts.rotation.y += 0.0008 + curX * 0.0025;
+      pts.rotation.x += 0.001 + curY * 0.0025;
+      pts.rotation.y += 0.001 + curX * 0.0025;
       renderer.render(scene, camera);
     }
     animate();
@@ -174,8 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', resize);
     setTimeout(resize, 300);
 
-    // Log success for debugging
-    console.log('TMH WebGL: ' + TOTAL + ' particles initialized');
+    console.log('TMH WebGL: ' + srcCount + ' torus knot particles');
   })();
 
   // ============================================================
@@ -764,42 +731,39 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 14. NAV SCROLL BEHAVIOR — smart hide/reveal + scrolled class
+  // 14. NAV SCROLL BEHAVIOR — rAF-optimized hide/reveal
   // ============================================================
   ;(function () {
     var nav = document.querySelector('.nav');
     if (!nav) return;
     var lastScrollY = 0;
-    var threshold = 80;
-    var navHeight = nav.offsetHeight || 72;
+    var threshold = 100;
+    var ticking = false;
 
     function updateNav() {
       var currentY = window.scrollY;
       var isMobileOpen = document.querySelector('.nav-links.open');
 
-      // Toggle scrolled class for background/border styles
-      nav.classList.toggle('nav-scrolled', currentY > 50);
-
-      // Smart hide/reveal — skip when mobile menu is open
-      if (!isMobileOpen) {
-        if (currentY > threshold) {
-          if (currentY > lastScrollY) {
-            nav.style.transform = 'translateY(-100%)';
-          } else {
-            nav.style.transform = 'translateY(0)';
-          }
-        } else {
-          nav.style.transform = 'translateY(0)';
-        }
+      if (isMobileOpen) {
+        nav.style.transform = 'translateY(0)';
+      } else if (currentY > threshold && currentY > lastScrollY) {
+        nav.style.transform = 'translateY(-100%)';
       } else {
-        // Always show nav when mobile menu is open
         nav.style.transform = 'translateY(0)';
       }
 
       lastScrollY = currentY;
+      ticking = false;
     }
 
-    window.addEventListener('scroll', updateNav, { passive: true });
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(updateNav);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
     updateNav();
   })();
 
