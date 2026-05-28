@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TMH — React Navbar Component</title>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tmh: { bg: '#000000', surface: '#0a0a0a', elevated: '#111111', muted: '#d1d1d1', 'muted-dim': '#888888', accent: '#ff2b2b', 'accent-dark': '#b30000' }
+          },
+          fontFamily: { display: ['Space Grotesk', 'system-ui', 'sans-serif'], body: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; font-family: 'Inter', system-ui, sans-serif; color: #fff; }
+    .hero-bg { position: absolute; inset: 0; overflow: hidden; }
+    .hero-gradient { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,43,43,0.12), transparent 70%), radial-gradient(ellipse 60% 50% at 70% 60%, rgba(179,0,0,0.08), transparent 60%); }
+    .hero-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; }
+    .hero-orb-1 { width: 500px; height: 500px; background: rgba(255,43,43,0.08); top: -120px; right: -80px; }
+    .hero-orb-2 { width: 350px; height: 350px; background: rgba(179,0,0,0.06); bottom: -60px; left: -40px; }
+    .demo-content { padding: 120px 24px 80px; max-width: 800px; margin: 0 auto; }
+    .demo-content h2 { font-family: 'Space Grotesk', sans-serif; font-size: 42px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 20px; }
+    .demo-content p { color: #d1d1d1; font-size: 18px; line-height: 1.7; margin-bottom: 40px; }
+    .demo-section { padding: 60px 0; border-top: 1px solid rgba(255,255,255,0.04); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useCallback, useRef } = React;
+
+    /* ===========================================================
+       TMH Navbar — React + Tailwind glassmorphism scroll effect
+       =========================================================== */
+    const NAV_LINKS = [
+      { href: 'index.html', label: 'Home' },
+      { href: 'about.html', label: 'About' },
+      { href: 'services.html', label: 'Services' },
+      { href: 'clients.html', label: 'Clients' },
+      { href: 'training.html', label: 'Training' },
+      { href: 'contact.html', label: 'Contact' },
+    ];
+
+    function Navbar() {
+      const [scrolled, setScrolled] = useState(false);
+      const [menuOpen, setMenuOpen] = useState(false);
+      const prevScrollRef = useRef(0);
+
+      useEffect(() => {
+        function onScroll() {
+          const y = window.scrollY;
+          prevScrollRef.current = y;
+          setScrolled(y > 50);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
+
+      // Close mobile menu on outside click
+      useEffect(() => {
+        if (!menuOpen) return;
+        function onClick(e) {
+          if (!e.target.closest('[data-nav-root]')) setMenuOpen(false);
+        }
+        document.addEventListener('click', onClick);
+        return () => document.removeEventListener('click', onClick);
+      }, [menuOpen]);
+
+      const closeMenu = useCallback(() => setMenuOpen(false), []);
+
+      return (
+        <nav
+          data-nav-root
+          className={`fixed top-0 left-0 right-0 z-50 h-20 flex items-center px-6 transition-all duration-300 ease-out ${
+            scrolled
+              ? 'bg-[rgba(18,0,0,0.85)] backdrop-blur-lg border-b border-[rgba(255,43,43,0.08)] shadow-[0_4px_30px_rgba(0,0,0,0.5),0_0_40px_rgba(255,43,43,0.06)]'
+              : 'bg-transparent'
+          }`}
+        >
+          <div className="w-full max-w-7xl mx-auto flex items-center justify-between">
+            {/* Logo */}
+            <a
+              href="index.html"
+              className="font-display text-[22px] font-bold text-white no-underline tracking-[-0.02em] flex items-center gap-2 opacity-100 transition-none"
+            >
+              TMH<span className="text-[#ff2b2b]">.</span>
+            </a>
+
+            {/* Desktop links */}
+            <ul className="hidden md:flex items-center gap-2 list-none">
+              {NAV_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className={`px-4 py-2 text-sm font-medium tracking-[0.02em] rounded-lg transition-all duration-300 no-underline ${
+                      (location.pathname.split('/').pop() || 'index.html') === link.href
+                        ? 'text-white bg-white/5'
+                        : 'text-[#d1d1d1] hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+              <li className="ml-4">
+                <a
+                  href="contact.html"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#ff2b2b] text-white text-sm font-semibold rounded-lg no-underline transition-all duration-300 hover:bg-[#e02424] shadow-[0_4px_20px_rgba(255,43,43,0.3)] hover:shadow-[0_6px_30px_rgba(255,43,43,0.4)]"
+                >
+                  Let's Talk
+                </a>
+              </li>
+            </ul>
+
+            {/* Mobile toggle */}
+            <button
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label="Toggle menu"
+              aria-expanded={menuOpen}
+              className="md:hidden bg-none border-none text-white text-[28px] cursor-pointer p-2"
+            >
+              {menuOpen ? '✕' : '☰'}
+            </button>
+          </div>
+
+          {/* Mobile menu */}
+          <div
+            className={`fixed left-0 right-0 top-20 bg-[rgba(18,0,0,0.95)] backdrop-blur-lg border-b border-[rgba(255,43,43,0.08)] flex flex-col p-6 gap-2 transition-all duration-300 md:hidden ${
+              menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+            }`}
+          >
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={closeMenu}
+                className={`w-full px-4 py-3.5 text-base font-medium rounded-lg no-underline transition-all duration-200 ${
+                  (location.pathname.split('/').pop() || 'index.html') === link.href
+                    ? 'text-white bg-white/5'
+                    : 'text-[#d1d1d1] hover:text-white hover:bg-white/5'
+                }`}
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="contact.html"
+              onClick={closeMenu}
+              className="w-full py-3.5 bg-[#ff2b2b] text-white text-base font-semibold rounded-lg text-center no-underline mt-2 shadow-[0_4px_20px_rgba(255,43,43,0.3)]"
+            >
+              Let's Talk
+            </a>
+          </div>
+        </nav>
+      );
+    }
+
+    /* ===========================================================
+       Demo page content
+       =========================================================== */
+    function DemoContent() {
+      return (
+        <div>
+          {/* Hero section to demonstrate transparency */}
+          <section className="relative min-h-screen flex items-center overflow-hidden">
+            <div className="hero-bg">
+              <div className="hero-gradient"></div>
+              <div className="hero-orb hero-orb-1"></div>
+              <div className="hero-orb hero-orb-2"></div>
+            </div>
+            <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+              <span className="font-display text-sm font-medium uppercase tracking-[0.15em] text-[#ff2b2b] mb-3 block">The Millennial Hub</span>
+              <h1 className="font-display text-[clamp(48px,8vw,96px)] font-bold leading-[1.05] tracking-[-0.03em] max-w-4xl">
+                Building Powerful Digital Presence for Modern Brands
+              </h1>
+              <p className="text-[#d1d1d1] text-[clamp(16px,1.4vw,20px)] max-w-2xl mt-6 leading-relaxed">
+                TMH helps brands grow through digital marketing, content creation, social media strategy, SEO, advertising, and behavioural training programs.
+              </p>
+              <div className="flex flex-wrap gap-4 mt-10">
+                <a href="contact.html" className="inline-flex items-center gap-2 px-8 py-4 bg-[#ff2b2b] text-white text-base font-semibold rounded-lg no-underline transition-all duration-300 hover:bg-[#e02424] shadow-[0_4px_20px_rgba(255,43,43,0.3),0_0_40px_rgba(255,43,43,0.1)]">
+                  Let's Work Together
+                </a>
+                <a href="services.html" className="inline-flex items-center gap-2 px-8 py-4 border border-white/10 text-white text-base font-semibold rounded-lg no-underline transition-all duration-300 hover:bg-white/5">
+                  Explore Services
+                </a>
+              </div>
+            </div>
+          </section>
+
+          {/* Scroll demo sections */}
+          <div className="demo-content">
+            <div className="demo-section">
+              <h2>Scroll Down to Test</h2>
+              <p>The navbar starts fully transparent. As you scroll past 50px, it transitions smoothly into a red-tinted glass state with backdrop blur, subtle red bottom border, and a soft red glow shadow.</p>
+            </div>
+
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="demo-section">
+                <h2>Section {i + 1}</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <>
+          <Navbar />
+          <DemoContent />
+        </>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

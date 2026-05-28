@@ -3,269 +3,357 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
   <title>Services — The Millennial Hub</title>
-  <meta name="description" content="Full-spectrum digital services from The Millennial Hub: digital marketing, social media, content creation, SEO, advertising, and website design." />
+  <meta name="description" content="TMH offers full-spectrum digital marketing services: strategy, social media, content creation, SEO, advertising, web design, and behavioural training." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="css/style.css" />
-  <script>if(matchMedia('(hover:hover)and(pointer:fine)').matches)document.documentElement.classList.add('hover-device')</script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0ihyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/tmh.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollSmoother.min.js" defer></script>
+  <script src="js/tmh.js" defer></script>
+  <style>
+    .service-detail-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .service-detail-list { list-style: none; }
+    .service-detail-list li {
+      padding: 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      color: var(--muted);
+    }
+    .service-detail-list li:last-child { border-bottom: none; }
+    .service-detail-list li::before {
+      content: '→';
+      color: var(--accent);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .service-tag {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 43, 43, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(255, 43, 43, 0.15);
+      margin-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+      .service-detail-inner { grid-template-columns: 1fr; gap: 24px; }
+    }
+  </style>
 </head>
 <body>
+  <div id="webgl-canvas"></div>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <nav class="nav">
+  <!-- NAVIGATION -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-          <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
-          <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
-      </a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html" class="active">Services</a>
-        <a href="clients.html">Clients</a>
-        <a href="training.html">Training</a>
-        <a href="contact.html">Contact</a>
-        <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Let's Talk</a>
-      </div>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="index.html" class="nav-logo">TMH<span>.</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html" class="active" aria-current="page">Services</a></li>
+        <li><a href="clients.html">Clients</a></li>
+        <li><a href="training.html">Training</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary btn-sm">Let's Talk</a></li>
+      </ul>
     </div>
   </nav>
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+  <main id="main-content">
 
-  <section class="page-hero" data-parallax="0.08">
-    <div id="webgl-canvas"></div>
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-content" data-reveal="fade">
+      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span>Services</div>
+      <h1 class="display-large">What We Deliver</h1>
+      <p class="body-large">Full-spectrum digital marketing services — from strategy through execution — designed to build brands that earn attention, trust, and growth.</p>
+    </div>
+  </section>
+
+  <!-- 1. DIGITAL MARKETING -->
+    <section class="section section-glass" id="digital-marketing">
     <div class="container">
-      <span class="section-label reveal">Our Services</span>
-      <h1 data-split class="reveal reveal-delay-1">Everything Your Brand Needs</h1>
-      <p class="reveal reveal-delay-2">From strategy to creative to technology — one partner, no compromises. Every service designed to drive measurable growth.</p>
+      <div class="service-detail-inner">
+        <div data-reveal="fade">
+          <span class="service-tag">Service 01</span>
+          <h2 class="display-medium">Digital Marketing</h2>
+          <p class="body-large mt-16">Strategic digital presence building and cross-platform management (Instagram, Facebook, YouTube, Google My Business, Blogs).</p>
+          <p class="body-regular mt-16">Every platform plays a specific role in your growth architecture — we design and manage a cohesive ecosystem that drives measurable results across all channels.</p>
+          <a href="contact.html" class="btn btn-primary mt-32">Start Your Campaign</a>
+        </div>
+        <div data-reveal="fade">
+          <div class="glass" style="padding:32px">
+            <h4 style="font-size:18px;margin-bottom:16px;color:var(--accent)">What's Included</h4>
+            <ul class="service-detail-list">
+              <li>Strategic digital presence planning</li>
+              <li>Instagram management & growth</li>
+              <li>Facebook page management</li>
+              <li>YouTube channel strategy & optimization</li>
+              <li>Google My Business setup & management</li>
+              <li>Blog content strategy & publishing</li>
+              <li>Performance reporting & analytics</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Services detail grid -->
-  <section class="section">
+  <hr class="section-divider" />
+
+  <!-- 2. SOCIAL MEDIA MANAGEMENT -->
+  <section class="section section-glass" id="social-media">
     <div class="container">
-      <div class="grid-2" data-gsap="stagger-grid">
-        <div class="service-card tilt-card" data-gsap="fade-lift" data-delay="0">
-          <div class="icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F4E1;</div>
-          <h3>Digital Marketing</h3>
-          <p>Strategic digital presence building and cross-platform management across Instagram, Facebook, YouTube, Google My Business, and Blogs.</p>
-          <div class="tags">
-            <span>Instagram</span><span>Facebook</span>
-            <span>YouTube</span><span>Google My Business</span>
-          </div>
+      <div class="service-detail-inner">
+        <div data-reveal="fade">
+          <span class="service-tag">Service 02</span>
+          <h2 class="display-medium">Social Media Management</h2>
+          <p class="body-large mt-16">Page management, weekly content planning, visual designs, campaign creation, video/GIF content, audience optimization, trend analysis, and top influencer engagement.</p>
+          <p class="body-regular mt-16">Every post is designed to stop the scroll. Every campaign is built on audience insight. Every metric is tied to a business outcome.</p>
+          <a href="contact.html" class="btn btn-primary mt-32">Get a Social Audit</a>
         </div>
-
-        <div class="service-card tilt-card" data-gsap="fade-lift" data-delay="0.1">
-          <div class="icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x1F4F7;</div>
-          <h3>Social Media Management</h3>
-          <p>Page management, weekly content planning, visual designs, campaign creation, video/GIF content, audience optimisation, trend analysis, and top influencer engagement.</p>
-          <div class="tags">
-            <span>Content Planning</span><span>Visual Design</span>
-            <span>Campaigns</span><span>Influencers</span>
-          </div>
-        </div>
-
-        <div class="service-card tilt-card" data-gsap="fade-lift" data-delay="0.2">
-          <div class="icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F3A8;</div>
-          <h3>Content Creation</h3>
-          <p>Over 30 posts per month, custom social designs, video production, photography, product/food shoots, offline designs (signage, posters), website creation, and Brand Book design.</p>
-          <div class="tags">
-            <span>Photography</span><span>Video Production</span>
-            <span>Offline Design</span><span>Brand Book</span>
-          </div>
-        </div>
-
-        <div class="service-card tilt-card" data-gsap="fade-lift" data-delay="0.3">
-          <div class="icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F50D;</div>
-          <h3>SEO Optimisation</h3>
-          <p>Local market research, competitor research, keyword analysis, on-page optimization, content optimization, link building strategy, and local map listing.</p>
-          <div class="tags">
-            <span>Keyword Analysis</span><span>Competitor Research</span>
-            <span>On-Page SEO</span><span>Local Listings</span>
-          </div>
-        </div>
-
-        <div class="service-card tilt-card" data-gsap="fade-lift" data-delay="0.4">
-          <div class="icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x1F4AD;</div>
-          <h3>Advertising Management</h3>
-          <p>Google Ads, Facebook Ads, Instagram Ads, event-based promotions, electronic screens, and offline advertising across Metros, Buses, Mobile, and Apartment.</p>
-          <div class="tags">
-            <span>Google Ads</span><span>Facebook Ads</span>
-            <span>Instagram Ads</span><span>Offline Media</span>
-          </div>
-        </div>
-
-        <div class="service-card tilt-card" data-gsap="fade-lift" data-delay="0.5">
-          <div class="icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F4AD;</div>
-          <h3>Leadership &amp; Behavioural Training</h3>
-          <p>Modular workshops and bootcamps focusing on emotional intelligence, mindset transformation, stress management, team effectiveness, and first-time leaders.</p>
-          <div class="tags">
-            <span>Emotional Intelligence</span><span>Mindset</span>
-            <span>Stress Management</span><span>Leadership</span>
+        <div data-reveal="fade">
+          <div class="glass" style="padding:32px">
+            <h4 style="font-size:18px;margin-bottom:16px;color:var(--accent)">What's Included</h4>
+            <ul class="service-detail-list">
+              <li>Content planning & editorial calendars</li>
+              <li>Visual design & brand asset creation</li>
+              <li>Comment management & community engagement</li>
+              <li>Campaign creation & execution</li>
+              <li>Video & GIF content planning</li>
+              <li>Analytics & performance dashboards</li>
+              <li>Audience optimization & targeting</li>
+              <li>Influencer engagement & partnership</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Behavioural Training upsell -->
-  <section class="section" style="background: rgba(7,17,31,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <hr class="section-divider" />
+
+  <!-- 3. CONTENT CREATION -->
+  <section class="section section-glass" id="content-creation">
     <div class="container">
-      <div class="grid-2" style="align-items: center;">
-        <div class="reveal">
-          <span class="section-label">Also available</span>
-          <h2>Behavioural Training<br/>for Teams</h2>
-          <p style="color: var(--muted); margin-top: 1rem; line-height: 1.7;">
-            Beyond digital, The Millennial Hub delivers corporate behavioural training programmes focused on emotional intelligence, mindset transformation, stress management, resilience, and team communication.
-          </p>
-          <a href="training.html" class="btn btn-outline mt-2">Explore Training &rarr;</a>
+      <div class="service-detail-inner">
+        <div data-reveal="fade">
+          <span class="service-tag">Service 03</span>
+          <h2 class="display-medium">Content Creation</h2>
+          <p class="body-large mt-16">Over 30 posts per month, custom social designs, video production, photography, product/food shoots, offline designs (signage, posters), website creation, and Brand Book design.</p>
+          <p class="body-regular mt-16">Every piece of content is built to serve a specific brand objective. Our creative engine runs on craft and consistency — producing at volume without sacrificing quality.</p>
+          <a href="contact.html" class="btn btn-primary mt-32">Brief the Creative Team</a>
         </div>
-        <div class="reveal reveal-delay-1" style="background: var(--surface); border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid var(--border);">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div style="padding: 0.7rem; background: rgba(18,214,231,0.04); border-radius: var(--radius-sm);">
-              <div style="color: var(--accent); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Workshops</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; Leadership</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; Communication</div>
-            </div>
-            <div style="padding: 0.7rem; background: rgba(54,124,255,0.04); border-radius: var(--radius-sm);">
-              <div style="color: var(--blue); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Audience</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; HR Teams</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; Corporates</div>
-            </div>
-            <div style="padding: 0.7rem; background: rgba(123,97,255,0.04); border-radius: var(--radius-sm);">
-              <div style="color: var(--purple); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Focus</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; EQ &amp; Mindset</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; Resilience</div>
-            </div>
-            <div style="padding: 0.7rem; background: rgba(18,214,231,0.04); border-radius: var(--radius-sm);">
-              <div style="color: var(--accent); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Delivery</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; Bootcamps</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; In-House</div>
-            </div>
+        <div data-reveal="fade">
+          <div class="glass" style="padding:32px">
+            <h4 style="font-size:18px;margin-bottom:16px;color:var(--accent)">What's Included</h4>
+            <ul class="service-detail-list">
+              <li>30+ monthly social media posts</li>
+              <li>Custom graphic designs & templates</li>
+              <li>Professional photography & product shoots</li>
+              <li>Video production & editing</li>
+              <li>Branding assets & identity systems</li>
+              <li>Posters, flyers & print collateral</li>
+              <li>Website design & development</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <hr class="section-divider" />
 
-
-  <!-- FAQ -->
-  <section class="section" style="background: rgba(7,17,31,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-    <div class="container container-narrow">
-      <div class="text-center mb-2 reveal">
-        <span class="section-label">Questions</span>
-        <h2>Frequently Asked Questions</h2>
-      </div>
-      <div class="faq-list reveal">
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">How quickly can you start?<span class="faq-arrow">&#x25BC;</span></div>
-          <div class="faq-a"><div><p>Most projects kick off within 5-7 business days of signing. We begin with a deep discovery phase to understand your brand, audience, and goals before any creative work starts. For urgent timelines, we can prioritise and start within 48 hours.</p></div></div>
+  <!-- 4. SEO OPTIMIZATION -->
+  <section class="section section-glass" id="seo">
+    <div class="container">
+      <div class="service-detail-inner">
+        <div data-reveal="fade">
+          <span class="service-tag">Service 04</span>
+          <h2 class="display-medium">SEO Optimisation</h2>
+          <p class="body-large mt-16">Local market research, competitor research, keyword analysis, on-page optimization, content optimization, link building strategy, and local map listing.</p>
+          <p class="body-regular mt-16">Our SEO practice is rooted in data, not guesswork. Keyword analysis, content clusters, on-page optimization, and a strategic link-building roadmap that earns algorithmic trust.</p>
+          <a href="contact.html" class="btn btn-primary mt-32">Request an SEO Audit</a>
         </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Do you work with startups?<span class="faq-arrow">&#x25BC;</span></div>
-          <div class="faq-a"><div><p>Absolutely. We've helped dozens of early-stage companies build their digital presence from the ground up — often with lean budgets and ambitious timelines. Our modular approach means we tailor scope to your stage.</p></div></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Can I switch plans later?<span class="faq-arrow">&#x25BC;</span></div>
-          <div class="faq-a"><div><p>Yes — all engagements are flexible with 30-day notice. Scale up, scale down, or pivot service focus as your brand evolves. We'll work with you to adjust scope and deliverables so the transition is seamless and nothing drops.</p></div></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">What industries do you specialise in?<span class="faq-arrow">&#x25BC;</span></div>
-          <div class="faq-a"><div><p>We work across food &amp; beverage, hospitality, lifestyle &amp; beauty, retail, fitness, health &amp; wellness, technology, and professional services. Our team adapts to your industry's specific audience, channels, and compliance requirements.</p></div></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Do you offer training independently of marketing?<span class="faq-arrow">&#x25BC;</span></div>
-          <div class="faq-a"><div><p>Yes — our behavioural training division operates independently. You can book workshops, bootcamps, or multi-week programmes without any marketing engagement. Visit our Training page for the full programme catalogue.</p></div></div>
+        <div data-reveal="fade">
+          <div class="glass" style="padding:32px">
+            <h4 style="font-size:18px;margin-bottom:16px;color:var(--accent)">What's Included</h4>
+            <ul class="service-detail-list">
+              <li>Keyword research & opportunity mapping</li>
+              <li>Competitor analysis & gap identification</li>
+              <li>On-page optimization & technical SEO</li>
+              <li>Local SEO & Google Business optimization</li>
+              <li>Content optimization & topic clusters</li>
+              <li>Link building strategy & outreach</li>
+              <li>Monthly performance reporting</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA — Aurora Glass -->
+  <hr class="section-divider" />
+
+  <!-- 5. ADVERTISING MANAGEMENT -->
+  <section class="section section-glass" id="advertising">
+    <div class="container">
+      <div class="service-detail-inner">
+        <div data-reveal="fade">
+          <span class="service-tag">Service 05</span>
+          <h2 class="display-medium">Advertising Management</h2>
+          <p class="body-large mt-16">Google Ads, Facebook Ads, Instagram Ads, event-based promotions, electronic screens, and offline advertising (Metros, Buses, Mobile, Apartment).</p>
+          <p class="body-regular mt-16">From precision-targeted Google and social campaigns to high-impact OOH advertising across metro, bus, mobile, and apartment networks — we cover the full media mix.</p>
+          <a href="contact.html" class="btn btn-primary mt-32">Plan Your Media Mix</a>
+        </div>
+        <div data-reveal="fade">
+          <div class="glass" style="padding:32px">
+            <h4 style="font-size:18px;margin-bottom:16px;color:var(--accent)">What's Included</h4>
+            <ul class="service-detail-list">
+              <li>Google Ads strategy & management</li>
+              <li>Facebook & Instagram Ads</li>
+              <li>Campaign management & optimization</li>
+              <li>Metro & bus advertising</li>
+              <li>Mobile advertising solutions</li>
+              <li>Apartment & residential advertising</li>
+              <li>ROI tracking & reporting</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" data-reveal="wipe" />
+
+  <!-- 6. LEADERSHIP & BEHAVIOURAL TRAINING -->
+  <section class="section section-glass" id="behavioural-training">
+    <div class="container">
+      <div class="service-detail-inner">
+        <div data-reveal="fade">
+          <span class="service-tag">Service 06</span>
+          <h2 class="display-medium">Leadership & Behavioural Training</h2>
+          <p class="body-large mt-16">Modular workshops and bootcamps focusing on emotional intelligence, mindset transformation, stress management, team effectiveness, and first-time leaders.</p>
+          <p class="body-regular mt-16">Beyond marketing — we design and deliver high-impact behavioural training programs that transform individuals and organizations from the inside out.</p>
+          <a href="training.html" class="btn btn-primary mt-32">Explore Programs</a>
+        </div>
+        <div data-reveal="fade">
+          <div class="glass" style="padding:32px">
+            <h4 style="font-size:18px;margin-bottom:16px;color:var(--accent)">What's Included</h4>
+            <ul class="service-detail-list">
+              <li>Emotional intelligence workshops</li>
+              <li>Mindset transformation programs</li>
+              <li>Stress management & resilience</li>
+              <li>Team effectiveness & communication</li>
+              <li>First-time leadership bootcamps</li>
+              <li>Customized corporate programs</li>
+              <li>Practical learning & application</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
   <section class="cta-section">
     <div class="cta-aurora"></div>
-    <div class="container container-narrow">
-      <div class="cta-banner">
-        <h2>Need a Custom Package?</h2>
-        <p>Every brand is different. Tell us what you need and we'll build a tailored service plan that fits your goals and budget.</p>
-        <a href="contact.html" class="btn-cta">Discuss Your Project</a>
+    <div class="container">
+      <div class="cta-glass" data-reveal="float">
+        <div class="cta-content">
+          <h2 class="display-medium">Not Sure Where to Start?</h2>
+          <p class="body-large">Tell us about your brand and goals — we'll recommend the right mix of services to get you moving.</p>
+          <div class="cta-actions">
+            <a href="contact.html" class="btn-cta">Book a Free Consultation</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- FOOTER -->
+  </main>
   <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="nav-logo" style="margin-bottom: 0.5rem;">
-            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
-              <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
-              <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
-          </a>
-          <p>The Millennial Hub delivers end-to-end digital marketing, content creation, advertising, and behavioural training — the A to Z of digital growth.</p>
-          <div class="footer-social">
-            <a href="#" aria-label="Instagram">IG</a>
-            <a href="#" aria-label="Facebook">FB</a>
-            <a href="#" aria-label="YouTube">YT</a>
-            <a href="#" aria-label="LinkedIn">LI</a>
-          </div>
-        </div>
-        <div>
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="clients.html">Clients</a></li>
-            <li><a href="training.html">Training</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Services</h4>
-          <ul>
-            <li><a href="services.html">Digital Marketing</a></li>
-            <li><a href="services.html">Social Media</a></li>
-            <li><a href="services.html">Content Creation</a></li>
-            <li><a href="services.html">SEO</a></li>
-            <li><a href="services.html">Advertising</a></li>
-            <li><a href="services.html">Web Design</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Stay Updated</h4>
-          <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 0.8rem;">Get the latest insights on digital marketing and brand growth.</p>
-          <div class="footer-newsletter">
-            <input type="email" placeholder="Your email" aria-label="Email for newsletter" />
-            <button type="button">Subscribe</button>
-          </div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>TMH<span>.</span></h3>
+        <p>The Millennial Hub — your A to Z partner for digital marketing, content, advertising, and behavioural training.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="LinkedIn">LI</a>
+          <a href="#" aria-label="YouTube">YT</a>
+          <a href="#" aria-label="Twitter/X">X</a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
-        <span>hello@themillennialhub.com &middot; +44 20 7123 4567</span>
+      <div>
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li><a href="training.html">Training</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </div>
+      <div>
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="services.html">Digital Marketing</a></li>
+          <li><a href="services.html">Social Media</a></li>
+          <li><a href="services.html">Content Creation</a></li>
+          <li><a href="services.html">SEO</a></li>
+          <li><a href="services.html">Advertising</a></li>
+          <li><a href="training.html">Behavioural Training</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Stay Updated</h4>
+        <p class="body-small" style="margin-bottom:16px">Get the latest on digital marketing trends and insights.</p>
+        <div class="footer-newsletter">
+          <form onsubmit="event.preventDefault();alert('Thank you for subscribing!')">
+            <input type="email" placeholder="Enter your email" aria-label="Email for newsletter" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+        <div style="margin-top:24px">
+          <p class="body-small">hello@themillennialhub.com</p>
+          <p class="body-small">+1 (555) 000-0000</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
+      <span>Designed with purpose in Toronto</span>
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
-  <script>
-    function toggleFaq(el) {
-      var item = el.parentNode;
-      item.classList.toggle('open');
-    }
-  </script>
+  </div>
+</div>
+
 </body>
 </html>
+

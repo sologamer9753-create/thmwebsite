@@ -3,139 +3,260 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
   <title>Contact — The Millennial Hub</title>
-  <meta name="description" content="Get in touch with The Millennial Hub. Start your project, enquire about training, or say hello." />
+  <meta name="description" content="Let's build your digital presence. Contact The Millennial Hub for digital marketing, content creation, and behavioural training." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="css/style.css" />
-  <script>if(matchMedia('(hover:hover)and(pointer:fine)').matches)document.documentElement.classList.add('hover-device')</script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/tmh.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollSmoother.min.js" defer></script>
+  <script src="js/tmh.js" defer></script>
+  <style>
+    .contact-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .contact-form .full-width { grid-column: 1 / -1; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--fg);
+      font-size: 15px;
+      font-family: var(--font-body);
+      transition: border-color 0.3s var(--ease-out);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 43, 43, 0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='%23d1d1d1'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+    .form-group select option { background: #000; color: var(--fg); }
+
+    .contact-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .contact-detail-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .contact-detail-icon {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 43, 43, 0.1);
+      border: 1px solid rgba(255, 43, 43, 0.15);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      color: var(--accent);
+    }
+    .contact-detail-item h4 { font-size: 15px; margin-bottom: 4px; }
+    .contact-detail-item p { font-size: 14px; color: var(--muted-dim); }
+
+    .map-placeholder {
+      width: 100%;
+      height: 400px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(255, 43, 43, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(179, 0, 0, 0.03) 0%, transparent 50%);
+    }
+    .map-placeholder-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .map-placeholder-content .icon { font-size: 48px; margin-bottom: 12px; }
+    .map-placeholder-content p { font-size: 14px; color: var(--muted-dim); }
+
+    @media (max-width: 600px) {
+      .contact-form { grid-template-columns: 1fr; }
+      .contact-details-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
+  <div id="webgl-canvas"></div>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <nav class="nav">
+  <!-- NAVIGATION -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-          <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
-          <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
-      </a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="clients.html">Clients</a>
-        <a href="training.html">Training</a>
-        <a href="contact.html" class="active">Contact</a>
-        <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Let's Talk</a>
-      </div>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="index.html" class="nav-logo">TMH<span>.</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="clients.html">Clients</a></li>
+        <li><a href="training.html">Training</a></li>
+        <li><a href="contact.html" class="active" aria-current="page">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary btn-sm">Let's Talk</a></li>
+      </ul>
     </div>
   </nav>
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+  <main id="main-content">
 
-  <section class="page-hero" data-parallax="0.08">
-    <div id="webgl-canvas"></div>
-    <div class="container">
-      <span class="section-label reveal">Get In Touch</span>
-      <h1 data-split class="reveal reveal-delay-1">Let's Build Your Digital Presence</h1>
-      <p class="reveal reveal-delay-2">Ready to grow? Tell us about your project and we'll craft a custom plan that delivers real results.</p>
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-content" data-reveal="fade">
+      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span>Contact</div>
+      <h1 class="display-large">Let's Build Your Digital Presence</h1>
+      <p class="body-large">Tell us about your brand and goals — we'll design a strategy that moves your business forward.</p>
     </div>
   </section>
 
-  <!-- Contact form + info -->
-  <section class="section" style="padding-top: 1rem;">
+  <!-- CONTACT FORM + DETAILS -->
+  <section class="section section-glass" style="padding-top:0">
     <div class="container">
-      <div class="grid-2">
-        <div class="reveal tilt-card" style="padding: 0;">
-          <h3 style="margin-bottom: 1rem;">Send Us a Message</h3>
-          <form id="contactForm">
+      <div class="grid-2" style="gap:48px;align-items:start">
+        <!-- FORM -->
+        <div data-reveal="fade">
+          <span class="kicker">Get in Touch</span>
+          <h2 class="heading-section" style="margin-bottom:32px">Start Your Project</h2>
+          <form class="contact-form" onsubmit="event.preventDefault();alert('Thank you for reaching out! We will be in touch within 24 hours.')">
             <div class="form-group">
-              <label for="name">Full Name</label>
-              <input type="text" id="name" class="form-control" placeholder="Your name" required />
+              <label for="name">Name</label>
+              <input type="text" id="name" placeholder="Your full name" required />
             </div>
             <div class="form-group">
               <label for="company">Company</label>
-              <input type="text" id="company" class="form-control" placeholder="Your company (optional)" />
+              <input type="text" id="company" placeholder="Your company name" />
             </div>
             <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" class="form-control" placeholder="you@company.com" required />
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="you@company.com" required />
             </div>
             <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" class="form-control" placeholder="+44 7..." />
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" placeholder="+1 (555) 000-0000" />
             </div>
-            <div class="form-group">
+            <div class="form-group full-width">
               <label for="service">Service Interested In</label>
-              <select id="service" class="form-control">
+              <select id="service">
                 <option value="">Select a service...</option>
                 <option value="digital-marketing">Digital Marketing</option>
                 <option value="social-media">Social Media Management</option>
                 <option value="content-creation">Content Creation</option>
-                <option value="seo">SEO Optimization</option>
+                <option value="seo">SEO Optimisation</option>
                 <option value="advertising">Advertising Management</option>
                 <option value="web-design">Website Design</option>
                 <option value="training">Behavioural Training</option>
-                <option value="other">Other / Multiple</option>
+                <option value="other">Other</option>
               </select>
             </div>
-            <div class="form-group">
-              <label for="message">Your Message</label>
-              <textarea id="message" class="form-control" placeholder="Tell us about your project, goals, budget, and timeline..." required></textarea>
+            <div class="form-group full-width">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Tell us about your project, goals, and timeline..." required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">Send Message</button>
+            <div class="full-width">
+              <button type="submit" class="btn btn-primary btn-lg glow-red">Send Message</button>
+            </div>
           </form>
         </div>
-        <div>
-          <div class="reveal reveal-delay-1">
-            <h3 style="margin-bottom: 0.8rem;">Contact Details</h3>
-            <div class="contact-details" style="margin-bottom: 1rem;">
-              <div class="contact-detail-card tilt-card">
-                <div class="cd-icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x2709;</div>
+
+        <!-- CONTACT DETAILS -->
+        <div data-reveal="fade">
+          <span class="kicker">Contact Details</span>
+          <h2 class="heading-section" style="margin-bottom:32px">Here's How to Reach Us</h2>
+          <div class="contact-details-grid" style="margin-bottom:32px">
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">✉️</div>
+              <div>
                 <h4>Email</h4>
                 <p>hello@themillennialhub.com</p>
               </div>
-              <div class="contact-detail-card tilt-card">
-                <div class="cd-icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x1F4DE;</div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">📞</div>
+              <div>
                 <h4>Phone</h4>
-                <p>+44 20 7123 4567</p>
+                <p>+1 (555) 000-0000</p>
               </div>
-              <div class="contact-detail-card tilt-card">
-                <div class="cd-icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F4CD;</div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">📍</div>
+              <div>
                 <h4>Office</h4>
-                <p>71-75 Shelton St, London WC2H 9JQ</p>
+                <p>Toronto, Ontario<br />Canada</p>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">🕐</div>
+              <div>
+                <h4>Hours</h4>
+                <p>Mon–Fri, 9 AM – 6 PM EST</p>
               </div>
             </div>
           </div>
-          <div class="reveal reveal-delay-2" style="margin-top: 1rem;">
-            <h3 style="margin-bottom: 0.6rem;">Follow Us</h3>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-              <a href="#" class="btn btn-secondary" style="border-radius: 12px; padding: 10px 20px;">Instagram</a>
-              <a href="#" class="btn btn-secondary" style="border-radius: 12px; padding: 10px 20px;">Facebook</a>
-              <a href="#" class="btn btn-secondary" style="border-radius: 12px; padding: 10px 20px;">YouTube</a>
-              <a href="#" class="btn btn-secondary" style="border-radius: 12px; padding: 10px 20px;">LinkedIn</a>
+
+          <!-- SOCIAL -->
+          <div class="glass" style="padding:24px;margin-bottom:32px">
+            <h4 style="font-size:14px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:16px">Follow Us</h4>
+            <div class="footer-social">
+              <a href="#" aria-label="Instagram">IG</a>
+              <a href="#" aria-label="Facebook">FB</a>
+              <a href="#" aria-label="LinkedIn">LI</a>
+              <a href="#" aria-label="YouTube">YT</a>
+              <a href="#" aria-label="Twitter/X">X</a>
             </div>
           </div>
-          <div class="reveal reveal-delay-3" style="margin-top: 1rem;">
-            <h3 style="margin-bottom: 0.6rem;">Office Hours</h3>
-            <ul class="hours-list">
-              <li><span>Monday — Friday</span> <strong>9:00 AM — 6:00 PM</strong></li>
-              <li><span>Saturday</span> <strong>10:00 AM — 2:00 PM</strong></li>
-              <li><span>Sunday</span> <strong>Closed</strong></li>
-            </ul>
-          </div>
-          <div class="reveal reveal-delay-3" style="margin-top: 1rem;">
-            <h3 style="margin-bottom: 0.6rem;">Find Us</h3>
-            <div class="map-embed">
-              <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-0.1247%2C51.5112%2C-0.1207%2C51.5132&amp;layer=mapnik&amp;marker=51.5122%2C-0.1227" width="600" height="320" loading="lazy" referrerpolicy="no-referrer"></iframe>
+
+          <!-- NEWSLETTER -->
+          <div class="surface-card" style="padding:24px">
+            <h4 style="font-size:14px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:12px">Stay in the Loop</h4>
+            <p class="body-small" style="margin-bottom:12px">Get marketing insights and TMH updates delivered to your inbox.</p>
+            <div class="footer-newsletter">
+              <form onsubmit="event.preventDefault();alert('Thank you for subscribing!')">
+                <input type="email" placeholder="Your email" aria-label="Email for newsletter" required />
+                <button type="submit">Subscribe</button>
+              </form>
             </div>
           </div>
         </div>
@@ -143,95 +264,104 @@
     </div>
   </section>
 
-  <!-- FAQ Section -->
-  <section class="section" style="background: rgba(7,17,31,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <!-- MAP SECTION -->
+  <section class="section section-glass">
     <div class="container">
-      <div class="text-center mb-2 reveal">
-        <span class="section-label">Quick Answers</span>
-        <h2>Before You Reach Out</h2>
-      </div>
-      <div class="grid-2" style="gap: 24px; max-width: 800px; margin: 0 auto;">
-        <div class="reveal">
-          <h4 style="color: var(--accent); margin-bottom: 0.4rem;">How quickly do you respond?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">We typically respond within 2-4 hours during business hours. For urgent enquiries, call us directly.</p>
-          <div style="height: 12px;"></div>
-          <h4 style="color: var(--accent); margin-bottom: 0.3rem;">Do you take on small projects?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">Yes. We work with brands of all sizes. Our Essential plan is built for startups and smaller budgets.</p>
-          <div style="height: 12px;"></div>
-          <h4 style="color: var(--accent); margin-bottom: 0.4rem;">Can I visit your office?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">Absolutely. We're based in Covent Garden, London. Book a meeting through the form above and we'll reserve a slot.</p>
+      <div class="text-center mb-48">
+        <div class="text-line-reveal" data-reveal="mask">
+          <span class="kicker">Location</span>
         </div>
-        <div class="reveal reveal-delay-1">
-          <h4 style="color: var(--accent); margin-bottom: 0.4rem;">What happens after I submit?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">A member of our team will review your message and schedule a free discovery call to discuss your goals.</p>
-          <div style="height: 12px;"></div>
-          <h4 style="color: var(--accent); margin-bottom: 0.3rem;">Do you offer free consultations?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">Yes — introductory 30-minute calls are complimentary. For detailed audits and proposals, we'll scope the work first.</p>
-          <div style="height: 12px;"></div>
-          <h4 style="color: var(--accent); margin-bottom: 0.3rem;">International clients?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">We work with clients globally. Virtual meetings and remote delivery are standard for international engagements.</p>
+        <div class="text-line-reveal" data-reveal="mask">
+          <h2 class="display-medium">Find Us</h2>
+        </div>
+      </div>
+      <div class="map-placeholder" data-reveal="float">
+        <div class="map-placeholder-content">
+          <div class="icon">🗺️</div>
+          <p>Interactive map — Toronto, Ontario</p>
+          <p class="body-small mt-16">hello@themillennialhub.com</p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- FINAL CTA -->
+  <section class="cta-section">
+    <div class="cta-aurora"></div>
+    <div class="container">
+      <div class="cta-glass" data-reveal="float">
+        <div class="cta-content">
+          <h2 class="display-medium">Ready to Grow Your Brand?</h2>
+          <p class="body-large">No pitch decks. No pressure. Just a conversation about where you are and where you want to be.</p>
+          <div class="cta-actions">
+            <a href="contact.html" class="btn-cta">Start the Conversation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  </main>
   <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="nav-logo" style="margin-bottom: 0.5rem;">
-            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
-              <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
-              <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
-          </a>
-          <p>The Millennial Hub delivers end-to-end digital marketing, content creation, advertising, and behavioural training — the A to Z of digital growth.</p>
-          <div class="footer-social">
-            <a href="#" aria-label="Instagram">IG</a>
-            <a href="#" aria-label="Facebook">FB</a>
-            <a href="#" aria-label="YouTube">YT</a>
-            <a href="#" aria-label="LinkedIn">LI</a>
-          </div>
-        </div>
-        <div>
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="clients.html">Clients</a></li>
-            <li><a href="training.html">Training</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Services</h4>
-          <ul>
-            <li><a href="services.html">Digital Marketing</a></li>
-            <li><a href="services.html">Social Media</a></li>
-            <li><a href="services.html">Content Creation</a></li>
-            <li><a href="services.html">SEO</a></li>
-            <li><a href="services.html">Advertising</a></li>
-            <li><a href="services.html">Web Design</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Stay Updated</h4>
-          <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 0.8rem;">Get the latest insights on digital marketing and brand growth.</p>
-          <div class="footer-newsletter">
-            <input type="email" placeholder="Your email" aria-label="Email for newsletter" />
-            <button type="button">Subscribe</button>
-          </div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>TMH<span>.</span></h3>
+        <p>The Millennial Hub — your A to Z partner for digital marketing, content, advertising, and behavioural training.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="LinkedIn">LI</a>
+          <a href="#" aria-label="YouTube">YT</a>
+          <a href="#" aria-label="Twitter/X">X</a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
-        <span>hello@themillennialhub.com &middot; +44 20 7123 4567</span>
+      <div>
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li><a href="training.html">Training</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </div>
+      <div>
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="services.html">Digital Marketing</a></li>
+          <li><a href="services.html">Social Media</a></li>
+          <li><a href="services.html">Content Creation</a></li>
+          <li><a href="services.html">SEO</a></li>
+          <li><a href="services.html">Advertising</a></li>
+          <li><a href="training.html">Behavioural Training</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Stay Updated</h4>
+        <p class="body-small" style="margin-bottom:16px">Get the latest on digital marketing trends and insights.</p>
+        <div class="footer-newsletter">
+          <form onsubmit="event.preventDefault();alert('Thank you for subscribing!')">
+            <input type="email" placeholder="Enter your email" aria-label="Email for newsletter" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+        <div style="margin-top:24px">
+          <p class="body-small">hello@themillennialhub.com</p>
+          <p class="body-small">+1 (555) 000-0000</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
+      <span>Designed with purpose in Toronto</span>
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  </div>
+</div>
+
 </body>
 </html>
+

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "The Millennial Hub — Home",
+  "entry": "tmh-home.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "primary": true,
+  "createdAt": "2026-05-28T09:27:59.314Z",
+  "updatedAt": "2026-05-28T09:27:59.322Z",
+  "metadata": {
+    "identifier": "tmh-home",
+    "artifactType": "text/html",
+    "inferred": false
+  }
+}
