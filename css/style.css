@@ -1520,3 +1520,31 @@ section, main {
     border-radius: 50%;
     text-shadow: 0px 4px 15px rgba(0,0,0,1);
 }
+
+/* --- FIXING FOREGROUND CONTRAST & TRANSPARENCY --- */
+
+/* 1. The Smoked Glass Shield for the Hero Text */
+.hero > .container, 
+.hero-content {
+    position: relative;
+    z-index: 20;
+    /* Creates a dark shadow bubble right behind the text */
+    background: radial-gradient(circle, rgba(7, 17, 31, 0.95) 0%, rgba(7, 17, 31, 0.6) 40%, transparent 75%) !important;
+    border-radius: 50%;
+    padding: 2rem 1rem;
+}
+
+/* 2. Force all sections below the Hero to have a solid background */
+/* Adjust the color based on your theme. Since your text in the screenshot is dark, we use white/light-gray */
+main > section:not(.hero),
+.services-section,
+.about-section {
+    position: relative;
+    z-index: 10;
+    background-color: #ffffff !important; /* Forces a solid white background so particles don't bleed through */
+}
+
+/* If you have dark-themed sections, target them specifically like this: */
+.dark-section {
+    background-color: #07111F !important;
+}
