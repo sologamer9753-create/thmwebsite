@@ -1484,3 +1484,39 @@ html.gsap-active .gsap-hidden-scale { opacity: 0; transform: scale(0.92); }
 }
 .dark-section { position: relative; }
 .dark-section > * { position: relative; z-index: 2; }
+
+
+/* --- MANUAL PARALLAX & LEGIBILITY SHIELD --- */
+
+/* 1. Stop the horizontal mobile scrolling */
+html, body {
+    overflow-x: hidden !important;
+}
+
+/* 2. Lock the 3D particles to the background */
+#webgl-canvas {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 3. Force the sections to scroll OVER the particles */
+section, main {
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* 4. The Smoked Glass Shield for the text */
+.hero .container, /* Change this class if your text is in a different wrapper */
+.hero-content {
+    position: relative;
+    z-index: 20;
+    padding: 3rem 1rem;
+    background: radial-gradient(circle at center, rgba(7, 17, 31, 0.95) 0%, rgba(7, 17, 31, 0.5) 45%, transparent 75%);
+    border-radius: 50%;
+    text-shadow: 0px 4px 15px rgba(0,0,0,1);
+}
