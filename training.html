@@ -3,298 +3,373 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
   <title>Training Programs — The Millennial Hub</title>
-  <meta name="description" content="TMH behavioural training programs: leadership, emotional intelligence, mindset transformation, and team communication for corporates and professionals." />
+  <meta name="description" content="The Millennial Hub corporate behavioural training: emotional intelligence, mindset transformation, stress management, resilience, and team communication." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/tmh.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollSmoother.min.js" defer></script>
-  <script src="js/tmh.js" defer></script>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>if(matchMedia('(hover:hover)and(pointer:fine)').matches)document.documentElement.classList.add('hover-device')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
 </head>
 <body>
-  <div id="webgl-canvas"></div>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- NAVIGATION -->
-  <nav class="nav" role="navigation" aria-label="Main navigation">
+  <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">TMH<span>.</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="clients.html">Clients</a></li>
-        <li><a href="training.html" class="active" aria-current="page">Training</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li class="nav-cta"><a href="contact.html" class="btn btn-primary btn-sm">Let's Talk</a></li>
-      </ul>
+      <a href="index.html" class="nav-logo">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
+          <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="clients.html">Clients</a>
+        <a href="training.html" class="active">Training</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Let's Talk</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
-  <div id="smooth-wrapper">
-    <div id="smooth-content">
-  <main id="main-content">
 
-  <!-- PAGE HERO -->
-  <section class="page-hero">
-    <div class="page-hero-bg"></div>
-    <div class="page-hero-content" data-reveal="fade">
-      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span>Training Programs</div>
-      <h1 class="display-large">Leadership & Behavioural Transformation</h1>
-      <p class="body-large">Evidence-based training programs that equip individuals and teams with the psychological skills to lead, communicate, and perform at their best.</p>
+  <section class="page-hero" data-parallax="0.08">
+    <div id="webgl-canvas"></div>
+    <div class="container">
+      <span class="section-label reveal">Behavioural Training</span>
+      <h1 data-split class="reveal reveal-delay-1">Transform Your Team from Within</h1>
+      <p class="reveal reveal-delay-2">Leadership development, emotional intelligence, and behavioural transformation — delivered through workshops, bootcamps, and in-house programmes for modern organisations.</p>
     </div>
   </section>
 
-  <!-- INTRO -->
-  <section class="section section-glass" style="padding-top:0">
+  <!-- Training approach -->
+  <section class="section">
     <div class="container">
-      <div class="grid-2" style="align-items:center">
-        <div data-reveal="fade">
-          <span class="kicker">Why Training</span>
-          <h2 class="display-medium">Performance Starts with Psychology</h2>
-          <p class="body-large mt-16">In a world of constant change, technical skills alone aren't enough. The most effective leaders and teams are those who understand how their minds work — and how to work with others.</p>
-          <p class="body-regular mt-16">Our programs blend cognitive science, emotional intelligence frameworks, and practical behavioural tools to create lasting change — not just a one-day workshop.</p>
-          <div style="display:flex;gap:24px;margin-top:32px">
-            <div><div class="counter-number" style="font-size:36px;text-align:left" data-target="500">0</div><div class="counter-label" style="text-align:left">Professionals Trained</div></div>
-            <div><div class="counter-number" style="font-size:36px;text-align:left" data-target="50">0</div><div class="counter-label" style="text-align:left">Partner Organizations</div></div>
-            <div><div class="counter-number" style="font-size:36px;text-align:left" data-target="95">95<span class="accent">%</span></div><div class="counter-label" style="text-align:left">Satisfaction Rate</div></div>
+      <div class="grid-2" style="align-items: center;">
+        <div class="reveal">
+          <span class="section-label">Our Approach</span>
+          <h2>Building Resilient,<br/>High-Performance Teams</h2>
+          <p style="color: var(--muted); margin-top: 0.5rem; line-height: 1.7; font-size: 0.9rem;">
+            At The Millennial Hub, we believe that great brands are built by great people. Our behavioural training programmes are designed to equip teams with the emotional intelligence, mindset, and communication skills needed to thrive in today's fast-paced business environment.
+          </p>
+          <p style="color: var(--muted); margin-top: 0.6rem; line-height: 1.7; font-size: 0.9rem;">
+            Whether it's a half-day workshop or a multi-week bootcamp, each programme is tailored to your organisation's culture, challenges, and goals.
+          </p>
+        </div>
+        <div class="reveal reveal-delay-1" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center;">
+            <div style="font-size: 1.8rem; color: var(--accent); margin-bottom: 0.3rem;">12+</div>
+            <div style="color: var(--muted); font-size: 0.8rem;">Training Modules</div>
+          </div>
+          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center;">
+            <div style="font-size: 1.8rem; color: var(--blue); margin-bottom: 0.3rem;">40+</div>
+            <div style="color: var(--muted); font-size: 0.8rem;">Corporate Clients</div>
+          </div>
+          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center;">
+            <div style="font-size: 1.8rem; color: var(--purple); margin-bottom: 0.3rem;">95%</div>
+            <div style="color: var(--muted); font-size: 0.8rem;">Satisfaction Rate</div>
+          </div>
+          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center;">
+            <div style="font-size: 1.8rem; color: var(--accent); margin-bottom: 0.3rem;">5K+</div>
+            <div style="color: var(--muted); font-size: 0.8rem;">Professionals Trained</div>
           </div>
         </div>
-        <div data-reveal="fade">
-          <div class="glass-card" style="padding:48px;text-align:center">
-            <div style="font-size:72px;margin-bottom:16px;color:var(--accent);opacity:0.3">🧠</div>
-            <h3 style="font-size:20px;margin-bottom:8px">Behavioural Training Philosophy</h3>
-            <p class="body-regular">We don't teach theory. We teach tools that people can use the next day — in meetings, under pressure, and when it matters most.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Program Grid -->
+  <section class="section" style="background: rgba(7,17,31,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="text-center mb-2 reveal">
+        <span class="section-label">Programmes</span>
+        <h2>Core Training Areas</h2>
+      </div>
+      <div class="grid-3 card-stagger">
+        <div class="program-card tilt-card">
+          <div class="p-icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F9E0;</div>
+          <h3>Emotional Intelligence</h3>
+          <p>Develop self-awareness, empathy, and interpersonal skills. Learn to navigate complex team dynamics with confidence and clarity.</p>
+          <div class="program-meta">
+            <span>&#x1F4C5; 2-Day Workshop</span>
+            <span>&#x1F465; Teams of 8-20</span>
+          </div>
+        </div>
+        <div class="program-card tilt-card">
+          <div class="p-icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x1F31F;</div>
+          <h3>Mindset Transformation</h3>
+          <p>Unlock growth mindset, overcome limiting beliefs, and build mental resilience. Practical frameworks for personal and professional breakthroughs.</p>
+          <div class="program-meta">
+            <span>&#x1F4C5; 1-Day Intensive</span>
+            <span>&#x1F465; Teams of 5-15</span>
+          </div>
+        </div>
+        <div class="program-card tilt-card">
+          <div class="p-icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F4A6;</div>
+          <h3>Stress Management</h3>
+          <p>Evidence-based techniques for managing workplace stress, preventing burnout, and maintaining peak performance under pressure.</p>
+          <div class="program-meta">
+            <span>&#x1F4C5; Half-Day Session</span>
+            <span>&#x1F465; All team sizes</span>
+          </div>
+        </div>
+        <div class="program-card tilt-card">
+          <div class="p-icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F31B;</div>
+          <h3>Resilience Building</h3>
+          <p>Strengthen individual and team resilience through proven psychological frameworks. Adapt and thrive through change and uncertainty.</p>
+          <div class="program-meta">
+            <span>&#x1F4C5; 2-Day Bootcamp</span>
+            <span>&#x1F465; Teams of 10-25</span>
+          </div>
+        </div>
+        <div class="program-card tilt-card">
+          <div class="p-icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x1F4AC;</div>
+          <h3>Team Communication</h3>
+          <p>Master the art of clear, constructive, and empathetic communication. Resolve conflict, align cross-functional teams, and lead with impact.</p>
+          <div class="program-meta">
+            <span>&#x1F4C5; 1-Day Workshop</span>
+            <span>&#x1F465; Teams of 6-18</span>
+          </div>
+        </div>
+        <div class="program-card tilt-card">
+          <div class="p-icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F3DB;</div>
+          <h3>Leadership Development</h3>
+          <p>Comprehensive leadership programme covering strategic thinking, coaching, decision-making, and building high-trust team cultures.</p>
+          <div class="program-meta">
+            <span>&#x1F4C5; 4-Week Programme</span>
+            <span>&#x1F465; Managers &amp; Leads</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CORE FOCUS AREAS -->
-  <section class="section section-glass">
+  <!-- Delivery & Audience -->
+  <section class="section">
     <div class="container">
-      <div class="text-center mb-48">
-        <div class="text-line-reveal" data-reveal="mask">
-          <span class="kicker">Core Focus Areas</span>
+      <div class="grid-2 gap-16">
+        <div class="card reveal tilt-card" style="padding: 1.2rem;">
+          <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">&#x1F3EB;</div>
+          <h3 style="margin-bottom: 0.5rem;">Delivery Formats</h3>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="color: var(--accent);">&#x25CF;</span>
+              <span style="color: var(--muted);">In-person workshops at your office or our venue</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="color: var(--blue);">&#x25CF;</span>
+              <span style="color: var(--muted);">Interactive virtual sessions for remote teams</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="color: var(--purple);">&#x25CF;</span>
+              <span style="color: var(--muted);">Multi-week bootcamps with coaching &amp; assessment</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="color: var(--accent);">&#x25CF;</span>
+              <span style="color: var(--muted);">Custom programmes tailored to your organisation</span>
+            </div>
+          </div>
         </div>
-        <div class="text-line-reveal" data-reveal="mask">
-          <h2 class="display-medium">What We Teach</h2>
-        </div>
-        <p class="body-large mt-16" style="max-width:600px;margin-left:auto;margin-right:auto" data-reveal="fade">Eight interconnected modules that build the psychological infrastructure for high performance.</p>
-      </div>
-      <div class="focus-grid" data-reveal="stagger" data-stagger-delay="0.08">
-        <div class="focus-item">
-          <div class="focus-icon">🧠</div>
-          <h4>Emotional Intelligence</h4>
-          <p>Self-awareness, empathy, and the ability to read and respond to emotional dynamics in any environment.</p>
-        </div>
-        <div class="focus-item">
-          <div class="focus-icon">🎯</div>
-          <h4>Emotional Regulation</h4>
-          <p>Techniques to stay composed under pressure, manage triggers, and respond rather than react.</p>
-        </div>
-        <div class="focus-item">
-          <div class="focus-icon">🔄</div>
-          <h4>Mindset Transformation</h4>
-          <p>Shifting from fixed to growth orientation — building resilience, adaptability, and cognitive flexibility.</p>
-        </div>
-        <div class="focus-item">
-          <div class="focus-icon">🌿</div>
-          <h4>Stress Management</h4>
-          <p>Practical frameworks for recognizing, managing, and reducing stress at individual and team levels.</p>
-        </div>
-        <div class="focus-item">
-          <div class="focus-icon">💪</div>
-          <h4>Resilience</h4>
-          <p>Building the psychological strength to navigate setbacks, uncertainty, and high-pressure environments.</p>
-        </div>
-        <div class="focus-item">
-          <div class="focus-icon">🗣️</div>
-          <h4>Team Communication</h4>
-          <p>Clear, honest, and productive communication — conflict resolution, feedback culture, and active listening.</p>
-        </div>
-        <div class="focus-item">
-          <div class="focus-icon">🌟</div>
-          <h4>First-Time Leadership</h4>
-          <p>Transitioning from individual contributor to leader: delegation, motivation, coaching, and accountability.</p>
-        </div>
-        <div class="focus-item">
-          <div class="focus-icon">🤝</div>
-          <h4>Team Dynamics</h4>
-          <p>Understanding group behaviour, psychological safety, and how to build high-trust, high-performance teams.</p>
+        <div class="card reveal reveal-delay-1 tilt-card" style="padding: 1.2rem;">
+          <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">&#x1F465;</div>
+          <h3 style="margin-bottom: 0.5rem;">Who It's For</h3>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="color: var(--accent);">&#x25CF;</span>
+              <span style="color: var(--muted);">HR teams seeking structured people development</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="color: var(--blue);">&#x25CF;</span>
+              <span style="color: var(--muted);">Corporate leadership &amp; management teams</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="color: var(--purple);">&#x25CF;</span>
+              <span style="color: var(--muted);">Educational institutions developing student potential</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="color: var(--accent);">&#x25CF;</span>
+              <span style="color: var(--muted);">Startups &amp; scale-ups building culture from day one</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- DELIVERY MODEL -->
-  <section class="section section-glass">
+  <!-- Upcoming Schedule -->
+  <section class="section" style="border-top: 1px solid var(--border);">
     <div class="container">
-      <div class="text-center mb-48">
-        <div class="text-line-reveal" data-reveal="mask">
-          <span class="kicker">Delivery Model</span>
-        </div>
-        <div class="text-line-reveal" data-reveal="mask">
-          <h2 class="display-medium">Flexible Formats for Every Organization</h2>
-        </div>
-        <p class="body-large mt-16" style="max-width:500px;margin-left:auto;margin-right:auto" data-reveal="fade">Programs designed to fit your team's schedule, culture, and learning objectives.</p>
+      <div class="text-center mb-2 reveal">
+        <span class="section-label">Upcoming</span>
+        <h2>Open Programme Schedule</h2>
+        <p style="color: var(--muted); max-width: 540px; margin: 0.8rem auto 0; font-size: 0.95rem;">Book onto our public programmes or contact us for private in-house delivery.</p>
       </div>
-      <div class="grid-3" data-reveal="stagger">
-        <div class="delivery-card">
-          <div class="icon">🎪</div>
-          <h4>Workshops</h4>
-          <p>Half-day or full-day immersive sessions focused on a single skill area — ideal for team offsites and professional development days.</p>
+      <div class="schedule-grid card-stagger">
+        <div class="schedule-card tilt-card">
+          <div class="schedule-date"><span class="day">10</span><span class="mon">Jun</span></div>
+          <div class="schedule-info">
+            <h4>Emotional Intelligence Workshop</h4>
+            <p>2-day intensive. London. Limited to 20 participants.</p>
+            <span class="tag">2 spots left</span>
+          </div>
         </div>
-        <div class="delivery-card">
-          <div class="icon">🔥</div>
-          <h4>Bootcamps</h4>
-          <p>Multi-day intensive programs covering a full curriculum — designed for organizations undertaking cultural transformation or leadership development.</p>
+        <div class="schedule-card tilt-card">
+          <div class="schedule-date" style="background: rgba(54,124,255,0.08); color: var(--blue);"><span class="day">24</span><span class="mon">Jun</span></div>
+          <div class="schedule-info">
+            <h4>Resilience Building Bootcamp</h4>
+            <p>2-day bootcamp. Birmingham. Open to all sectors.</p>
+            <span class="tag" style="background: rgba(54,124,255,0.1); color: var(--blue);">8 spots</span>
+          </div>
         </div>
-        <div class="delivery-card">
-          <div class="icon">📈</div>
-          <h4>Ongoing Programs</h4>
-          <p>Sustained engagement over weeks or months — weekly sessions, coaching, and practice-based learning that embeds skills into daily workflow.</p>
+        <div class="schedule-card tilt-card">
+          <div class="schedule-date" style="background: rgba(123,97,255,0.08); color: var(--purple);"><span class="day">8</span><span class="mon">Jul</span></div>
+          <div class="schedule-info">
+            <h4>Leadership Development Programme</h4>
+            <p>4-week programme. Virtual + 2 in-person days. Managers &amp; leads.</p>
+            <span class="tag" style="background: rgba(123,97,255,0.1); color: var(--purple);">Booking now</span>
+          </div>
         </div>
-        <div class="delivery-card">
-          <div class="icon">🎯</div>
-          <h4>Customized Training</h4>
-          <p>Tailored curriculum designed around your organization's specific challenges, culture, and strategic objectives.</p>
+        <div class="schedule-card tilt-card">
+          <div class="schedule-date" style="background: rgba(18,214,231,0.08); color: var(--accent);"><span class="day">15</span><span class="mon">Jul</span></div>
+          <div class="schedule-info">
+            <h4>Stress Management &amp; Wellbeing</h4>
+            <p>Half-day session. Manchester. All team sizes welcome.</p>
+            <span class="tag">12 spots</span>
+          </div>
         </div>
-        <div class="delivery-card">
-          <div class="icon">📚</div>
-          <h4>Practical Learning</h4>
-          <p>Every session includes real-world scenarios, role-play exercises, and actionable frameworks participants can apply immediately.</p>
-        </div>
-        <div class="delivery-card">
-          <div class="icon">💻</div>
-          <h4>Virtual & Hybrid</h4>
-          <p>Fully remote or hybrid delivery options for distributed teams — same depth, same impact, anywhere in the world.</p>
+      </div>
+      <div class="text-center mt-2 reveal">
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+          <span class="cert-badge"><span class="dot"></span>CPD Accredited</span>
+          <span class="cert-badge"><span class="dot"></span>ILM Recognised</span>
+          <span class="cert-badge"><span class="dot"></span>BPS Approved</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- WHO IT'S FOR -->
-  <section class="section section-glass">
+  <!-- Training Testimonials -->
+  <section class="section" style="background: rgba(7,17,31,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
     <div class="container">
-      <div class="text-center mb-48">
-        <div class="text-line-reveal" data-reveal="mask">
-          <span class="kicker">Who It's For</span>
-        </div>
-        <div class="text-line-reveal" data-reveal="mask">
-          <h2 class="display-medium">Built for Organizations That Invest in People</h2>
-        </div>
+      <div class="text-center mb-2 reveal">
+        <span class="section-label">Impact</span>
+        <h2>What Organisations Say</h2>
       </div>
-      <div class="grid-4" data-reveal="stagger" style="gap:16px">
-        <div class="surface-card" style="padding:32px 24px;text-align:center">
-          <div style="font-size:40px;margin-bottom:12px;color:var(--accent)">🏢</div>
-          <h4 style="font-size:18px;margin-bottom:8px">Corporates</h4>
-          <p class="body-small">Leadership development, team effectiveness, and culture transformation programs for organizations of all sizes.</p>
+      <div class="testimonial-grid card-stagger">
+        <div class="testimonial-card tilt-card">
+          <div class="quote">&ldquo;</div>
+          <p>The emotional intelligence workshop transformed how our leadership team communicates. We've seen measurable improvements in cross-department collaboration and conflict resolution.</p>
+          <div class="author">
+            <div class="author-avatar">DP</div>
+            <div>
+              <div class="author-name">David Park</div>
+              <div class="author-role">COO, FinTech Partners</div>
+            </div>
+          </div>
         </div>
-        <div class="surface-card" style="padding:32px 24px;text-align:center">
-          <div style="font-size:40px;margin-bottom:12px;color:var(--accent)">🤝</div>
-          <h4 style="font-size:18px;margin-bottom:8px">HR Teams</h4>
-          <p class="body-small">Strategic partnership to design and deliver learning & development initiatives that build organizational capability.</p>
+        <div class="testimonial-card tilt-card">
+          <div class="quote">&ldquo;</div>
+          <p>The Millennial Hub designed a bespoke resilience programme for our customer service teams during a period of rapid change. The feedback was outstanding — 92% of participants reported improved coping strategies.</p>
+          <div class="author">
+            <div class="author-avatar">JT</div>
+            <div>
+              <div class="author-name">Jennifer Tan</div>
+              <div class="author-role">Head of People, ScaleUp London</div>
+            </div>
+          </div>
         </div>
-        <div class="surface-card" style="padding:32px 24px;text-align:center">
-          <div style="font-size:40px;margin-bottom:12px;color:var(--accent)">🎓</div>
-          <h4 style="font-size:18px;margin-bottom:8px">Educational Institutions</h4>
-          <p class="body-small">Student and faculty programs focused on emotional intelligence, resilience, and communication skills.</p>
-        </div>
-        <div class="surface-card" style="padding:32px 24px;text-align:center">
-          <div style="font-size:40px;margin-bottom:12px;color:var(--accent)">🚀</div>
-          <h4 style="font-size:18px;margin-bottom:8px">Young Professionals</h4>
-          <p class="body-small">Career acceleration programs for early-stage professionals building leadership and self-management skills.</p>
+        <div class="testimonial-card tilt-card">
+          <div class="quote">&ldquo;</div>
+          <p>We've run the leadership programme twice now and the results speak for themselves. Promotions from within increased 40% in the year following the first cohort. Highly recommended.</p>
+          <div class="author">
+            <div class="author-avatar">RW</div>
+            <div>
+              <div class="author-name">Rebecca Walsh</div>
+              <div class="author-role">HR Director, Metro Retail Group</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- CTA — Aurora Glass -->
   <section class="cta-section">
     <div class="cta-aurora"></div>
-    <div class="container">
-      <div class="cta-glass" data-reveal="float">
-        <div class="cta-content">
-          <h2 class="display-medium">Invest in Your Team's Potential</h2>
-          <p class="body-large">Every organization says people are their greatest asset. We help you build the skills to prove it.</p>
-          <div class="cta-actions">
-            <a href="contact.html" class="btn-cta">Book a Program Consultation</a>
-            <a href="services.html" class="btn btn-outline btn-lg">View All Services</a>
-          </div>
-        </div>
+    <div class="container container-narrow">
+      <div class="cta-banner">
+        <h2>Invest in Your Team's Potential</h2>
+        <p>Ready to build a more resilient, emotionally intelligent, and high-performing team? Let's design a programme for your organisation.</p>
+        <a href="contact.html" class="btn-cta">Enquire About Training</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  </main>
   <footer class="footer">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <h3>TMH<span>.</span></h3>
-        <p>The Millennial Hub — your A to Z partner for digital marketing, content, advertising, and behavioural training.</p>
-        <div class="footer-social">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="Facebook">FB</a>
-          <a href="#" aria-label="LinkedIn">LI</a>
-          <a href="#" aria-label="YouTube">YT</a>
-          <a href="#" aria-label="Twitter/X">X</a>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" style="margin-bottom: 0.5rem;">
+            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
+              <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
+          </a>
+          <p>The Millennial Hub delivers end-to-end digital marketing, content creation, advertising, and behavioural training — the A to Z of digital growth.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="YouTube">YT</a>
+            <a href="#" aria-label="LinkedIn">LI</a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="training.html">Training</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">Digital Marketing</a></li>
+            <li><a href="services.html">Social Media</a></li>
+            <li><a href="services.html">Content Creation</a></li>
+            <li><a href="services.html">SEO</a></li>
+            <li><a href="services.html">Advertising</a></li>
+            <li><a href="services.html">Web Design</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Stay Updated</h4>
+          <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 0.8rem;">Get the latest insights on digital marketing and brand growth.</p>
+          <div class="footer-newsletter">
+            <input type="email" placeholder="Your email" aria-label="Email for newsletter" />
+            <button type="button">Subscribe</button>
+          </div>
         </div>
       </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="clients.html">Clients</a></li>
-          <li><a href="training.html">Training</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
+      <div class="footer-bottom">
+        <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
+        <span>hello@themillennialhub.com &middot; +44 20 7123 4567</span>
       </div>
-      <div>
-        <h4>Services</h4>
-        <ul class="footer-links">
-          <li><a href="services.html">Digital Marketing</a></li>
-          <li><a href="services.html">Social Media</a></li>
-          <li><a href="services.html">Content Creation</a></li>
-          <li><a href="services.html">SEO</a></li>
-          <li><a href="services.html">Advertising</a></li>
-          <li><a href="training.html">Behavioural Training</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Stay Updated</h4>
-        <p class="body-small" style="margin-bottom:16px">Get the latest on digital marketing trends and insights.</p>
-        <div class="footer-newsletter">
-          <form onsubmit="event.preventDefault();alert('Thank you for subscribing!')">
-            <input type="email" placeholder="Enter your email" aria-label="Email for newsletter" required />
-            <button type="submit">Subscribe</button>
-          </form>
-        </div>
-        <div style="margin-top:24px">
-          <p class="body-small">hello@themillennialhub.com</p>
-          <p class="body-small">+1 (555) 000-0000</p>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
-      <span>Designed with purpose in Toronto</span>
     </div>
   </footer>
 
-  </div>
-</div>
-
+  <script src="js/main.js"></script>
 </body>
 </html>
-

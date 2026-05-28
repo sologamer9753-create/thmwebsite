@@ -3,458 +3,278 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
   <title>Clients & Portfolio — The Millennial Hub</title>
-  <meta name="description" content="Trusted by brands across food, hospitality, lifestyle, retail, and modern businesses. Explore TMH's portfolio and client success stories." />
+  <meta name="description" content="Trusted by brands across food, hospitality, lifestyle, retail, and modern businesses. View The Millennial Hub's portfolio and client success stories." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/tmh.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollSmoother.min.js" defer></script>
-  <script src="js/tmh.js" defer></script>
-  <style>
-    .client-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-    .client-card {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-      height: 96px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 600;
-      color: #D1D1D1;
-      text-align: center;
-      letter-spacing: 0.04em;
-      line-height: 1.3;
-      user-select: none;
-    }
-    .client-card:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 43, 43, 0.3);
-      transform: translateY(-4px);
-      box-shadow: 0 0 20px rgba(255, 43, 43, 0.18);
-      color: #ffffff;
-    }
-    .client-card.is-short {
-      font-size: 16px;
-      letter-spacing: 0.12em;
-    }
-    @media (min-width: 768px) {
-      .client-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-      }
-      .client-card {
-        font-size: 15px;
-        height: 104px;
-        padding: 32px 20px;
-      }
-    }
-    @media (min-width: 1024px) {
-      .client-grid {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 24px;
-      }
-    }
-    .portfolio-masonry {
-      columns: 3;
-      column-gap: 20px;
-    }
-    .portfolio-item {
-      break-inside: avoid;
-      margin-bottom: 20px;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      transition: all 0.4s var(--ease-out);
-      position: relative;
-    }
-    .portfolio-item:hover {
-      border-color: rgba(255, 43, 43, 0.2);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-    }
-    .portfolio-item-visual {
-      width: 100%;
-      aspect-ratio: var(--ratio, 4/3);
-      background: linear-gradient(135deg, rgba(255,43,43,0.05), rgba(179,0,0,0.05));
-      display: grid;
-      place-items: center;
-      font-size: 48px;
-      color: rgba(255, 43, 43, 0.2);
-    }
-    .portfolio-item-visual.tall { --ratio: 3/4; }
-    .portfolio-item-visual.wide { --ratio: 16/9; }
-    .portfolio-item-visual.square { --ratio: 1/1; }
-    .portfolio-item-info { padding: 20px; }
-    .portfolio-item-info h3 { font-size: 18px; margin-bottom: 4px; }
-    .portfolio-item-info p { font-size: 13px; color: var(--muted-dim); }
-    .portfolio-item-hover {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(4px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.4s var(--ease-out);
-      padding: 24px;
-      text-align: center;
-    }
-    .portfolio-item:hover .portfolio-item-hover { opacity: 1; }
-    .portfolio-item-hover span {
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 8px;
-    }
-    .portfolio-item-hover p {
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .testimonial-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 40px 32px;
-      position: relative;
-    }
-    .testimonial-card::before {
-      content: '"';
-      position: absolute;
-      top: 12px;
-      left: 20px;
-      font-size: 64px;
-      color: var(--accent);
-      font-family: var(--font-display);
-      line-height: 1;
-      opacity: 0.2;
-    }
-    .testimonial-card p {
-      font-style: italic;
-      font-size: 16px;
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-    .testimonial-author { font-weight: 600; color: var(--fg); }
-    .testimonial-role { font-size: 13px; color: var(--muted-dim); }
-
-    @media (max-width: 900px) {
-      .portfolio-masonry { columns: 2; }
-    }
-    @media (max-width: 600px) {
-      .portfolio-masonry { columns: 1; }
-    }
-  </style>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>if(matchMedia('(hover:hover)and(pointer:fine)').matches)document.documentElement.classList.add('hover-device')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
 </head>
 <body>
-  <div id="webgl-canvas"></div>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- NAVIGATION -->
-  <nav class="nav" role="navigation" aria-label="Main navigation">
+  <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">TMH<span>.</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="clients.html" class="active" aria-current="page">Clients</a></li>
-        <li><a href="training.html">Training</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li class="nav-cta"><a href="contact.html" class="btn btn-primary btn-sm">Let's Talk</a></li>
-      </ul>
+      <a href="index.html" class="nav-logo">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
+          <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="clients.html" class="active">Clients</a>
+        <a href="training.html">Training</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Let's Talk</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
-  <div id="smooth-wrapper">
-    <div id="smooth-content">
-  <main id="main-content">
 
-  <!-- PAGE HERO -->
-  <section class="page-hero">
-    <div class="page-hero-bg"></div>
-    <div class="page-hero-content" data-reveal="fade">
-      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span>Clients & Portfolio</div>
-      <h1 class="display-large">Trusted by Brands That Grow</h1>
-      <p class="body-large">Trusted by brands across food, hospitality, lifestyle, retail, and modern businesses — we help ambitious companies build digital presence that earns attention and drives results.</p>
-    </div>
-  </section>
-
-  <!-- COUNTERS -->
-  <section class="section section-glass" style="padding-top:0">
+  <section class="page-hero" data-parallax="0.08">
+    <div id="webgl-canvas"></div>
     <div class="container">
-      <div class="glass" style="padding:48px">
-        <div class="counter-grid">
-          <div class="counter-item" data-reveal="fade">
-            <div class="counter-number" data-target="200">0</div>
-            <div class="counter-label">Brands Served</div>
-          </div>
-          <div class="counter-item" data-reveal="fade">
-            <div class="counter-number" data-target="500">0<span class="accent">+</span></div>
-            <div class="counter-label">Campaigns Executed</div>
-          </div>
-          <div class="counter-item" data-reveal="fade">
-            <div class="counter-number" data-target="15">0</div>
-            <div class="counter-label">Industry Verticals</div>
-          </div>
-          <div class="counter-item" data-reveal="fade">
-            <div class="counter-number" data-target="98">0<span class="accent">%</span></div>
-            <div class="counter-label">Client Retention</div>
-          </div>
-        </div>
-      </div>
+      <span class="section-label reveal">Our Work</span>
+      <h1 data-split class="reveal reveal-delay-1">Trusted by Brands Across Industries</h1>
+      <p class="reveal reveal-delay-2">From food and hospitality to lifestyle, retail, and tech — we've partnered with diverse brands to build their digital presence. Here's a look at who we work with.</p>
     </div>
   </section>
 
-  <!-- CLIENT LOGO WALL -->
-  <section class="section section-glass" style="padding-top:0">
+  <!-- Logo Grid -->
+  <section class="section dark-section" style="padding-top: 0;">
     <div class="container">
-      <div class="text-center mb-48">
-        <div class="text-line-reveal" data-reveal="mask">
-          <span class="kicker">Our Clients</span>
-        </div>
-        <div class="text-line-reveal" data-reveal="mask">
-          <h2 class="display-medium">Brands We've Partnered With</h2>
-        </div>
+      <div class="text-center mb-2 reveal" style="color: #fff;">
+        <span class="section-label" style="color: #12D6E7;">Who We Work With</span>
+        <h2>Our Client Network</h2>
       </div>
-      <div class="client-grid" data-reveal="stagger" data-stagger-delay="0.06">
-        <div class="client-card">The Sherlock's Group</div>
-        <div class="client-card is-short">Amazon</div>
-        <div class="client-card">Bengaluru Cafe</div>
-        <div class="client-card">Nimma Local</div>
-        <div class="client-card">Health Horizons</div>
-        <div class="client-card">Treehaus</div>
-        <div class="client-card is-short">NYRC</div>
+      <div class="logo-grid reveal">
+        <span class="logo-grid-item">The Sherlock's Group</span>
+        <span class="logo-grid-item">Grub Hop</span>
+        <span class="logo-grid-item">Rajamandry Kitchen</span>
+        <span class="logo-grid-item">Smart Kitchens</span>
+        <span class="logo-grid-item">AMAZON</span>
+        <span class="logo-grid-item">Deसी Licious</span>
+        <span class="logo-grid-item">Bengaluru Cafe</span>
+        <span class="logo-grid-item">Creemeé Riche Corner</span>
+        <span class="logo-grid-item">Treehaus</span>
+        <span class="logo-grid-item">Nimma Local</span>
+        <span class="logo-grid-item">Health Horizons</span>
+        <span class="logo-grid-item">Sthira Studio</span>
+        <span class="logo-grid-item">Indian Gymkhana Club</span>
+        <span class="logo-grid-item">The Roxbury</span>
+        <span class="logo-grid-item">Happy Leading</span>
+        <span class="logo-grid-item">NYRC</span>
+        <span class="logo-grid-item">Sol Woodpegger</span>
+        <span class="logo-grid-item">Little Ville</span>
+        <span class="logo-grid-item">Blah Blah</span>
+        <span class="logo-grid-item">SL</span>
       </div>
     </div>
   </section>
 
-  <!-- PORTFOLIO MASONRY -->
-  <section class="section section-glass" style="padding-top:0">
+  <!-- Results Stats Bar -->
+  <section class="section" style="padding-top: 0;">
     <div class="container">
-      <div class="text-center mb-48">
-        <div class="text-line-reveal" data-reveal="mask">
-          <span class="kicker">Portfolio</span>
+      <div class="results-bar reveal">
+        <div class="result-item">
+          <div class="result-number">200+</div>
+          <p>Brands Served</p>
         </div>
-        <div class="text-line-reveal" data-reveal="mask">
-          <h2 class="display-medium">Selected Work</h2>
+        <div class="result-item">
+          <div class="result-number">340%</div>
+          <p>Avg. Engagement Uplift</p>
         </div>
-      </div>
-      <div class="portfolio-masonry" data-reveal="stagger" data-stagger-delay="0.06">
-        <div class="portfolio-item">
-          <div class="portfolio-item-visual tall">🍽️</div>
-          <div class="portfolio-item-info">
-            <h3>The Sherlock's Group</h3>
-            <p>Premium hospitality & dining — full digital transformation</p>
-          </div>
-          <div class="portfolio-item-hover">
-            <span>Services Delivered</span>
-            <p>Rebrand + social strategy + content production + OOH</p>
-          </div>
+        <div class="result-item">
+          <div class="result-number">64%</div>
+          <p>Avg. Revenue Growth</p>
         </div>
-        <div class="portfolio-item">
-          <div class="portfolio-item-visual square">☕</div>
-          <div class="portfolio-item-info">
-            <h3>Bengaluru Cafe</h3>
-            <p>South Indian cafe chain — rebrand + visual identity</p>
-          </div>
-          <div class="portfolio-item-hover">
-            <span>Services Delivered</span>
-            <p>Full rebrand + packaging + video production + local SEO</p>
-          </div>
-        </div>
-        <div class="portfolio-item">
-          <div class="portfolio-item-visual square">☕</div>
-          <div class="portfolio-item-info">
-            <h3>Nimma Local</h3>
-            <p>Chai Coffee Aur — beverage brand launch + positioning</p>
-          </div>
-          <div class="portfolio-item-hover">
-            <span>Services Delivered</span>
-            <p>Launch campaign + brand identity + social + OOH</p>
-          </div>
-        </div>
-        <div class="portfolio-item">
-          <div class="portfolio-item-visual wide">🏡</div>
-          <div class="portfolio-item-info">
-            <h3>Treehaus</h3>
-            <p>Lifestyle brand — social presence + campaign management</p>
-          </div>
-          <div class="portfolio-item-hover">
-            <span>Services Delivered</span>
-            <p>Social media strategy + campaign creatives + analytics</p>
-          </div>
-        </div>
-        <div class="portfolio-item">
-          <div class="portfolio-item-visual tall">📦</div>
-          <div class="portfolio-item-info">
-            <h3>Amazon</h3>
-            <p>Global e-commerce — local market campaigns</p>
-          </div>
-          <div class="portfolio-item-hover">
-            <span>Services Delivered</span>
-            <p>Local market campaigns + brand management + advertising</p>
-          </div>
-        </div>
-        <div class="portfolio-item">
-          <div class="portfolio-item-visual tall">🏥</div>
-          <div class="portfolio-item-info">
-            <h3>Health Horizons</h3>
-            <p>Health & wellness — content strategy + community building</p>
-          </div>
-          <div class="portfolio-item-hover">
-            <span>Services Delivered</span>
-            <p>Content strategy + community management + social + ads</p>
-          </div>
-        </div>
-        <div class="portfolio-item">
-          <div class="portfolio-item-visual square">☕</div>
-          <div class="portfolio-item-info">
-            <h3>NYRC</h3>
-            <p>Not Your Regular Cafe — visual identity + social growth</p>
-          </div>
-          <div class="portfolio-item-hover">
-            <span>Services Delivered</span>
-            <p>Visual identity + Instagram growth + content production</p>
-          </div>
+        <div class="result-item">
+          <div class="result-number">98%</div>
+          <p>Client Retention Rate</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section class="section section-glass">
+  <!-- Case Studies -->
+  <section class="section" style="border-top: 1px solid var(--border);">
     <div class="container">
-      <div class="text-center mb-48">
-        <div class="text-line-reveal" data-reveal="mask">
-          <span class="kicker">Testimonials</span>
-        </div>
-        <div class="text-line-reveal" data-reveal="mask">
-          <h2 class="display-medium">What Our Clients Say</h2>
-        </div>
+      <div class="text-center mb-2 reveal">
+        <span class="section-label">Case Studies</span>
+        <h2>Real Results for Real Brands</h2>
       </div>
-      <div class="grid-3" data-reveal="stagger">
-        <div class="testimonial-card">
-          <p>TMH transformed our social presence. Within three months our engagement rate tripled and we started seeing real business inquiries coming through Instagram.</p>
-          <div class="testimonial-author">The Sherlock's Group</div>
-          <div class="testimonial-role">Social Media, Content &amp; OOH Campaign</div>
+      <div class="masonry">
+        <div class="masonry-item reveal tilt-card">
+          <div class="thumb" style="background: linear-gradient(135deg, rgba(18,214,231,0.08), rgba(54,124,255,0.08));">&#x1F3DB;</div>
+          <div class="body">
+            <span style="font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">Hospitality &amp; Club</span>
+            <h4 style="margin-top: 4px;">The Sherlock's Group</h4>
+            <p>Comprehensive digital marketing and brand positioning for a premium hospitality group. Social media management, content creation, and targeted campaigns driving membership and event bookings.</p>
+          </div>
         </div>
-        <div class="testimonial-card">
-          <p>The team's strategic approach to our digital overhaul was methodical and effective. Brand engagement and local discovery improved significantly within 90 days.</p>
-          <div class="testimonial-author">Bengaluru Cafe</div>
-          <div class="testimonial-role">Rebrand &amp; Local SEO Strategy</div>
+        <div class="masonry-item reveal reveal-delay-1 tilt-card">
+          <div class="thumb tall" style="background: linear-gradient(135deg, rgba(54,124,255,0.08), rgba(123,97,255,0.08));">&#x1F372;</div>
+          <div class="body">
+            <span style="font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">Food &amp; Tech</span>
+            <h4 style="margin-top: 4px;">Grub Hop (Dine@Home)</h4>
+            <p>Full-spectrum digital strategy for a growing food-tech platform. Social media campaigns, influencer partnerships, and content production driving user acquisition and brand awareness across Bangalore.</p>
+          </div>
         </div>
-        <div class="testimonial-card">
-          <p>What sets TMH apart is their understanding of brand psychology. They don't just make things look good — they understand why people buy.</p>
-          <div class="testimonial-author">Treehaus</div>
-          <div class="testimonial-role">Social Media Strategy &amp; Campaign Management</div>
+        <div class="masonry-item reveal reveal-delay-2 tilt-card">
+          <div class="thumb" style="background: linear-gradient(135deg, rgba(123,97,255,0.08), rgba(18,214,231,0.08));">&#x1F4B1;</div>
+          <div class="body">
+            <span style="font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">E-Commerce &amp; Tech</span>
+            <h4 style="margin-top: 4px;">Amazon</h4>
+            <p>Strategic campaign support and content optimisation for one of the world's largest e-commerce platforms. Advertising management, brand compliance, and performance-driven creative execution.</p>
+          </div>
+        </div>
+        <div class="masonry-item reveal reveal-delay-3 tilt-card">
+          <div class="thumb" style="background: linear-gradient(135deg, rgba(18,214,231,0.08), rgba(54,124,255,0.08));">&#x1F3E9;</div>
+          <div class="body">
+            <span style="font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">Hospitality</span>
+            <h4 style="margin-top: 4px;">Indian Gymkhana Club</h4>
+            <p>Brand repositioning and digital presence management for a prestigious members' club. Website content, social media strategy, and event promotion driving member engagement and new enquiries.</p>
+          </div>
+        </div>
+        <div class="masonry-item reveal reveal-delay-4 tilt-card">
+          <div class="thumb tall" style="background: linear-gradient(135deg, rgba(54,124,255,0.08), rgba(123,97,255,0.08));">&#x1F37A;</div>
+          <div class="body">
+            <span style="font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">Food &amp; Beverage</span>
+            <h4 style="margin-top: 4px;">The Roxbury Bar &amp; Kitchen</h4>
+            <p>Brand launch campaign and ongoing social media management. Content creation, event promotions, influencer engagement, and paid advertising establishing a strong local following and consistent footfall.</p>
+          </div>
+        </div>
+        <div class="masonry-item reveal reveal-delay-5 tilt-card">
+          <div class="thumb" style="background: linear-gradient(135deg, rgba(18,214,231,0.08), rgba(123,97,255,0.08));">&#x1F484;</div>
+          <div class="body">
+            <span style="font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">Beauty &amp; Wellness</span>
+            <h4 style="margin-top: 4px;">Sthira Studio</h4>
+            <p>Digital marketing and content strategy for a premium unisex salon and spa. Instagram growth, targeted ad campaigns, and visual content production driving appointment bookings and brand visibility.</p>
+          </div>
+        </div>
+        <div class="masonry-item reveal tilt-card">
+          <div class="thumb tall" style="background: linear-gradient(135deg, rgba(123,97,255,0.08), rgba(54,124,255,0.08));">&#x1F33F;</div>
+          <div class="body">
+            <span style="font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">Health &amp; Wellness</span>
+            <h4 style="margin-top: 4px;">Health Horizons</h4>
+            <p>Content creation, social media management, and brand building for a health and wellness brand. Educational content strategy, community engagement, and targeted campaigns driving programme enquiries.</p>
+          </div>
+        </div>
+        <div class="masonry-item reveal reveal-delay-1 tilt-card">
+          <div class="thumb" style="background: linear-gradient(135deg, rgba(54,124,255,0.08), rgba(18,214,231,0.08));">&#x1F3E0;</div>
+          <div class="body">
+            <span style="font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">Food &amp; Beverage</span>
+            <h4 style="margin-top: 4px;">NYRC (Not Your Regular Cafe)</h4>
+            <p>Brand identity and digital presence for a distinctive cafe concept. Social media campaigns, photography, and community-driven content building a loyal customer base and consistent footfall.</p>
+          </div>
+        </div>
+        <div class="masonry-item reveal reveal-delay-2 tilt-card">
+          <div class="thumb tall" style="background: linear-gradient(135deg, rgba(123,97,255,0.08), rgba(18,214,231,0.08));">&#x1F3A5;</div>
+          <div class="body">
+            <span style="font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">Food &amp; Beverage</span>
+            <h4 style="margin-top: 4px;">Bengaluru Cafe</h4>
+            <p>Digital marketing strategy, content production, and local SEO for a beloved Bengaluru cafe. Instagram growth, Google My Business optimisation, and targeted campaigns increasing dine-in and takeaway orders.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- Testimonial -->
+  <section class="section" style="background: rgba(7,17,31,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container container-narrow text-center">
+      <div class="reveal" style="max-width: 700px; margin: 0 auto;">
+        <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">&ldquo;</div>
+        <p style="font-size: 1.2rem; line-height: 1.7; font-style: italic; color: var(--muted);">
+          The Millennial Hub transformed our digital presence entirely. Their strategic approach and creative execution made them feel like a true extension of our team — not just another agency.
+        </p>
+        <div style="margin-top: 1.5rem;">
+          <div style="font-weight: 600;">— Rajesh Khanna</div>
+          <div style="color: var(--muted); font-size: 0.85rem;">Director, The Sherlock's Group</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA — Aurora Glass -->
   <section class="cta-section">
     <div class="cta-aurora"></div>
-    <div class="container">
-      <div class="cta-glass" data-reveal="float">
-        <div class="cta-content">
-          <h2 class="display-medium">Let's Build Your Success Story</h2>
-          <p class="body-large">Join the brands that trust TMH to build their digital presence. Your brand could be next.</p>
-          <div class="cta-actions">
-            <a href="contact.html" class="btn-cta">Start Your Journey</a>
-          </div>
-        </div>
+    <div class="container container-narrow">
+      <div class="cta-banner">
+        <h2>Be Our Next Success Story</h2>
+        <p>Join 200+ brands that trust The Millennial Hub to grow their digital presence. Let's create something remarkable together.</p>
+        <a href="contact.html" class="btn-cta">Start Your Journey</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  </main>
   <footer class="footer">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <h3>TMH<span>.</span></h3>
-        <p>The Millennial Hub — your A to Z partner for digital marketing, content, advertising, and behavioural training.</p>
-        <div class="footer-social">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="Facebook">FB</a>
-          <a href="#" aria-label="LinkedIn">LI</a>
-          <a href="#" aria-label="YouTube">YT</a>
-          <a href="#" aria-label="Twitter/X">X</a>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" style="margin-bottom: 0.5rem;">
+            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
+              <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
+          </a>
+          <p>The Millennial Hub delivers end-to-end digital marketing, content creation, advertising, and behavioural training — the A to Z of digital growth.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="YouTube">YT</a>
+            <a href="#" aria-label="LinkedIn">LI</a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="training.html">Training</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">Digital Marketing</a></li>
+            <li><a href="services.html">Social Media</a></li>
+            <li><a href="services.html">Content Creation</a></li>
+            <li><a href="services.html">SEO</a></li>
+            <li><a href="services.html">Advertising</a></li>
+            <li><a href="services.html">Web Design</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Stay Updated</h4>
+          <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 0.8rem;">Get the latest insights on digital marketing and brand growth.</p>
+          <div class="footer-newsletter">
+            <input type="email" placeholder="Your email" aria-label="Email for newsletter" />
+            <button type="button">Subscribe</button>
+          </div>
         </div>
       </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="clients.html">Clients</a></li>
-          <li><a href="training.html">Training</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
+      <div class="footer-bottom">
+        <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
+        <span>hello@themillennialhub.com &middot; +44 20 7123 4567</span>
       </div>
-      <div>
-        <h4>Services</h4>
-        <ul class="footer-links">
-          <li><a href="services.html">Digital Marketing</a></li>
-          <li><a href="services.html">Social Media</a></li>
-          <li><a href="services.html">Content Creation</a></li>
-          <li><a href="services.html">SEO</a></li>
-          <li><a href="services.html">Advertising</a></li>
-          <li><a href="training.html">Behavioural Training</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Stay Updated</h4>
-        <p class="body-small" style="margin-bottom:16px">Get the latest on digital marketing trends and insights.</p>
-        <div class="footer-newsletter">
-          <form onsubmit="event.preventDefault();alert('Thank you for subscribing!')">
-            <input type="email" placeholder="Enter your email" aria-label="Email for newsletter" required />
-            <button type="submit">Subscribe</button>
-          </form>
-        </div>
-        <div style="margin-top:24px">
-          <p class="body-small">hello@themillennialhub.com</p>
-          <p class="body-small">+1 (555) 000-0000</p>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
-      <span>Designed with purpose in Toronto</span>
     </div>
   </footer>
 
-  </div>
-</div>
-
+  <script src="js/main.js"></script>
 </body>
 </html>
-

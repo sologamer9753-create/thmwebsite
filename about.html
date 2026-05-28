@@ -3,294 +3,335 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <title>About Us — The Millennial Hub</title>
-  <meta name="description" content="Learn about TMH — a modern digital-first agency built for brands that want strategic, creative, and measurable marketing." />
+  <title>About — The Millennial Hub</title>
+  <meta name="description" content="Learn about The Millennial Hub's mission, vision, core values, and our journey in digital marketing and behavioural training." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/tmh.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollSmoother.min.js" defer></script>
-  <script src="js/tmh.js" defer></script>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>if(matchMedia('(hover:hover)and(pointer:fine)').matches)document.documentElement.classList.add('hover-device')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
 </head>
 <body>
-  <div id="webgl-canvas"></div>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- NAVIGATION -->
-  <nav class="nav" role="navigation" aria-label="Main navigation">
+  <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">TMH<span>.</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" class="active" aria-current="page">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="clients.html">Clients</a></li>
-        <li><a href="training.html">Training</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li class="nav-cta"><a href="contact.html" class="btn btn-primary btn-sm">Let's Talk</a></li>
-      </ul>
+      <a href="index.html" class="nav-logo">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
+          <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="services.html">Services</a>
+        <a href="clients.html">Clients</a>
+        <a href="training.html">Training</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Let's Talk</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
-  <div id="smooth-wrapper">
-    <div id="smooth-content">
-  <main id="main-content">
 
-  <!-- PAGE HERO -->
-  <section class="page-hero">
-    <div class="page-hero-bg"></div>
-    <div class="page-hero-content" data-reveal="fade">
-      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span>About</div>
-      <h1 class="display-large">Who We Are</h1>
-      <p class="body-large">A modern digital agency built at the intersection of strategy, creativity, and measurable brand growth.</p>
+  <section class="page-hero" data-parallax="0.08">
+    <div id="webgl-canvas"></div>
+    <div class="container">
+      <span class="section-label reveal">About Us</span>
+      <h1 data-split class="reveal reveal-delay-1">The Story Behind The Millennial Hub</h1>
+      <p class="reveal reveal-delay-2">From a bold vision to a full-spectrum digital growth partner — meet the team that helps modern brands win online.</p>
     </div>
   </section>
 
-  <!-- BRAND STORY -->
-  <section class="section section-glass">
+  <!-- Stats -->
+  <section class="section" style="padding-top: 1rem;">
     <div class="container">
-      <div class="grid-2" style="align-items:center">
-        <div data-reveal="fade">
-          <span class="kicker">Our Story</span>
-          <h2 class="display-medium">Born to Close the Digital Gap</h2>
-          <p class="body-large mt-16">The Millennial Hub was founded on a simple insight: most brands know they need digital presence — but few know how to build one that actually works. We bridge that gap with a full-stack approach that covers every layer of the marketing ecosystem.</p>
-          <p class="body-regular mt-16">From content creation and social strategy to SEO, advertising, and behavioural training — we partner with brands that are ready to grow, not just exist online.</p>
+      <div class="stat-grid">
+        <div class="stat-item reveal">
+          <div class="stat-number" data-target="200" data-suffix="+">0</div>
+          <div class="stat-label">Brands Served</div>
         </div>
-        <div data-reveal="fade">
-          <div class="glass-card" style="padding:48px">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;text-align:center">
-              <div>
-                <div class="counter-number" style="font-size:48px" data-target="200">0</div>
-                <div class="counter-label">Brands Served</div>
-              </div>
-              <div>
-                <div class="counter-number" style="font-size:48px" data-target="8">0</div>
-                <div class="counter-label">Years Experience</div>
-              </div>
-              <div>
-                <div class="counter-number" style="font-size:48px" data-target="30">0</div>
-                <div class="counter-label">Team Members</div>
-              </div>
-              <div>
-                <div class="counter-number" style="font-size:48px" data-target="15">0</div>
-                <div class="counter-label">Industry Verticals</div>
-              </div>
-            </div>
+        <div class="stat-item reveal reveal-delay-1">
+          <div class="stat-number" data-target="98" data-suffix="%">0</div>
+          <div class="stat-label">Client Retention</div>
+        </div>
+        <div class="stat-item reveal reveal-delay-2">
+          <div class="stat-number" data-target="12" data-suffix="+">0</div>
+          <div class="stat-label">Industry Awards</div>
+        </div>
+        <div class="stat-item reveal reveal-delay-3">
+          <div class="stat-number" data-target="8" data-suffix="+">0</div>
+          <div class="stat-label">Years of Excellence</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Story -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="align-items: center;">
+        <div class="reveal">
+          <span class="section-label">Our Journey</span>
+          <h2>From Vision to <span class="gradient-text">Industry Standard</span></h2>
+          <p style="color: var(--muted); margin-top: 0.5rem; line-height: 1.7; font-size: 0.9rem;">
+            The Millennial Hub was founded with a single belief: that digital marketing should be strategic, creative, and measurable. What started as a boutique content studio has grown into a full-service digital agency working with brands across food, hospitality, lifestyle, retail, and technology.
+          </p>
+          <p style="color: var(--muted); margin-top: 0.6rem; line-height: 1.7; font-size: 0.9rem;">
+            Today, The Millennial Hub delivers end-to-end solutions — from social media management and content creation to SEO, paid advertising, website design, and corporate behavioural training. Every campaign we run is built on data, executed with craft, and measured against real business outcomes.
+          </p>
+        </div>
+        <div class="reveal reveal-delay-1" style="background: var(--surface); border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid var(--border); text-align: center;">
+          <div style="font-size: 1.8rem; margin-bottom: 0.4rem; font-family: var(--font-display); font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">"A to Z of Digital Marketing"</div>
+          <p style="color: var(--muted); font-size: 0.85rem;">— Our promise. Every service under one roof, delivered with precision.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision -->
+  <section class="section" style="background: rgba(7,17,31,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="grid-2 gap-16">
+        <div class="card reveal tilt-card" style="padding: 1.5rem;">
+          <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#x1F3AF;</div>
+          <h3 style="margin-bottom: 0.4rem;">Our Mission</h3>
+          <p style="color: var(--muted); line-height: 1.6; font-size: 0.9rem;">To empower modern brands with strategic, creative, and data-driven digital solutions that drive measurable growth and build lasting market presence.</p>
+        </div>
+        <div class="card reveal reveal-delay-1 tilt-card" style="padding: 1.5rem;">
+          <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#x1F4A1;</div>
+          <h3 style="margin-bottom: 0.4rem;">Our Vision</h3>
+          <p style="color: var(--muted); line-height: 1.6; font-size: 0.9rem;">To become the most trusted end-to-end digital partner for ambitious brands across the UK and beyond — setting the standard for marketing excellence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Values -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-2 reveal">
+        <span class="section-label">What We Stand For</span>
+        <h2>Our Core Values</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card reveal tilt-card">
+          <div class="v-icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F511;</div>
+          <h4>Integrity</h4>
+          <p>Honest reporting, transparent pricing, and strategies we truly believe in.</p>
+        </div>
+        <div class="value-card reveal reveal-delay-1 tilt-card">
+          <div class="v-icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x1F4A1;</div>
+          <h4>Innovation</h4>
+          <p>We stay ahead of the curve — new platforms, new formats, new ways to connect.</p>
+        </div>
+        <div class="value-card reveal reveal-delay-2 tilt-card">
+          <div class="v-icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F91D;</div>
+          <h4>Partnership</h4>
+          <p>Your brand is our brand. We succeed when you succeed — full commitment, always.</p>
+        </div>
+        <div class="value-card reveal reveal-delay-3 tilt-card">
+          <div class="v-icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F3AF;</div>
+          <h4>Excellence</h4>
+          <p>Every deliverable — from a social post to a full campaign — meets our highest standard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="text-center mb-2 reveal">
+        <span class="section-label">Leadership</span>
+        <h2>Meet the Team Behind The Millennial Hub</h2>
+        <p style="color: var(--muted); max-width: 540px; margin: 0.8rem auto 0; font-size: 0.95rem;">A tight-knit team of strategists, creatives, and technologists building the future of digital.</p>
+      </div>
+      <div class="team-grid card-stagger">
+        <div class="team-card tilt-card">
+          <div class="team-avatar">JD</div>
+          <h4>James Darlington</h4>
+          <div class="team-role">Founder &amp; CEO</div>
+          <div class="team-bio">12+ years in digital strategy. Former agency lead at Wunderman Thompson. Built The Millennial Hub from a solo consultancy to a 40-person agency.</div>
+        </div>
+        <div class="team-card tilt-card">
+          <div class="team-avatar">AN</div>
+          <h4>Aisha Nkosi</h4>
+          <div class="team-role">Creative Director</div>
+          <div class="team-bio">Award-winning designer with work featured in D&AD and The One Club. Leads all creative output across brand, content, and web.</div>
+        </div>
+        <div class="team-card tilt-card">
+          <div class="team-avatar">MP</div>
+          <h4>Marcus Patel</h4>
+          <div class="team-role">Head of Strategy</div>
+          <div class="team-bio">Data-driven strategist. Previously led digital transformation for三家 FTSE 250 companies. Builds campaigns that convert.</div>
+        </div>
+        <div class="team-card tilt-card">
+          <div class="team-avatar">LC</div>
+          <h4>Lauren Cross</h4>
+          <div class="team-role">Training Director</div>
+          <div class="team-bio">Chartered psychologist and executive coach. Specialises in emotional intelligence and leadership development for corporate teams.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Awards -->
+  <section class="section" style="background: rgba(7,17,31,0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="text-center mb-2 reveal">
+        <span class="section-label">Recognition</span>
+        <h2>Awards &amp; Certifications</h2>
+      </div>
+      <div class="awards-grid card-stagger">
+        <div class="award-card tilt-card">
+          <div class="award-icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x1F3C6;</div>
+          <div>
+            <h4>Best Integrated Campaign 2024</h4>
+            <p>UK Digital Marketing Awards</p>
+          </div>
+        </div>
+        <div class="award-card tilt-card">
+          <div class="award-icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x1F3C6;</div>
+          <div>
+            <h4>Top 50 Digital Agencies 2024</h4>
+            <p>Marketing Week Rankings</p>
+          </div>
+        </div>
+        <div class="award-card tilt-card">
+          <div class="award-icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F3C6;</div>
+          <div>
+            <h4>Google Premier Partner</h4>
+            <p>Certified Since 2021</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- MISSION & VISION -->
-  <section class="section section-glass">
+  <!-- Timeline — card grid, no vertical line -->
+  <section class="section" style="background: rgba(7,17,31,0.01); border-top: 1px solid var(--border);">
     <div class="container">
-      <div class="grid-2" style="gap:24px">
-        <div class="surface-card" data-reveal="fade" style="padding:48px 40px">
-          <span class="kicker">Our Mission</span>
-          <h3 style="font-size:28px;margin-bottom:16px">Empower Brands to Own Their Digital Future</h3>
-          <p class="body-regular">We exist to democratize world-class digital marketing — giving growing brands the same strategic firepower that global enterprises rely on, delivered with the agility and care of a dedicated partner.</p>
+      <div class="text-center mb-2 reveal">
+        <span class="section-label">Our Growth</span>
+        <h2>The Millennial Hub Timeline</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-dot">18</div>
+          <div class="timeline-content">
+            <h4>2018 — Founded</h4>
+            <p>The Millennial Hub launches as a content studio in London, working with 5 local brands on social media strategy.</p>
+          </div>
         </div>
-        <div class="surface-card" data-reveal="fade" style="padding:48px 40px">
-          <span class="kicker">Our Vision</span>
-          <h3 style="font-size:28px;margin-bottom:16px">A World Where Every Great Brand Finds Its Audience</h3>
-          <p class="body-regular">We envision a digital ecosystem where creativity, data, and humanity converge — and where TMH is the partner that ambitious brands trust to get them there.</p>
+        <div class="timeline-item reveal">
+          <div class="timeline-dot">20</div>
+          <div class="timeline-content">
+            <h4>2020 — Full-Service Pivot</h4>
+            <p>Expanded into SEO, paid advertising, and website design. Team grows to 12. 40+ brands onboarded.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-dot">22</div>
+          <div class="timeline-content">
+            <h4>2022 — Behavioural Training Launch</h4>
+            <p>Launched corporate training division focused on emotional intelligence, leadership, and team communication.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-dot">24</div>
+          <div class="timeline-content">
+            <h4>2024 — Industry Recognition</h4>
+            <p>Named among Top 50 Digital Agencies. 150+ brands served. Awarded Best Integrated Campaign.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-dot">26</div>
+          <div class="timeline-content">
+            <h4>2026 — Scaling Further</h4>
+            <p>200+ brands, expanding into new markets, launching AI-powered analytics for client campaigns.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- WHAT MAKES TMH DIFFERENT -->
-  <section class="section section-glass">
-    <div class="container">
-      <div class="text-center mb-48">
-        <div class="text-line-reveal" data-reveal="mask">
-          <span class="kicker">Our Difference</span>
-        </div>
-        <div class="text-line-reveal" data-reveal="mask">
-          <h2 class="display-medium">What Sets Us Apart</h2>
-        </div>
-      </div>
-      <div class="grid-3" data-reveal="stagger">
-        <div class="feature-card">
-          <div class="feature-number">Full-Spectrum</div>
-          <h3>One Partner, Every Layer</h3>
-          <p>Strategy, content, social, advertising, SEO, web design, and training — delivered as a cohesive system rather than fragmented vendor relationships.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-number">Data-Led</div>
-          <h3>Decisions Over Opinions</h3>
-          <p>Every creative choice is anchored in real performance data, audience insights, and competitive intelligence — not gut feelings.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-number">Behavioural Edge</div>
-          <h3>Psychology Meets Marketing</h3>
-          <p>Our unique behavioural training background means we understand how people think, decide, and act — making every campaign more effective.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TIMELINE -->
-  <section class="section section-glass">
-    <div class="container">
-      <div class="text-center mb-48">
-        <div class="text-line-reveal" data-reveal="mask">
-          <span class="kicker">Our Journey</span>
-        </div>
-        <div class="text-line-reveal" data-reveal="mask">
-          <h2 class="display-medium">The TMH Timeline</h2>
-        </div>
-      </div>
-      <div class="timeline" data-reveal="stagger" data-stagger-delay="0.1" style="max-width:600px">
-        <div class="timeline-item">
-          <h3><span style="color:var(--accent)">🚀</span> Founded</h3>
-          <p style="color:var(--accent);font-weight:600;font-size:13px">2018</p>
-          <p>TMH launched with a mission to close the digital gap for growing brands.</p>
-        </div>
-        <div class="timeline-item">
-          <h3><span style="color:var(--accent)">📊</span> Expanded Services</h3>
-          <p style="color:var(--accent);font-weight:600;font-size:13px">2020</p>
-          <p>Added content creation, video production, and full advertising management to our offering.</p>
-        </div>
-        <div class="timeline-item">
-          <h3><span style="color:var(--accent)">🎓</span> Training Division Launch</h3>
-          <p style="color:var(--accent);font-weight:600;font-size:13px">2022</p>
-          <p>Launched behavioural training programs — emotional intelligence, leadership, and team development.</p>
-        </div>
-        <div class="timeline-item">
-          <h3><span style="color:var(--accent)">🌟</span> 200+ Brands & Growing</h3>
-          <p style="color:var(--accent);font-weight:600;font-size:13px">2024</p>
-          <p>Surpassed 200 brand partnerships across food, hospitality, lifestyle, retail, and enterprise.</p>
-        </div>
-        <div class="timeline-item">
-          <h3><span style="color:var(--accent)">🌐</span> Scaling for the Future</h3>
-          <p style="color:var(--accent);font-weight:600;font-size:13px">2026</p>
-          <p>Expanding into new markets, channels, and technology — building the next generation of digital experiences.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CORE VALUES -->
-  <section class="section section-glass">
-    <div class="container">
-      <div class="text-center mb-48">
-        <div class="text-line-reveal" data-reveal="mask">
-          <span class="kicker">Our Values</span>
-        </div>
-        <div class="text-line-reveal" data-reveal="mask">
-          <h2 class="display-medium">Principles That Guide Every Decision</h2>
-        </div>
-      </div>
-      <div class="grid-4" data-reveal="stagger">
-        <div class="glass-card text-center" style="padding:32px 20px">
-          <div style="font-size:36px;margin-bottom:16px;color:var(--accent)">🎯</div>
-          <h4 style="font-size:18px;margin-bottom:8px">Precision</h4>
-          <p class="body-small">Every action has intent. We measure before we move.</p>
-        </div>
-        <div class="glass-card text-center" style="padding:32px 20px">
-          <div style="font-size:36px;margin-bottom:16px;color:var(--accent)">✨</div>
-          <h4 style="font-size:18px;margin-bottom:8px">Craft</h4>
-          <p class="body-small">Quality is non-negotiable. Detail is our signature.</p>
-        </div>
-        <div class="glass-card text-center" style="padding:32px 20px">
-          <div style="font-size:36px;margin-bottom:16px;color:var(--accent)">🤝</div>
-          <h4 style="font-size:18px;margin-bottom:8px">Partnership</h4>
-          <p class="body-small">We win when our clients win. That's the only metric.</p>
-        </div>
-        <div class="glass-card text-center" style="padding:32px 20px">
-          <div style="font-size:36px;margin-bottom:16px;color:var(--accent)">🚀</div>
-          <h4 style="font-size:18px;margin-bottom:8px">Growth</h4>
-          <p class="body-small">Comfort zones are not in our vocabulary.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
+  <!-- CTA — Aurora Glass -->
   <section class="cta-section">
     <div class="cta-aurora"></div>
-    <div class="container">
-      <div class="cta-glass" data-reveal="float">
-        <div class="cta-content">
-          <h2 class="display-medium">Let's Write Your Story</h2>
-          <p class="body-large">Every great brand has a beginning. Let's make yours unforgettable.</p>
-          <div class="cta-actions">
-            <a href="contact.html" class="btn-cta">Start the Conversation</a>
-            <a href="services.html" class="btn btn-outline btn-lg">Explore Services</a>
-          </div>
-        </div>
+    <div class="container container-narrow">
+      <div class="cta-banner">
+        <h2>Ready to Write Your Success Story?</h2>
+        <p>Join 200+ brands that trust The Millennial Hub to grow their digital presence. Let's talk about what we can do for you.</p>
+        <a href="contact.html" class="btn-cta">Get In Touch</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  </main>
   <footer class="footer">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <h3>TMH<span>.</span></h3>
-        <p>The Millennial Hub — your A to Z partner for digital marketing, content, advertising, and behavioural training.</p>
-        <div class="footer-social">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="Facebook">FB</a>
-          <a href="#" aria-label="LinkedIn">LI</a>
-          <a href="#" aria-label="YouTube">YT</a>
-          <a href="#" aria-label="Twitter/X">X</a>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" style="margin-bottom: 0.5rem;">
+            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#1A2E3B"/>
+              <path d="M9 27V9L18 19.5L27 9V27" stroke="#12D6E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="nav-logo-text">The Millennial Hub<span class="dot">.</span></span>
+          </a>
+          <p>The Millennial Hub delivers end-to-end digital marketing, content creation, advertising, and behavioural training — the A to Z of digital growth.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="YouTube">YT</a>
+            <a href="#" aria-label="LinkedIn">LI</a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="training.html">Training</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">Digital Marketing</a></li>
+            <li><a href="services.html">Social Media</a></li>
+            <li><a href="services.html">Content Creation</a></li>
+            <li><a href="services.html">SEO</a></li>
+            <li><a href="services.html">Advertising</a></li>
+            <li><a href="services.html">Web Design</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Stay Updated</h4>
+          <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 0.8rem;">Get the latest insights on digital marketing and brand growth.</p>
+          <div class="footer-newsletter">
+            <input type="email" placeholder="Your email" aria-label="Email for newsletter" />
+            <button type="button">Subscribe</button>
+          </div>
         </div>
       </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="clients.html">Clients</a></li>
-          <li><a href="training.html">Training</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
+      <div class="footer-bottom">
+        <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
+        <span>hello@themillennialhub.com &middot; +44 20 7123 4567</span>
       </div>
-      <div>
-        <h4>Services</h4>
-        <ul class="footer-links">
-          <li><a href="services.html">Digital Marketing</a></li>
-          <li><a href="services.html">Social Media</a></li>
-          <li><a href="services.html">Content Creation</a></li>
-          <li><a href="services.html">SEO</a></li>
-          <li><a href="services.html">Advertising</a></li>
-          <li><a href="training.html">Behavioural Training</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Stay Updated</h4>
-        <p class="body-small" style="margin-bottom:16px">Get the latest on digital marketing trends and insights.</p>
-        <div class="footer-newsletter">
-          <form onsubmit="event.preventDefault();alert('Thank you for subscribing!')">
-            <input type="email" placeholder="Enter your email" aria-label="Email for newsletter" required />
-            <button type="submit">Subscribe</button>
-          </form>
-        </div>
-        <div style="margin-top:24px">
-          <p class="body-small">hello@themillennialhub.com</p>
-          <p class="body-small">+1 (555) 000-0000</p>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
-      <span>Designed with purpose in Toronto</span>
     </div>
   </footer>
 
-  </div>
-</div>
-
+  <script src="js/main.js"></script>
 </body>
 </html>
-
