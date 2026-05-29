@@ -69,6 +69,20 @@ h4 { font-size: 1.2rem; font-weight: 700; }
 @media (max-width: 480px) { .container { padding: 0 16px; } }
 .container-narrow { max-width: 960px; }
 
+/* Local utility equivalents for pb-24 md:pb-0 so the footer can clear browser chrome. */
+.site-main {
+  position: relative;
+  z-index: 10;
+}
+.pb-24 {
+  padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
+}
+@media (min-width: 768px) {
+  .md\:pb-0 {
+    padding-bottom: 0;
+  }
+}
+
 /* ---- Section — no fixed heights, content-fit === h-auto === w-full === flex-col === py-2 md:py-4 ---- */
 section { position: relative; z-index: 10; }
 .section { width: 100%; padding: 0.6rem 0 1.5rem; position: relative; background: #07111F !important; color: #fff; }
@@ -242,14 +256,17 @@ section { position: relative; z-index: 10; }
 
 /* ---- Hero — asymmetrical split, floating glass cards, flashlight ---- */
 .hero {
-  position: relative; width: 100%; min-height: 100vh;
+  position: relative; width: 100%; min-height: 100dvh;
   display: flex; align-items: center;
-  background: transparent; overflow: hidden;
+  background: transparent !important; overflow: hidden;
   padding: calc(var(--nav-h) + 20px) 0 40px;
+}
+.hero.hero-transparent {
+  background: transparent !important;
 }
 /* WebGL particle canvas — fixed viewport, beneath all content */
 #webgl-canvas {
-  position: fixed !important; top: 0; left: 0; width: 100vw; height: 100vh;
+  position: fixed !important; top: 0; left: 0; width: 100vw; height: 100dvh;
   z-index: 0; pointer-events: none; overflow: hidden;
   background: #07111F !important;
 }
@@ -257,7 +274,7 @@ section { position: relative; z-index: 10; }
   display: block; width: 100% !important; height: 100% !important;
   mix-blend-mode: screen;
 }
-@media (max-width: 768px) { .hero { min-height: auto; padding: calc(var(--nav-h) + 16px) 0 24px; } }
+@media (max-width: 768px) { .hero { min-height: 100dvh; padding: calc(var(--nav-h) + 16px) 0 24px; } }
 
 /* Flashlight — tracks cursor position within hero */
 .hero-flashlight {
@@ -302,6 +319,53 @@ section { position: relative; z-index: 10; }
   background: radial-gradient(circle at center, rgba(7,17,31,0.95) 0%, rgba(7,17,31,0.4) 50%, transparent 75%);
   pointer-events: none; z-index: -1;
   border-radius: 24px;
+}
+.hero-glass-shield {
+  position: relative;
+  z-index: 20;
+  padding: 2rem;
+  border-radius: 2rem;
+  background: rgba(7,17,31,0.30);
+  backdrop-filter: blur(24px) saturate(1.25);
+  -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.08);
+  animation: hero-glass-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+.hero-glass-shield::before {
+  content: none !important;
+}
+.hero-glass-shield::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(2rem - 1px);
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent 34%, rgba(18,214,231,0.07) 100%);
+  opacity: 0.75;
+}
+.hero-glass-shield > * {
+  position: relative;
+  z-index: 1;
+}
+@media (min-width: 768px) {
+  .hero-glass-shield {
+    padding: 3rem;
+  }
+}
+@media (max-width: 480px) {
+  .hero-glass-shield {
+    padding: 1.4rem;
+    border-radius: 1.5rem;
+  }
+  .hero-glass-shield::after {
+    border-radius: calc(1.5rem - 1px);
+  }
+}
+@keyframes hero-glass-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
 }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -932,7 +996,7 @@ select.form-control { appearance: none; cursor: pointer; }
 @media (max-width: 640px) {
   .footer {
     min-height: auto;
-    padding: 3rem 0 1.5rem;
+    padding: 3rem 0 calc(2.5rem + env(safe-area-inset-bottom, 0px));
   }
   .footer .container::before {
     left: 16px;
@@ -1234,6 +1298,7 @@ html.gsap-active .stagger-item {
   .tilt-card:hover { transform: none !important; }
   .cursor-glow { display: none; }
   .cta-aurora { display: none; }
+  .hero-glass-shield { animation: none; }
   .cta-section { background: linear-gradient(135deg, #07111F, #0F1C2E); }
   #webgl-canvas canvas { display: none; }
 }
