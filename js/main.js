@@ -60,15 +60,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Store globally for anchor-link scrolling
     window.__lenis = lenis;
+
+    if (hasGSAP) {
+      lenis.on('scroll', ScrollTrigger.update);
+    }
   })();
 
   // ============================================================
-  // 1A. THREE.JS — WebGL dense Torus Knot particles (hero bg)
+  // 1A. THREE.JS — WebGL particle morph: Torus Knot → Cube
   // ============================================================
   ;(function () {
     if (isReduced || typeof THREE === 'undefined') return;
     var canvas = document.getElementById('webgl-canvas');
     if (!canvas || canvas.querySelector('canvas')) return;
+
+    var particleCount = 5000;
 
     var scene = new THREE.Scene();
     var w = window.innerWidth;
@@ -84,20 +90,35 @@ document.addEventListener('DOMContentLoaded', function () {
     renderer.setClearColor(0x000000, 0);
     canvas.appendChild(renderer.domElement);
 
-    // Sample vertices from a dense TorusKnotGeometry
-    var knotGeom = new THREE.TorusKnotGeometry(6, 2, 200, 24);
-    var src = knotGeom.attributes.position.array;
-    var srcCount = src.length / 3;
-    var positions = new Float32Array(srcCount * 3);
+    // Shape A: Torus Knot — exactly 5000 vertices
+    var knotGeom = new THREE.TorusKnotGeometry(6, 2, 199, 24);
+    var knotPos = knotGeom.attributes.position.array;
 
-    for (var i = 0; i < srcCount; i++) {
-      positions[i * 3]     = src[i * 3]     + (Math.random() - 0.5) * 0.6;
-      positions[i * 3 + 1] = src[i * 3 + 1] + (Math.random() - 0.5) * 0.6;
-      positions[i * 3 + 2] = src[i * 3 + 2] + (Math.random() - 0.5) * 0.6;
+    // Shape B: Box (segmented) — trim to particleCount
+    var boxGeom = new THREE.BoxGeometry(12, 12, 12, 28, 28, 28);
+    var boxPos = boxGeom.attributes.position.array;
+    var boxCount = boxPos.length / 3;
+
+    var positions = new Float32Array(particleCount * 3);
+    var morphPos = new Float32Array(particleCount * 3);
+
+    for (var i = 0; i < particleCount; i++) {
+      var i3 = i * 3;
+      positions[i3]     = knotPos[i3]     + (Math.random() - 0.5) * 0.6;
+      positions[i3 + 1] = knotPos[i3 + 1] + (Math.random() - 0.5) * 0.6;
+      positions[i3 + 2] = knotPos[i3 + 2] + (Math.random() - 0.5) * 0.6;
+      var bi = (i % boxCount) * 3;
+      morphPos[i3]     = boxPos[bi];
+      morphPos[i3 + 1] = boxPos[bi + 1];
+      morphPos[i3 + 2] = boxPos[bi + 2];
     }
 
     var geom = new THREE.BufferGeometry();
     geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geom.morphAttributes = {};
+    geom.morphAttributes.position = [
+      new THREE.BufferAttribute(morphPos, 3)
+    ];
 
     var mat = new THREE.PointsMaterial({
       size: 0.15,
@@ -106,10 +127,12 @@ document.addEventListener('DOMContentLoaded', function () {
       opacity: 0.9,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
-      sizeAttenuation: true
+      sizeAttenuation: true,
+      morphTargets: true
     });
 
     var pts = new THREE.Points(geom, mat);
+    pts.morphTargetInfluences = [0];
     scene.add(pts);
 
     var mouseX = 0, mouseY = 0;
@@ -142,7 +165,21 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', resize);
     setTimeout(resize, 300);
 
-    console.log('TMH WebGL: ' + srcCount + ' torus knot particles');
+    // GSAP ScrollTrigger: morph Torus Knot → Cube on scroll
+    if (hasGSAP && typeof ScrollTrigger !== 'undefined') {
+      gsap.to(pts.morphTargetInfluences, {
+        0: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1.5
+        }
+      });
+    }
+
+    console.log('TMH WebGL: ' + particleCount + ' particles (morph: torus → cube)');
   })();
 
   // ============================================================
@@ -776,19 +813,34 @@ document.addEventListener('DOMContentLoaded', function () {
     var nav = document.querySelector('.nav');
     if (!toggle || !navLinks) return;
 
+    function updateScrollLock(open) {
+      if (open) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    }
+
     toggle.addEventListener('click', function () {
       var opening = !navLinks.classList.contains('open');
       navLinks.classList.toggle('open');
+      updateScrollLock(opening);
       // When opening mobile menu, ensure nav is visible
       if (opening && nav) nav.style.transform = 'translateY(0)';
     });
 
     navLinks.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () { navLinks.classList.remove('open'); });
+      a.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        updateScrollLock(false);
+      });
     });
 
     document.addEventListener('click', function (e) {
-      if (!e.target.closest('.nav-inner')) navLinks.classList.remove('open');
+      if (!e.target.closest('.nav-inner')) {
+        navLinks.classList.remove('open');
+        updateScrollLock(false);
+      }
     });
   })();
 

@@ -1486,3 +1486,57 @@ html.gsap-active .gsap-hidden-scale { opacity: 0; transform: scale(0.92); }
 }
 .dark-section { position: relative; }
 .dark-section > * { position: relative; z-index: 2; }
+
+/* ============================================================
+   SECTION 5: Accessibility — skip-link, focus, forced-colors
+   ============================================================ */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 16px;
+  z-index: 99999;
+  padding: 10px 20px;
+  background: #12D6E7;
+  color: #07111F;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.25s ease;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid #12D6E7;
+  outline-offset: 2px;
+}
+
+*:focus-visible {
+  outline: 2px solid #12D6E7;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (forced-colors: active) {
+  .glass-card,
+  .nav,
+  .btn,
+  .hero-card,
+  .stat-item,
+  .value-card,
+  .timeline-item,
+  .focus-item,
+  .delivery-card,
+  .footer,
+  .page-hero {
+    border: 1px solid CanvasText;
+  }
+  .btn-primary,
+  .hero-btn-primary,
+  .nav-cta {
+    border: 1px solid Highlight;
+  }
+  .skip-link {
+    border: 2px solid Highlight;
+  }
+}
