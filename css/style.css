@@ -1602,3 +1602,17 @@ h1, h2, h3 {
 .masonry-item .body h4 {
   color: var(--fg);
 }
+
+/* --- FIX INVISIBLE TEXT IN PROGRAM CARDS --- */
+
+.program-card h3 {
+    color: #0f172a !important; /* Very dark blue/grey for the bold headings */
+}
+
+.program-card p {
+    color: #475569 !important; /* Medium readable grey for the descriptions */
+}
+
+.program-card .program-meta span {
+    color: #64748b !important; /* Slightly lighter grey for the small bottom text */
+}
