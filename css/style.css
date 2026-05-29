@@ -26,7 +26,6 @@ ul { list-style: none; }
   --surface:  oklch(100% 0 0);
   --fg:       #07111F;
   --muted:    oklch(27% 0.015 260);
-  --muted-on-dark: oklch(72% 0.018 260);
   --border:   rgba(7,17,31,0.08);
   --accent:   #12D6E7;
   --blue:     #367CFF;
@@ -45,15 +44,15 @@ ul { list-style: none; }
 }
 
 /* ---- Typography ---- */
-h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
-h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); }
-h2 { font-size: clamp(2rem, 3.5vw, 3rem); }
-h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); }
-h4 { font-size: 1.15rem; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.8rem); }
+h2 { font-size: clamp(2rem, 3.8vw, 3.2rem); }
+h3 { font-size: clamp(1.35rem, 2.2vw, 1.75rem); }
+h4 { font-size: 1.2rem; font-weight: 700; }
 @media (max-width: 480px) {
-  h1 { font-size: clamp(1.7rem, 9vw, 2.4rem); }
-  h2 { font-size: clamp(1.35rem, 6.5vw, 2rem); }
-  h3 { font-size: clamp(1.1rem, 5vw, 1.3rem); }
+  h1 { font-size: clamp(1.8rem, 10vw, 2.6rem); }
+  h2 { font-size: clamp(1.4rem, 7vw, 2.2rem); }
+  h3 { font-size: clamp(1.15rem, 5.5vw, 1.4rem); }
 }
 .section-label {
   font-family: var(--font-display);
@@ -649,65 +648,89 @@ section { position: relative; z-index: 10; }
 textarea.form-control { min-height: 140px; resize: vertical; }
 select.form-control { appearance: none; cursor: pointer; }
 
-/* ---- Footer ---- */
+/* ---- Premium Footer ---- */
 .footer {
   width: 100%;
-  border-top: 1px solid var(--border);
-  padding: 0.8rem 0 0.6rem;
-  margin-top: 0.5rem;
+  background: #07111F;
+  border-top: 1px solid rgba(18,214,231,0.15);
+  padding: 3rem 0 1.5rem;
+  margin-top: 3rem;
+  position: relative;
 }
-@media (min-width: 640px) { .footer { padding: 1rem 0 0.8rem; } }
+.footer::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  box-shadow: 0 0 20px rgba(18,214,231,0.4);
+}
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1.5fr;
-  gap: 28px;
-  margin-bottom: 1.5rem;
+  gap: 40px;
+  margin-bottom: 2.5rem;
 }
-.footer-brand p { color: var(--muted); font-size: 0.85rem; margin-top: 1rem; max-width: 300px; line-height: 1.7; }
-.footer h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 1.2rem; font-weight: 600; }
-.footer ul li { margin-bottom: 10px; }
-.footer ul a { color: var(--muted); font-size: 0.88rem; transition: color var(--transition); }
-.hover-device .footer ul a:hover { color: var(--fg); }
-.footer-social { display: flex; gap: 12px; margin-top: 1rem; }
-.footer-social a {
+.footer-brand p { color: #94a3b8; font-size: 0.85rem; margin-top: 1rem; max-width: 320px; line-height: 1.8; }
+.footer h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 1.5rem; font-weight: 700; }
+.footer ul li { margin-bottom: 12px; }
+.footer ul a { color: #94a3b8; font-size: 0.88rem; transition: color 0.3s ease; }
+.hover-device .footer ul a:hover { color: #fff; }
+.footer-social { display: flex; gap: 12px; margin-top: 1.2rem; }
+.footer-social a.social-icon {
   width: 40px; height: 40px; border-radius: 50%;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255,255,255,0.1);
   display: grid; place-items: center;
-  color: var(--muted); transition: var(--transition); font-size: 0.9rem;
+  color: #94a3b8; transition: all 0.3s ease;
 }
-.hover-device .footer-social a:hover { border-color: var(--accent); color: var(--accent); }
+.footer-social a.social-icon svg {
+  width: 18px; height: 18px;
+}
+.hover-device .footer-social a.social-icon:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 20px rgba(18,214,231,0.15);
+}
 .footer-bottom {
-  border-top: 1px solid var(--border);
-  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 1.5rem;
   display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap; gap: 8px;
-  font-size: 0.78rem; color: rgba(7,17,31,0.3);
+  font-size: 0.78rem; color: #64748b;
 }
+.footer-newsletter-text { color: #94a3b8; font-size: 0.85rem; margin-bottom: 1rem; line-height: 1.7; }
 .footer-newsletter { display: flex; gap: 8px; }
 .footer-newsletter input {
-  flex: 1; padding: 10px 16px;
-  background: rgba(7,17,31,0.03);
-  border: 1px solid var(--border); border-radius: 999px;
-  color: var(--fg); font-size: 0.85rem; outline: none;
-  min-width: 180px;
+  flex: 1; padding: 12px 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 999px;
+  color: #fff; font-size: 0.85rem; outline: none;
+  min-width: 180px; transition: border-color 0.3s ease;
 }
 .footer-newsletter input:focus { border-color: var(--accent); }
+.footer-newsletter input::placeholder { color: rgba(255,255,255,0.3); }
 .footer-newsletter button {
-  padding: 10px 20px; border-radius: 999px;
+  padding: 12px 24px; border-radius: 999px;
   background: var(--accent); color: #07111F;
-  border: none; font-weight: 600; cursor: pointer;
+  border: none; font-weight: 700; cursor: pointer;
   font-size: 0.85rem; white-space: nowrap;
-  transition: var(--transition);
+  letter-spacing: 0.02em; transition: all 0.3s ease;
 }
-.hover-device .footer-newsletter button:hover { box-shadow: 0 0 30px rgba(18,214,231,0.3); }
+.hover-device .footer-newsletter button:hover { box-shadow: 0 0 30px rgba(18,214,231,0.3); transform: scale(1.02); }
 
 @media (max-width: 820px) {
-  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
 }
 @media (max-width: 560px) {
-  .footer-grid { grid-template-columns: 1fr; }
-  .footer-bottom { flex-direction: column; text-align: center; }
+  .footer { padding: 2rem 0 1.2rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 6px; }
   .footer-newsletter { flex-direction: column; }
+  .footer-newsletter input { min-width: unset; }
 }
 
 /* ---- Premium CTA Section — Aurora Glass ---- */
@@ -1205,6 +1228,23 @@ html.gsap-active .stagger-item {
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+.text-glow {
+  text-shadow: 0 0 40px rgba(18,214,231,0.3), 0 0 80px rgba(18,214,231,0.1);
+}
+.text-glow-blue {
+  text-shadow: 0 0 40px rgba(54,124,255,0.3), 0 0 80px rgba(54,124,255,0.1);
+}
+.display-xl {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  font-weight: 800;
+}
+@media (max-width: 480px) {
+  .display-xl {
+    font-size: clamp(2rem, 12vw, 3rem);
+  }
+}
 .mt-1 { margin-top: 0.4rem; }
 .mt-2 { margin-top: 0.6rem; }
 .mt-3 { margin-top: 1rem; }
@@ -1575,9 +1615,24 @@ p, label, .text-slate-800, .text-gray-800, .text-slate-900, .text-gray-900 {
     color: #cbd5e1 !important; 
 }
 
-/* 2. Protect the white cards! Make sure text inside white backgrounds stays dark */
-.bg-white p, .bg-white span, .bg-white div, .bg-white .text-slate-800 {
-    color: #1e293b !important; 
+/* 2. Protect text inside white-surface cards from .section color:#fff inheritance.
+   These cards use background: var(--surface) (white) and inherit white text from .section.
+   Some also use color: var(--muted) which may fail if oklch() is unsupported. */
+.card p,
+.service-card p,
+.feature-card p,
+.masonry-item .body p,
+.timeline-content p,
+.value-card p,
+.program-card p,
+.contact-detail-card p,
+.award-card p,
+.testimonial-card p,
+.result-item p,
+.schedule-info p,
+.service-card .tags span,
+.program-meta span {
+    color: #475569 !important;
 }
 
 /* 3. Ensure primary headings always stay pure white */
@@ -1600,19 +1655,109 @@ h1, h2, h3 {
 .contact-detail-card h4,
 .feature-card h3,
 .masonry-item .body h4 {
-  color: var(--fg);
+  color: var(--fg) !important;
 }
 
-/* --- FIX INVISIBLE TEXT IN PROGRAM CARDS --- */
-
-.program-card h3 {
-    color: #0f172a !important; /* Very dark blue/grey for the bold headings */
+/* Behavioural training specs box checkmarks inherit #fff from .section */
+.specs-check {
+  color: #334155;
 }
 
-.program-card p {
-    color: #475569 !important; /* Medium readable grey for the descriptions */
+/* --- FOOTER VISIBILITY FIX --- */
+/* Override oklch() fallback issues & .section color:#fff cascade */
+.footer ul a,
+.footer-social a.social-icon,
+.footer-bottom,
+.footer-bottom span {
+  color: #94a3b8 !important;
+}
+.hover-device .footer ul a:hover {
+  color: #ffffff !important;
+}
+.hover-device .footer-social a.social-icon:hover {
+  border-color: #12D6E7 !important;
+  color: #12D6E7 !important;
+}
+/* Force footer newsletter text & brand description to visible slate on navy */
+.footer-newsletter-text,
+.footer-brand p {
+  color: #94a3b8 !important;
 }
 
-.program-card .program-meta span {
-    color: #64748b !important; /* Slightly lighter grey for the small bottom text */
+/* --- CONTACT PAGE VISIBILITY FIX --- */
+/* "Follow Us" social buttons inside .section need light text on navy bg */
+.section .btn-secondary {
+  color: #94a3b8 !important;
+  border-color: rgba(255,255,255,0.15) !important;
+  background: rgba(255,255,255,0.04) !important;
+}
+.hover-device .section .btn-secondary:hover {
+  border-color: #12D6E7 !important;
+  color: #12D6E7 !important;
+  background: rgba(18,214,231,0.08) !important;
+}
+/* Office hours list — fix dark oklch colors on navy bg */
+.hours-list li {
+  color: #94a3b8 !important;
+}
+.hours-list li span {
+  color: #cbd5e1 !important;
+}
+.hours-list li strong {
+  color: #cbd5e1 !important;
+}
+/* "Follow Us" heading inside .section already white from h3 rule, ensure it stays */
+.section h3 {
+  color: #ffffff !important;
+}
+/* Contact page "Find Us" map embed area */
+.section .map-embed {
+  border-color: rgba(255,255,255,0.1) !important;
+}
+
+/* --- ABOUT PAGE CUSTOM FIXES --- */
+/* Ensure text cards with white surface bg get dark text inside .section */
+.section .card p,
+.section [style*="background: var(--surface)"] p,
+.section [style*="background:var(--surface)"] p {
+  color: #475569 !important;
+}
+/* Team cards — role/bio text */
+.team-card .team-role {
+  color: #12D6E7;
+}
+.team-card .team-bio {
+  color: #475569 !important;
+}
+/* Stat labels in about page */
+.section .stat-label {
+  color: #94a3b8 !important;
+}
+
+/* --- REMAINING INLINE var(--muted) VISIBILITY FIXES --- */
+
+/* Base: ALL inline var(--muted) inside .section — use visible slate
+   (catches <div>/<span> elements on dark bg that escape the global p override) */
+.section [style*="color: var(--muted)"] {
+  color: #94a3b8 !important;
+}
+
+/* Override: inside white-surface cards — darker slate for white bg readability */
+.section [style*="background: var(--surface)"] [style*="color: var(--muted)"] {
+  color: #475569 !important;
+}
+
+/* Testimonial card author role — inside .card, caught by the white-card override above */
+.testimonial-card .author-role {
+  color: #475569 !important;
+}
+
+/* --- CONTACT-DETAIL-CARD HOVER (missing) --- */
+.contact-detail-card {
+  transition: var(--transition);
+}
+.hover-device .contact-detail-card:hover {
+  border-color: rgba(18,214,231,0.2);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-4px);
 }

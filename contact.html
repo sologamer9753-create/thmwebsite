@@ -9,14 +9,148 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link rel="preconnect" href="https://unpkg.com" />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="css/style.css" />
   <script>if(matchMedia('(hover:hover)and(pointer:fine)').matches)document.documentElement.classList.add('hover-device')</script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" fetchpriority="high"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0iYKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script defer src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+  <style>
+    .contact-glass-form {
+      background: rgba(15,28,46,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-glass-form::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at 50% 0%, rgba(18,214,231,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .contact-glass-form h3,
+    .contact-glass-form label {
+      position: relative;
+    }
+    .contact-glass-form .form-control {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+    }
+    .contact-glass-form .form-control:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(18,214,231,0.08);
+    }
+    .contact-glass-form .form-control::placeholder {
+      color: rgba(255,255,255,0.35);
+    }
+    .contact-glass-form label {
+      color: rgba(255,255,255,0.65);
+    }
+    .contact-glass-form select.form-control option {
+      background: #0F1C2E;
+      color: #fff;
+    }
+    .contact-detail-glass {
+      background: rgba(15,28,46,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), border-color 0.4s ease, box-shadow 0.5s ease;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .contact-detail-glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at 50% 0%, rgba(18,214,231,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hover-device .contact-detail-glass:hover {
+      border-color: rgba(18,214,231,0.35);
+      box-shadow: 0 0 40px rgba(18,214,231,0.12), 0 20px 60px rgba(0,0,0,0.3);
+      transform: translateY(-6px) scale(1.02);
+    }
+    .contact-detail-glass .cd-icon {
+      position: relative;
+      width: 48px; height: 48px; border-radius: 50%;
+      display: grid; place-items: center; margin: 0 auto 0.8rem;
+      font-size: 1.2rem;
+    }
+    .contact-detail-glass h4 {
+      position: relative;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+    .contact-detail-glass p {
+      position: relative;
+      color: rgba(199,208,217,0.65);
+      font-size: 0.88rem;
+    }
+    .contact-side-section {
+      margin-top: 1.5rem;
+    }
+    .contact-side-section h3 {
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+    .hours-list-dark li {
+      display: flex; justify-content: space-between;
+      padding: 10px 0;
+      color: rgba(199,208,217,0.65);
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .hours-list-dark li strong {
+      color: #fff;
+    }
+    .follow-us-grid {
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .follow-us-grid .btn-outline {
+      border-radius: 12px; padding: 10px 20px;
+      border-color: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+    }
+    .hover-device .follow-us-grid .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .faq-dark h4 {
+      color: var(--accent) !important;
+      margin-bottom: 0.4rem;
+    }
+    .faq-dark p {
+      color: rgba(199,208,217,0.65) !important;
+      font-size: 0.9rem;
+    }
+    .contact-map-glass {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .contact-map-glass iframe {
+      width: 100%; height: 320px; border: 0;
+      filter: grayscale(0.6);
+    }
+    @media (max-width: 768px) {
+      .contact-glass-form { padding: 1.2rem 1rem; }
+      .contact-detail-glass { padding: 1rem; }
+    }
+  </style>
 </head>
 <body class="hero-dark-bg">
 
@@ -51,97 +185,98 @@
     <div id="webgl-canvas"></div>
     <div class="container">
       <span class="section-label reveal">Get In Touch</span>
-      <h1 data-split class="reveal reveal-delay-1">Let's Build Your Digital Presence</h1>
+      <h1 data-split class="reveal reveal-delay-1">Let's Build <span class="gradient-text">Your Digital Presence</span></h1>
       <p class="reveal reveal-delay-2">Ready to grow? Tell us about your project and we'll craft a custom plan that delivers real results.</p>
     </div>
   </section>
 
-  <!-- Contact form + info -->
   <section class="section" style="padding-top: 1rem;">
     <div class="container">
       <div class="grid-2">
-        <div class="reveal tilt-card" style="padding: 0;">
-          <h3 style="margin-bottom: 1rem;">Send Us a Message</h3>
-          <form id="contactForm">
-            <div class="form-group">
-              <label for="name">Full Name</label>
-              <input type="text" id="name" class="form-control" placeholder="Your name" required />
-            </div>
-            <div class="form-group">
-              <label for="company">Company</label>
-              <input type="text" id="company" class="form-control" placeholder="Your company (optional)" />
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" class="form-control" placeholder="you@company.com" required />
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" class="form-control" placeholder="+44 7..." />
-            </div>
-            <div class="form-group">
-              <label for="service">Service Interested In</label>
-              <select id="service" class="form-control">
-                <option value="">Select a service...</option>
-                <option value="digital-marketing">Digital Marketing</option>
-                <option value="social-media">Social Media Management</option>
-                <option value="content-creation">Content Creation</option>
-                <option value="seo">SEO Optimization</option>
-                <option value="advertising">Advertising Management</option>
-                <option value="web-design">Website Design</option>
-                <option value="training">Behavioural Training</option>
-                <option value="other">Other / Multiple</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="message">Your Message</label>
-              <textarea id="message" class="form-control" placeholder="Tell us about your project, goals, budget, and timeline..." required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">Send Message</button>
-          </form>
+        <div class="reveal">
+          <div class="contact-glass-form">
+            <h3 style="margin-bottom: 1rem; color: #fff;">Send Us a Message</h3>
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" class="form-control" placeholder="Your name" required />
+              </div>
+              <div class="form-group">
+                <label for="company">Company</label>
+                <input type="text" id="company" class="form-control" placeholder="Your company (optional)" />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="you@company.com" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" class="form-control" placeholder="+44 7..." />
+              </div>
+              <div class="form-group">
+                <label for="service">Service Interested In</label>
+                <select id="service" class="form-control">
+                  <option value="">Select a service...</option>
+                  <option value="digital-marketing">Digital Marketing</option>
+                  <option value="social-media">Social Media Management</option>
+                  <option value="content-creation">Content Creation</option>
+                  <option value="seo">SEO Optimization</option>
+                  <option value="advertising">Advertising Management</option>
+                  <option value="web-design">Website Design</option>
+                  <option value="training">Behavioural Training</option>
+                  <option value="other">Other / Multiple</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" class="form-control" placeholder="Tell us about your project, goals, budget, and timeline..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">Send Message</button>
+            </form>
+          </div>
         </div>
         <div>
-          <div class="reveal reveal-delay-1">
-            <h3 style="margin-bottom: 0.8rem;">Contact Details</h3>
-            <div class="contact-details" style="margin-bottom: 1rem;">
-              <div class="contact-detail-card tilt-card">
+          <div class="reveal">
+            <h3>Contact Details</h3>
+            <div class="contact-details">
+              <div class="contact-detail-glass">
                 <div class="cd-icon" style="background: rgba(18,214,231,0.1); color: var(--accent);">&#x2709;</div>
                 <h4>Email</h4>
                 <p>hello@themillennialhub.com</p>
               </div>
-              <div class="contact-detail-card tilt-card">
+              <div class="contact-detail-glass">
                 <div class="cd-icon" style="background: rgba(54,124,255,0.1); color: var(--blue);">&#x1F4DE;</div>
                 <h4>Phone</h4>
                 <p>+44 20 7123 4567</p>
               </div>
-              <div class="contact-detail-card tilt-card">
+              <div class="contact-detail-glass">
                 <div class="cd-icon" style="background: rgba(123,97,255,0.1); color: var(--purple);">&#x1F4CD;</div>
                 <h4>Office</h4>
                 <p>71-75 Shelton St, London WC2H 9JQ</p>
               </div>
             </div>
           </div>
-          <div class="reveal reveal-delay-2" style="margin-top: 1rem;">
-            <h3 style="margin-bottom: 0.6rem;">Follow Us</h3>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-              <a href="#" class="btn btn-secondary" style="border-radius: 12px; padding: 10px 20px;">Instagram</a>
-              <a href="#" class="btn btn-secondary" style="border-radius: 12px; padding: 10px 20px;">Facebook</a>
-              <a href="#" class="btn btn-secondary" style="border-radius: 12px; padding: 10px 20px;">YouTube</a>
-              <a href="#" class="btn btn-secondary" style="border-radius: 12px; padding: 10px 20px;">LinkedIn</a>
+          <div class="reveal contact-side-section">
+            <h3>Follow Us</h3>
+            <div class="follow-us-grid">
+              <a href="#" class="btn btn-outline">Instagram</a>
+              <a href="#" class="btn btn-outline">Facebook</a>
+              <a href="#" class="btn btn-outline">YouTube</a>
+              <a href="#" class="btn btn-outline">LinkedIn</a>
             </div>
           </div>
-          <div class="reveal reveal-delay-3" style="margin-top: 1rem;">
-            <h3 style="margin-bottom: 0.6rem;">Office Hours</h3>
-            <ul class="hours-list">
+          <div class="reveal contact-side-section">
+            <h3>Office Hours</h3>
+            <ul class="hours-list-dark">
               <li><span>Monday — Friday</span> <strong>9:00 AM — 6:00 PM</strong></li>
               <li><span>Saturday</span> <strong>10:00 AM — 2:00 PM</strong></li>
               <li><span>Sunday</span> <strong>Closed</strong></li>
             </ul>
           </div>
-          <div class="reveal reveal-delay-3" style="margin-top: 1rem;">
-            <h3 style="margin-bottom: 0.6rem;">Find Us</h3>
-            <div class="map-embed">
-              <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-0.1247%2C51.5112%2C-0.1207%2C51.5132&amp;layer=mapnik&amp;marker=51.5122%2C-0.1227" width="600" height="320" loading="lazy" referrerpolicy="no-referrer"></iframe>
+          <div class="reveal contact-side-section">
+            <h3>Find Us</h3>
+            <div class="contact-map-glass">
+              <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-0.1247%2C51.5112%2C-0.1207%2C51.5132&amp;layer=mapnik&amp;marker=51.5122%2C-0.1227" loading="lazy" referrerpolicy="no-referrer"></iframe>
             </div>
           </div>
         </div>
@@ -149,34 +284,44 @@
     </div>
   </section>
 
-  <!-- FAQ Section -->
-  <section class="section" style="background: rgba(7,17,31,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <section class="section">
     <div class="container">
       <div class="text-center mb-2 reveal">
         <span class="section-label">Quick Answers</span>
         <h2>Before You Reach Out</h2>
       </div>
       <div class="grid-2" style="gap: 24px; max-width: 800px; margin: 0 auto;">
-        <div class="reveal">
-          <h4 style="color: var(--accent); margin-bottom: 0.4rem;">How quickly do you respond?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">We typically respond within 2-4 hours during business hours. For urgent enquiries, call us directly.</p>
+        <div class="reveal faq-dark">
+          <h4 style="color: var(--accent);">How quickly do you respond?</h4>
+          <p style="color: rgba(199,208,217,0.65);">We typically respond within 2-4 hours during business hours. For urgent enquiries, call us directly.</p>
           <div style="height: 12px;"></div>
-          <h4 style="color: var(--accent); margin-bottom: 0.3rem;">Do you take on small projects?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">Yes. We work with brands of all sizes. Our Essential plan is built for startups and smaller budgets.</p>
+          <h4 style="color: var(--accent);">Do you take on small projects?</h4>
+          <p style="color: rgba(199,208,217,0.65);">Yes. We work with brands of all sizes. Our Essential plan is built for startups and smaller budgets.</p>
           <div style="height: 12px;"></div>
-          <h4 style="color: var(--accent); margin-bottom: 0.4rem;">Can I visit your office?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">Absolutely. We're based in Covent Garden, London. Book a meeting through the form above and we'll reserve a slot.</p>
+          <h4 style="color: var(--accent);">Can I visit your office?</h4>
+          <p style="color: rgba(199,208,217,0.65);">Absolutely. We're based in Covent Garden, London. Book a meeting through the form above and we'll reserve a slot.</p>
         </div>
-        <div class="reveal reveal-delay-1">
-          <h4 style="color: var(--accent); margin-bottom: 0.4rem;">What happens after I submit?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">A member of our team will review your message and schedule a free discovery call to discuss your goals.</p>
+        <div class="reveal reveal-delay-1 faq-dark">
+          <h4 style="color: var(--accent);">What happens after I submit?</h4>
+          <p style="color: rgba(199,208,217,0.65);">A member of our team will review your message and schedule a free discovery call to discuss your goals.</p>
           <div style="height: 12px;"></div>
-          <h4 style="color: var(--accent); margin-bottom: 0.3rem;">Do you offer free consultations?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">Yes — introductory 30-minute calls are complimentary. For detailed audits and proposals, we'll scope the work first.</p>
+          <h4 style="color: var(--accent);">Do you offer free consultations?</h4>
+          <p style="color: rgba(199,208,217,0.65);">Yes — introductory 30-minute calls are complimentary. For detailed audits and proposals, we'll scope the work first.</p>
           <div style="height: 12px;"></div>
-          <h4 style="color: var(--accent); margin-bottom: 0.3rem;">International clients?</h4>
-          <p style="color: var(--muted); font-size: 0.9rem;">We work with clients globally. Virtual meetings and remote delivery are standard for international engagements.</p>
+          <h4 style="color: var(--accent);">International clients?</h4>
+          <p style="color: rgba(199,208,217,0.65);">We work with clients globally. Virtual meetings and remote delivery are standard for international engagements.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-aurora"></div>
+    <div class="container container-narrow">
+      <div class="cta-banner">
+        <h2>Start Your Project Today</h2>
+        <p>Tell us about your goals and we'll build a custom strategy that drives real, measurable growth for your brand.</p>
+        <a href="contact.html" class="btn-cta">Book a Free Consultation</a>
       </div>
     </div>
   </section>
@@ -195,10 +340,31 @@
           </a>
           <p>The Millennial Hub delivers end-to-end digital marketing, content creation, advertising, and behavioural training — the A to Z of digital growth.</p>
           <div class="footer-social">
-            <a href="#" aria-label="Instagram">IG</a>
-            <a href="#" aria-label="Facebook">FB</a>
-            <a href="#" aria-label="YouTube">YT</a>
-            <a href="#" aria-label="LinkedIn">LI</a>
+            <a href="#" aria-label="Instagram" class="social-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4.5"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Facebook" class="social-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="YouTube" class="social-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+                <polygon points="9.75 15.02 15.5 12 9.75 8.98" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn" class="social-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            </a>
           </div>
         </div>
         <div>
@@ -225,7 +391,7 @@
         </div>
         <div>
           <h4>Stay Updated</h4>
-          <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 0.8rem;">Get the latest insights on digital marketing and brand growth.</p>
+          <p class="footer-newsletter-text">Get the latest insights on digital marketing and brand growth.</p>
           <div class="footer-newsletter">
             <input type="email" placeholder="Your email" aria-label="Email for newsletter" />
             <button type="button">Subscribe</button>
@@ -234,7 +400,7 @@
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
-        <span>hello@themillennialhub.com &middot; +44 20 7123 4567</span>
+        <span class="footer-contact">hello@themillennialhub.com &middot; +44 20 7123 4567</span>
       </div>
     </div>
   </footer>

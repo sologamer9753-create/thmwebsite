@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link rel="preconnect" href="https://unpkg.com" />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="css/style.css" />
   <script>if(matchMedia('(hover:hover)and(pointer:fine)').matches)document.documentElement.classList.add('hover-device')</script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" fetchpriority="high"></script>
@@ -51,7 +51,7 @@
     <div id="webgl-canvas"></div>
     <div class="container">
       <span class="section-label reveal">Our Services</span>
-      <h1 data-split class="reveal reveal-delay-1">Everything Your Brand Needs</h1>
+      <h1 data-split class="reveal reveal-delay-1">Everything <span class="gradient-text">Your Brand</span> Needs</h1>
       <p class="reveal reveal-delay-2">From strategy to creative to technology — one partner, no compromises. Every service designed to drive measurable growth.</p>
     </div>
   </section>
@@ -139,23 +139,23 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div style="padding: 0.7rem; background: rgba(18,214,231,0.04); border-radius: var(--radius-sm);">
               <div style="color: var(--accent); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Workshops</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; Leadership</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; Communication</div>
+              <div class="specs-check" style="font-weight: 600; font-size: 0.9rem;">&#x2713; Leadership</div>
+              <div class="specs-check" style="font-weight: 600; font-size: 0.9rem;">&#x2713; Communication</div>
             </div>
             <div style="padding: 0.7rem; background: rgba(54,124,255,0.04); border-radius: var(--radius-sm);">
               <div style="color: var(--blue); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Audience</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; HR Teams</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; Corporates</div>
+              <div class="specs-check" style="font-weight: 600; font-size: 0.9rem;">&#x2713; HR Teams</div>
+              <div class="specs-check" style="font-weight: 600; font-size: 0.9rem;">&#x2713; Corporates</div>
             </div>
             <div style="padding: 0.7rem; background: rgba(123,97,255,0.04); border-radius: var(--radius-sm);">
               <div style="color: var(--purple); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Focus</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; EQ &amp; Mindset</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; Resilience</div>
+              <div class="specs-check" style="font-weight: 600; font-size: 0.9rem;">&#x2713; EQ &amp; Mindset</div>
+              <div class="specs-check" style="font-weight: 600; font-size: 0.9rem;">&#x2713; Resilience</div>
             </div>
             <div style="padding: 0.7rem; background: rgba(18,214,231,0.04); border-radius: var(--radius-sm);">
               <div style="color: var(--accent); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Delivery</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; Bootcamps</div>
-              <div style="font-weight: 600; font-size: 0.9rem;">&#x2713; In-House</div>
+              <div class="specs-check" style="font-weight: 600; font-size: 0.9rem;">&#x2713; Bootcamps</div>
+              <div class="specs-check" style="font-weight: 600; font-size: 0.9rem;">&#x2713; In-House</div>
             </div>
           </div>
         </div>
@@ -223,10 +223,31 @@
           </a>
           <p>The Millennial Hub delivers end-to-end digital marketing, content creation, advertising, and behavioural training — the A to Z of digital growth.</p>
           <div class="footer-social">
-            <a href="#" aria-label="Instagram">IG</a>
-            <a href="#" aria-label="Facebook">FB</a>
-            <a href="#" aria-label="YouTube">YT</a>
-            <a href="#" aria-label="LinkedIn">LI</a>
+            <a href="#" aria-label="Instagram" class="social-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4.5"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Facebook" class="social-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="YouTube" class="social-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+                <polygon points="9.75 15.02 15.5 12 9.75 8.98" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn" class="social-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            </a>
           </div>
         </div>
         <div>
@@ -253,7 +274,7 @@
         </div>
         <div>
           <h4>Stay Updated</h4>
-          <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 0.8rem;">Get the latest insights on digital marketing and brand growth.</p>
+          <p class="footer-newsletter-text">Get the latest insights on digital marketing and brand growth.</p>
           <div class="footer-newsletter">
             <input type="email" placeholder="Your email" aria-label="Email for newsletter" />
             <button type="button">Subscribe</button>
@@ -262,7 +283,7 @@
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 The Millennial Hub. All rights reserved.</span>
-        <span>hello@themillennialhub.com &middot; +44 20 7123 4567</span>
+        <span class="footer-contact">hello@themillennialhub.com &middot; +44 20 7123 4567</span>
       </div>
     </div>
   </footer>
