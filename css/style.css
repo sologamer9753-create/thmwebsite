@@ -1540,3 +1540,65 @@ html.gsap-active .gsap-hidden-scale { opacity: 0; transform: scale(0.92); }
     border: 2px solid Highlight;
   }
 }
+
+/* ---- Touch-device hover reset: prevent sticky hover states on mobile ---- */
+@media (hover: none) and (pointer: coarse) {
+  .card:hover, .service-card:hover, .feature-card:hover,
+  .program-card:hover, .schedule-card:hover, .pricing-card:hover,
+  .pricing-tier:hover, .team-card:hover, .award-card:hover,
+  .testimonial-card:hover, .value-card:hover, .contact-detail-card:hover,
+  .glass-card:hover, .tilt-card:hover, .faq-q:hover,
+  .cert-badge:hover, .btn:hover, .learn-link:hover,
+  .nav-links a:hover, .footer a:hover,
+  .portfolio-item:hover, .masonry-item:hover,
+  .trust-item:hover, .focus-item:hover, .delivery-card:hover,
+  .client-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: inherit !important;
+    background: inherit !important;
+    color: inherit !important;
+    scale: 1 !important;
+    translate: 0 !important;
+    opacity: 1 !important;
+  }
+  .glow-border::before { opacity: 0 !important; }
+  .nav-links a:hover { color: #fff !important; }
+  .nav-links .btn-primary:hover,
+  .nav-cta:hover { background: var(--accent) !important; color: #07111F !important; }
+}
+
+/* --- GLOBAL TEXT CONTRAST OVERRIDE --- */
+
+/* 1. Force all paragraphs, form labels, and bad dark-text classes to be light grey */
+p, label, .text-slate-800, .text-gray-800, .text-slate-900, .text-gray-900 {
+    color: #cbd5e1 !important; 
+}
+
+/* 2. Protect the white cards! Make sure text inside white backgrounds stays dark */
+.bg-white p, .bg-white span, .bg-white div, .bg-white .text-slate-800 {
+    color: #1e293b !important; 
+}
+
+/* 3. Ensure primary headings always stay pure white */
+h1, h2, h3 {
+    color: #ffffff;
+}
+
+/* --- FIX INVISIBLE TEXT INSIDE WHITE-SURFACE CARDS --- */
+.card h3,
+.service-card h3,
+.program-card h3,
+.schedule-info h4,
+.testimonial-card .author-name,
+.value-card h4,
+.team-card h4,
+.award-card h4,
+.pricing-card h3,
+.pricing-tier h3,
+.pricing-amount,
+.contact-detail-card h4,
+.feature-card h3,
+.masonry-item .body h4 {
+  color: var(--fg);
+}
