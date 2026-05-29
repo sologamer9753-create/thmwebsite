@@ -602,10 +602,10 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 9. 3D TILT ON HOVER (cards) — hover devices only
+  // 9. 3D TILT ON HOVER (cards) & CURSOR SPOTLIGHT TRACKING
   // ============================================================
   ;(function () {
-    if (isReduced || !isHoverDevice) return;
+    if (isReduced) return;
     var cards = document.querySelectorAll('.tilt-card');
     if (!cards.length) return;
 
@@ -613,32 +613,63 @@ document.addEventListener('DOMContentLoaded', function () {
     var tiltRaf = null;
 
     cards.forEach(function (card, i) {
-      tiltData[i] = { x: 0, y: 0, active: false };
-      card.addEventListener('mousemove', function (e) {
-        var rect = card.getBoundingClientRect();
-        tiltData[i].x = (e.clientX - rect.left) / rect.width;
-        tiltData[i].y = (e.clientY - rect.top) / rect.height;
-        tiltData[i].active = true;
-        if (!tiltRaf) {
-          tiltRaf = requestAnimationFrame(function tiltFlush() {
-            tiltRaf = null;
-            for (var j = 0; j < tiltData.length; j++) {
-              if (tiltData[j].active) {
-                var p = tiltData[j];
-                var tx = (p.y - 0.5) * -12;
-                var ty = (p.x - 0.5) * 12;
-                cards[j].style.transform = 'perspective(800px) rotateX(' + tx + 'deg) rotateY(' + ty + 'deg) translateZ(4px)';
-                tiltData[j].active = false;
+      // 1. Mouse/Cursor interactions (desktop)
+      if (isHoverDevice) {
+        tiltData[i] = { x: 0, y: 0, active: false };
+        
+        card.addEventListener('mousemove', function (e) {
+          var rect = card.getBoundingClientRect();
+          var px = (e.clientX - rect.left) / rect.width;
+          var py = (e.clientY - rect.top) / rect.height;
+          
+          // Track relative cursor position for spotlight gradient in CSS
+          card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+          card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+          
+          tiltData[i].x = px;
+          tiltData[i].y = py;
+          tiltData[i].active = true;
+          
+          if (!tiltRaf) {
+            tiltRaf = requestAnimationFrame(function tiltFlush() {
+              tiltRaf = null;
+              for (var j = 0; j < tiltData.length; j++) {
+                if (tiltData[j].active) {
+                  var p = tiltData[j];
+                  var tx = (p.y - 0.5) * -16; // Up to 16 deg rotation
+                  var ty = (p.x - 0.5) * 16;
+                  // Combine translate, scale, and rotation seamlessly!
+                  cards[j].style.transform = 'perspective(1000px) translateY(-8px) scale(1.03) rotateX(' + tx + 'deg) rotateY(' + ty + 'deg)';
+                  tiltData[j].active = false;
+                }
               }
-            }
-          });
-        }
-      });
+            });
+          }
+        });
 
-      card.addEventListener('mouseleave', function () {
-        tiltData[i].active = false;
-        card.style.transform = '';
-      });
+        card.addEventListener('mouseleave', function () {
+          tiltData[i].active = false;
+          card.style.transform = '';
+          // Smoothly clear spotlight variables
+          card.style.removeProperty('--mouse-x');
+          card.style.removeProperty('--mouse-y');
+        });
+      }
+
+      // 2. Touch interactions (mobile/tablet)
+      card.addEventListener('touchstart', function (e) {
+        var touch = e.touches[0];
+        var rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', (touch.clientX - rect.left) + 'px');
+        card.style.setProperty('--mouse-y', (touch.clientY - rect.top) + 'px');
+      }, { passive: true });
+
+      card.addEventListener('touchmove', function (e) {
+        var touch = e.touches[0];
+        var rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', (touch.clientX - rect.left) + 'px');
+        card.style.setProperty('--mouse-y', (touch.clientY - rect.top) + 'px');
+      }, { passive: true });
     });
   })();
 
@@ -1058,7 +1089,265 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 23. REFRESH ScrollTrigger after layout settles
+  // 23. INTERACTIVE CLIENT NETWORK SYSTEM
+  // ============================================================
+  ;(function () {
+    var container = document.querySelector('.client-network');
+    if (!container) return;
+
+    var wrapper = document.querySelector('.client-network-wrapper');
+    var svg = container.querySelector('.client-network-lines');
+    var core = container.querySelector('.network-core');
+    var nodes = container.querySelectorAll('.network-node');
+    var threads = container.querySelectorAll('.network-thread');
+
+    if (!core || nodes.length === 0) return;
+
+    // Center scroll on mobile devices so user starts at the middle (TMH)
+    if (wrapper) {
+      wrapper.scrollLeft = (container.offsetWidth - wrapper.clientWidth) / 2;
+    }
+
+    var width = container.offsetWidth;
+    var height = container.offsetHeight;
+
+    // Robust variable parser
+    var getStyleVal = function (el, prop) {
+      var val = el.style.getPropertyValue(prop);
+      if (!val && el.style.cssText) {
+        var match = new RegExp(prop + '\\s*:\\s*([^;\\s]+)').exec(el.style.cssText);
+        if (match) val = match[1];
+      }
+      return parseFloat(val) || 50;
+    };
+
+    // Node state tracking
+    var nodeData = [];
+    nodes.forEach(function (node, index) {
+      var xPct = getStyleVal(node, '--x');
+      var yPct = getStyleVal(node, '--y');
+
+      // Base position in pixels relative to container
+      var baseX = (xPct / 100) * width;
+      var baseY = (yPct / 100) * height;
+
+      nodeData.push({
+        el: node,
+        threadEl: threads[index],
+        baseX: baseX,
+        baseY: baseY,
+        x: baseX,
+        y: baseY,
+        vx: 0,
+        vy: 0,
+        floatSeedX: Math.random() * 100,
+        floatSeedY: Math.random() * 100,
+        floatSpeed: 0.0008 + Math.random() * 0.0006,
+        isHovered: false
+      });
+
+      // Handle hover interactions
+      node.addEventListener('mouseenter', function () {
+        nodeData[index].isHovered = true;
+        node.classList.add('active');
+        if (nodeData[index].threadEl) {
+          nodeData[index].threadEl.classList.add('active', 'pulse');
+        }
+      });
+
+      node.addEventListener('mouseleave', function () {
+        nodeData[index].isHovered = false;
+        node.classList.remove('active');
+        if (nodeData[index].threadEl) {
+          nodeData[index].threadEl.classList.remove('active', 'pulse');
+        }
+      });
+    });
+
+    // Core position
+    var coreX = width / 2;
+    var coreY = height / 2;
+
+    // Track mouse coordinates relative to container
+    var mouseX = null;
+    var mouseY = null;
+
+    container.addEventListener('mousemove', function (e) {
+      var rect = container.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+    });
+
+    container.addEventListener('mouseleave', function () {
+      mouseX = null;
+      mouseY = null;
+    });
+
+    // Touch support for dragging nodes slightly & scrolling on mobile
+    var startTouchX = 0;
+    var startTouchY = 0;
+    var startScrollLeft = 0;
+    var isDraggingCanvas = false;
+
+    container.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 1) {
+        var touch = e.touches[0];
+        var targetNode = e.target.closest('.network-node') || e.target.closest('.network-core');
+        if (!targetNode) {
+          isDraggingCanvas = true;
+          startTouchX = touch.clientX;
+          startTouchY = touch.clientY;
+          if (wrapper) {
+            startScrollLeft = wrapper.scrollLeft;
+          }
+        } else {
+          // Touch on a node: trigger hover-like state
+          nodes.forEach(function (n) { n.classList.remove('active'); });
+          threads.forEach(function (t) { t.classList.remove('active', 'pulse'); });
+          
+          var idx = Array.prototype.indexOf.call(nodes, targetNode);
+          if (idx !== -1) {
+            nodeData[idx].isHovered = true;
+            targetNode.classList.add('active');
+            if (nodeData[idx].threadEl) {
+              nodeData[idx].threadEl.classList.add('active', 'pulse');
+            }
+            setTimeout(function () {
+              nodeData[idx].isHovered = false;
+              targetNode.classList.remove('active');
+              if (nodeData[idx].threadEl) {
+                nodeData[idx].threadEl.classList.remove('active', 'pulse');
+              }
+            }, 2500); // highlight for 2.5s
+          }
+        }
+      }
+    }, { passive: true });
+
+    container.addEventListener('touchmove', function (e) {
+      if (isDraggingCanvas && e.touches.length === 1 && wrapper) {
+        var touch = e.touches[0];
+        var dx = touch.clientX - startTouchX;
+        wrapper.scrollLeft = startScrollLeft - dx;
+      }
+    }, { passive: true });
+
+    container.addEventListener('touchend', function () {
+      isDraggingCanvas = false;
+    });
+
+    // Update dimensions on resize
+    window.addEventListener('resize', function () {
+      width = container.offsetWidth;
+      height = container.offsetHeight;
+      coreX = width / 2;
+      coreY = height / 2;
+      
+      nodes.forEach(function (node, index) {
+        var xPct = getStyleVal(node, '--x');
+        var yPct = getStyleVal(node, '--y');
+        nodeData[index].baseX = (xPct / 100) * width;
+        nodeData[index].baseY = (yPct / 100) * height;
+      });
+    });
+
+    var time = 0;
+    function animateNetwork() {
+      time = performance.now();
+
+      // Core heartbeat scale (match the CSS animation scale for exact positioning)
+      var coreScale = 1 + 0.04 * Math.sin(time * 0.003) * 0.5;
+
+      nodeData.forEach(function (node, i) {
+        // 1. Gently float/bob
+        var floatX = Math.sin(time * node.floatSpeed + node.floatSeedX) * 12;
+        var floatY = Math.cos(time * (node.floatSpeed * 1.2) + node.floatSeedY) * 12;
+
+        // 2. Mouse attraction / repulsion
+        var pushX = 0;
+        var pushY = 0;
+        if (mouseX !== null && mouseY !== null) {
+          var dx = node.x - mouseX;
+          var dy = node.y - mouseY;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < 180) {
+            // Push away slightly (repulsion)
+            var force = (1 - dist / 180) * 22;
+            pushX = (dx / (dist || 1)) * force;
+            pushY = (dy / (dist || 1)) * force;
+          }
+        }
+
+        // Target position
+        var targetX = node.baseX + floatX + pushX;
+        var targetY = node.baseY + floatY + pushY;
+
+        // Spring physics interpolation for smooth motion
+        node.vx += (targetX - node.x) * 0.08;
+        node.vy += (targetY - node.y) * 0.08;
+        node.vx *= 0.75; // damping
+        node.vy *= 0.75;
+
+        node.x += node.vx;
+        node.y += node.vy;
+
+        // Update DOM transform
+        var offsetX = node.x - node.baseX;
+        var offsetY = node.y - node.baseY;
+        node.el.style.transform = 'translate(-50%, -50%) translate3d(' + offsetX.toFixed(1) + 'px, ' + offsetY.toFixed(1) + 'px, 0)';
+
+        // 3. Draw curved SVG thread connecting core to node
+        if (node.threadEl) {
+          // Calculate start point on core boundary
+          var angle = Math.atan2(node.y - coreY, node.x - coreX);
+          // Core radius is 80px (since core width is 160px), adjusted for scale
+          var coreRadius = 80 * coreScale;
+          var startX = coreX + Math.cos(angle) * coreRadius;
+          var startY = coreY + Math.sin(angle) * coreRadius;
+
+          // End point on node boundary (approximate offset)
+          var endX = node.x - Math.cos(angle) * 10;
+          var endY = node.y - Math.sin(angle) * 10;
+
+          // Bezier control points for wavy connection
+          var dx = endX - startX;
+          var dy = endY - startY;
+          var L = Math.sqrt(dx * dx + dy * dy);
+          
+          // Perpendicular vector for wave offset
+          var nx = -dy / (L || 1);
+          var ny = dx / (L || 1);
+
+          // Wave amplitude wiggles dynamically over time
+          var wiggleFreq = 0.0022;
+          var wiggleAmp = 0.16 + 0.04 * Math.sin(time * wiggleFreq + i * 1.5);
+          var offsetDist = L * wiggleAmp;
+
+          var cp1x = startX + dx * 0.33 + nx * offsetDist;
+          var cp1y = startY + dy * 0.33 + ny * offsetDist;
+          var cp2x = startX + dx * 0.67 - nx * offsetDist;
+          var cp2y = startY + dy * 0.67 - ny * offsetDist;
+
+          // S-curve Bezier path description
+          var d = 'M' + startX.toFixed(1) + ',' + startY.toFixed(1) + 
+                  ' C' + cp1x.toFixed(1) + ',' + cp1y.toFixed(1) + 
+                  ' ' + cp2x.toFixed(1) + ',' + cp2y.toFixed(1) + 
+                  ' ' + endX.toFixed(1) + ',' + endY.toFixed(1);
+          
+          node.threadEl.setAttribute('d', d);
+        }
+      });
+
+      requestAnimationFrame(animateNetwork);
+    }
+
+    // Start animation loop
+    requestAnimationFrame(animateNetwork);
+  })();
+
+  // ============================================================
+  // 24. REFRESH ScrollTrigger after layout settles
   // ============================================================
   if (hasGSAP) {
     setTimeout(function () { ScrollTrigger.refresh(); }, 400);

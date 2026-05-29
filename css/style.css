@@ -991,23 +991,25 @@ select.form-control { appearance: none; cursor: pointer; }
 .footer-contact {
   color: #c8d4df !important;
 }
-.footer.footer-animate-ready .footer-brand,
-.footer.footer-animate-ready .footer-grid > div:not(.footer-brand),
-.footer.footer-animate-ready .footer-bottom {
-  opacity: 0;
-  transform: translateY(24px);
+@media (min-width: 769px) {
+  .footer.footer-animate-ready .footer-brand,
+  .footer.footer-animate-ready .footer-grid > div:not(.footer-brand),
+  .footer.footer-animate-ready .footer-bottom {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  .footer.footer-in-view .footer-brand,
+  .footer.footer-in-view .footer-grid > div,
+  .footer.footer-in-view .footer-bottom {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.7s ease, transform 0.7s var(--ease-out);
+  }
+  .footer.footer-in-view .footer-grid > div:nth-child(2) { transition-delay: 0.08s; }
+  .footer.footer-in-view .footer-grid > div:nth-child(3) { transition-delay: 0.14s; }
+  .footer.footer-in-view .footer-grid > div:nth-child(4) { transition-delay: 0.2s; }
+  .footer.footer-in-view .footer-bottom { transition-delay: 0.26s; }
 }
-.footer.footer-in-view .footer-brand,
-.footer.footer-in-view .footer-grid > div,
-.footer.footer-in-view .footer-bottom {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.7s ease, transform 0.7s var(--ease-out);
-}
-.footer.footer-in-view .footer-grid > div:nth-child(2) { transition-delay: 0.08s; }
-.footer.footer-in-view .footer-grid > div:nth-child(3) { transition-delay: 0.14s; }
-.footer.footer-in-view .footer-grid > div:nth-child(4) { transition-delay: 0.2s; }
-.footer.footer-in-view .footer-bottom { transition-delay: 0.26s; }
 
 @media (max-width: 980px) {
   .footer-grid { grid-template-columns: 1.2fr 1fr; }
@@ -2074,4 +2076,555 @@ h1, h2, h3 {
   border-color: rgba(18,214,231,0.2);
   box-shadow: var(--glow-cyan);
   transform: translateY(-4px);
+}
+
+/* ============================================================
+   HOMEPAGE TRANSPARENCY — Particles visible through entire page
+   Scoped to body.page-home so other pages are unaffected.
+   ============================================================ */
+
+/* --- All section backgrounds → transparent --- */
+.page-home .section,
+.page-home .dark-section,
+.page-home .marquee-wrap,
+.page-home .cta-section {
+  background: transparent !important;
+}
+
+/* Remove section borders that visually break the transparency */
+.page-home .section {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+/* Add subtle divider lines between sections instead of opaque borders */
+.page-home .section + .section::before,
+.page-home .dark-section + .section::before,
+.page-home .section + .dark-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(90%, 800px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(18,214,231,0.2), rgba(123,97,255,0.15), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- Marquee (trust bar) --- */
+.page-home .marquee-wrap {
+  border-top-color: rgba(255,255,255,0.04) !important;
+}
+/* Fade edges: use alpha fade instead of solid navy */
+.page-home .marquee-fade-left {
+  background: linear-gradient(90deg, rgba(7,17,31,0.85) 0%, transparent 100%) !important;
+}
+.page-home .marquee-fade-right {
+  background: linear-gradient(270deg, rgba(7,17,31,0.85) 0%, transparent 100%) !important;
+}
+
+/* --- Convert solid homepage cards to glassmorphism so particles show through --- */
+.page-home .glass-card,
+.page-home .feature-card,
+.page-home .timeline-item,
+.page-home .testimonial-card,
+.page-home .cta-banner {
+  background: rgba(10,23,40,0.40) !important;
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
+  color: #ffffff !important;
+}
+
+/* Ensure all text inside glassmorphism elements stays readable and white on homepage */
+.page-home .glass-card *,
+.page-home .feature-card *,
+.page-home .timeline-item *,
+.page-home .testimonial-card *,
+.page-home .cta-banner * {
+  color: #ffffff !important;
+}
+.page-home .glass-card p,
+.page-home .feature-card p,
+.page-home .timeline-item p,
+.page-home .testimonial-card p,
+.page-home .cta-banner p {
+  color: #b8c5d4 !important;
+}
+
+/* --- INTERACTIVE STATES & TOUCH/TAP FEEDBACK (LIVELY & PROFESSIONAL) --- */
+
+/* Base transition properties for all cards */
+.card,
+.service-card,
+.feature-card,
+.program-card,
+.schedule-card,
+.team-card,
+.award-card,
+.value-card,
+.contact-detail-card,
+.contact-detail-glass,
+.masonry-item,
+.tilt-card,
+.testimonial-card,
+.faq-q,
+.btn {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              background 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Desktop Hover Effects (Hover devices only) */
+@media (hover: hover) {
+  /* White surface cards hover */
+  .card:hover,
+  .service-card:hover,
+  .feature-card:hover,
+  .program-card:hover,
+  .team-card:hover,
+  .value-card:hover,
+  .contact-detail-card:hover,
+  .contact-detail-glass:hover,
+  .masonry-item:hover,
+  .tilt-card:hover,
+  .testimonial-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(18, 214, 231, 0.35) !important;
+    box-shadow: 0 16px 36px rgba(7, 17, 31, 0.08), 
+                0 0 24px rgba(18, 214, 231, 0.15) !important;
+  }
+  
+  /* Outline / small border cards hover */
+  .schedule-card:hover,
+  .award-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(54, 124, 255, 0.35) !important;
+    box-shadow: 0 12px 28px rgba(7, 17, 31, 0.06), 
+                0 0 20px rgba(54, 124, 255, 0.12) !important;
+  }
+
+  /* Homepage glass cards hover overrides */
+  .page-home .glass-card:hover,
+  .page-home .feature-card:hover,
+  .page-home .timeline-item:hover,
+  .page-home .testimonial-card:hover {
+    background: rgba(10,23,40,0.55) !important;
+    border-color: rgba(18,214,231,0.2) !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35), var(--glow-cyan) !important;
+  }
+
+  /* FAQ Accordion hover */
+  .faq-q:hover {
+    color: var(--accent) !important;
+    padding-left: 8px;
+  }
+
+  /* Button hovers */
+  .btn:hover {
+    transform: translateY(-3px) scale(1.03);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 40px rgba(18, 214, 231, 0.5) !important;
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+  }
+  .btn-outline:hover {
+    background: var(--accent) !important;
+    color: #07111F !important;
+    box-shadow: 0 0 35px rgba(18, 214, 231, 0.4) !important;
+  }
+}
+
+/* Touch Active/Press Feedback (Highly responsive feedback on mobile/tablet tap) */
+.card:active,
+.service-card:active,
+.feature-card:active,
+.program-card:active,
+.team-card:active,
+.value-card:active,
+.contact-detail-card:active,
+.contact-detail-glass:active,
+.masonry-item:active,
+.tilt-card:active,
+.schedule-card:active,
+.award-card:active,
+.testimonial-card:active,
+.faq-q:active {
+  transform: translateY(-2px) scale(0.97) !important;
+  border-color: rgba(18, 214, 231, 0.5) !important;
+  box-shadow: 0 4px 12px rgba(7, 17, 31, 0.1), 
+              0 0 12px rgba(18, 214, 231, 0.2) !important;
+  transition: transform 0.1s ease, box-shadow 0.1s ease !important;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.96) !important;
+  transition: transform 0.08s ease !important;
+}
+
+/* Homepage glass cards active overrides */
+.page-home .glass-card:active,
+.page-home .feature-card:active,
+.page-home .timeline-item:active,
+.page-home .testimonial-card:active {
+  background: rgba(10,23,40,0.6) !important;
+  border-color: rgba(18, 214, 231, 0.4) !important;
+}
+
+
+/* --- GLOBAL COLOR FIXES FOR WHITE BACKGROUND CARDS INSIDE DARK SECTIONS --- */
+
+/* Force proper text color on ALL text elements inside white-background cards on dark sections */
+.section .card,
+.section .service-card,
+.section .feature-card,
+.section .program-card,
+.section .schedule-card,
+.section .team-card,
+.section .award-card,
+.section .value-card,
+.section .contact-detail-card,
+.section .contact-detail-glass,
+.section .masonry-item,
+.section .tilt-card {
+  color: var(--fg) !important; /* Dark navy text */
+}
+
+/* Ensure strong, list, div, span, b, etc. tags inside cards default to readable dark grey */
+.section .card span,
+.section .service-card span,
+.section .feature-card span,
+.section .program-card span,
+.section .schedule-card span,
+.section .team-card span,
+.section .award-card span,
+.section .value-card span,
+.section .contact-detail-card span,
+.section .contact-detail-glass span,
+.section .masonry-item span,
+.section .tilt-card span,
+.section .card li,
+.section .service-card li,
+.section .feature-card li,
+.section .program-card li,
+.section .schedule-card li,
+.section .team-card li,
+.section .award-card li,
+.section .value-card li,
+.section .contact-detail-card li,
+.section .contact-detail-glass li,
+.section .masonry-item li,
+.section .tilt-card li {
+  color: var(--fg) !important;
+}
+
+/* Force proper heading color on ALL headings inside white-background cards on dark sections */
+.section .card h3,
+.section .card h4,
+.section .service-card h3,
+.section .service-card h4,
+.section .feature-card h3,
+.section .feature-card h4,
+.section .program-card h3,
+.section .program-card h4,
+.section .schedule-card h3,
+.section .schedule-card h4,
+.section .team-card h3,
+.section .team-card h4,
+.section .award-card h3,
+.section .award-card h4,
+.section .value-card h3,
+.section .value-card h4,
+.section .contact-detail-card h3,
+.section .contact-detail-card h4,
+.section .contact-detail-glass h3,
+.section .contact-detail-glass h4,
+.section .masonry-item h3,
+.section .masonry-item h4,
+.section .tilt-card h3,
+.section .tilt-card h4,
+.section .schedule-info h3,
+.section .schedule-info h4 {
+  color: var(--fg) !important;
+}
+
+/* Target elements inside cards using inline color: var(--muted) and force a darker, readable slate grey on white background */
+.section .card [style*="color: var(--muted)"],
+.section .service-card [style*="color: var(--muted)"],
+.section .feature-card [style*="color: var(--muted)"],
+.section .program-card [style*="color: var(--muted)"],
+.section .schedule-card [style*="color: var(--muted)"],
+.section .team-card [style*="color: var(--muted)"],
+.section .award-card [style*="color: var(--muted)"],
+.section .value-card [style*="color: var(--muted)"],
+.section .contact-detail-card [style*="color: var(--muted)"],
+.section .contact-detail-glass [style*="color: var(--muted)"],
+.section .masonry-item [style*="color: var(--muted)"],
+.section .tilt-card [style*="color: var(--muted)"],
+.section .card [style*="color:var(--muted)"],
+.section .service-card [style*="color:var(--muted)"],
+.section .feature-card [style*="color:var(--muted)"],
+.section .program-card [style*="color:var(--muted)"],
+.section .schedule-card [style*="color:var(--muted)"],
+.section .team-card [style*="color:var(--muted)"],
+.section .award-card [style*="color:var(--muted)"],
+.section .value-card [style*="color:var(--muted)"],
+.section .contact-detail-card [style*="color:var(--muted)"],
+.section .contact-detail-glass [style*="color:var(--muted)"],
+.section .masonry-item [style*="color:var(--muted)"],
+.section .tilt-card [style*="color:var(--muted)"] {
+  color: #475569 !important; /* Premium readable slate color */
+}
+
+/* Specifically fix checkmarks inside training page specs box card */
+.specs-check {
+  color: #334155 !important;
+}
+
+/* Premium interactive cursor spotlight glow for all tilt-cards */
+.tilt-card {
+  position: relative;
+  overflow: hidden;
+}
+.tilt-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(320px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(18,214,231,0.07), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.tilt-card:hover::after {
+  opacity: 1;
+}
+
+/* For homepage glass cards, make the spotlight glow purple/cyan gradient for more flair */
+.page-home .tilt-card::after {
+  background: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(123,97,255,0.08) 0%, rgba(18,214,231,0.04) 50%, transparent 80%);
+}
+
+/* Highlighting service-card tags on hover for extra aesthetic fun */
+.service-card .tags span {
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.service-card:hover .tags span {
+  background: rgba(18,214,231,0.08) !important;
+  border-color: rgba(18,214,231,0.2) !important;
+  color: #12D6E7 !important;
+}
+
+/* ============================================================
+   INTERACTIVE CLIENT NETWORK GRAPH STYLES
+   ============================================================ */
+.client-network-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(7, 17, 31, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin: 2.5rem 0 1.5rem 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.client-network-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.client-network {
+  position: relative;
+  width: 1000px;
+  height: 620px;
+  margin: 0 auto;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  background: radial-gradient(circle at 50% 50%, rgba(18, 214, 231, 0.03) 0%, transparent 70%);
+}
+.client-network:active {
+  cursor: grabbing;
+}
+
+.client-network-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.network-thread {
+  stroke: url(#threadCyan);
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  fill: none;
+  opacity: 0.18;
+  transition: opacity 0.4s ease, stroke-width 0.4s ease;
+}
+
+.network-thread.active {
+  opacity: 0.9;
+  stroke-width: 2.5px;
+  filter: url(#threadGlow);
+}
+
+.network-thread.pulse {
+  stroke-dasharray: 8, 12;
+  animation: threadFlow 1.2s linear infinite;
+}
+
+@keyframes threadFlow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.network-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(18, 214, 231, 0.15) 0%, rgba(123, 97, 255, 0.05) 100%);
+  border: 2px solid rgba(18, 214, 231, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 10;
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  box-shadow: 0 0 35px rgba(18, 214, 231, 0.25);
+  animation: coreHeartbeat 4s ease-in-out infinite;
+  pointer-events: auto;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+@keyframes coreHeartbeat {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 30px rgba(18, 214, 231, 0.25);
+    border-color: rgba(18, 214, 231, 0.4);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.04);
+    box-shadow: 0 0 45px rgba(123, 97, 255, 0.45);
+    border-color: rgba(123, 97, 255, 0.6);
+  }
+}
+
+.network-core strong {
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #12D6E7, #7B61FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 4px 0;
+  filter: drop-shadow(0 2px 8px rgba(18, 214, 231, 0.3));
+}
+
+.network-core .core-kicker {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(18, 214, 231, 0.85);
+  font-weight: 700;
+}
+
+.network-core span:last-child {
+  font-size: 0.55rem;
+  max-width: 130px;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+}
+
+.network-node {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.76rem;
+  white-space: nowrap;
+  z-index: 5;
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease-out;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.network-node.node-xl {
+  font-size: 0.85rem;
+  padding: 10px 20px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.network-node:hover,
+.network-node.active {
+  background: rgba(18, 214, 231, 0.08) !important;
+  border-color: rgba(18, 214, 231, 0.45) !important;
+  color: #fff !important;
+  box-shadow: 0 0 25px rgba(18, 214, 231, 0.25) !important;
+  z-index: 25;
+}
+
+.network-mobile-hint {
+  display: none;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.8rem;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .network-mobile-hint {
+    display: block !important;
+    animation: pulseHint 2s infinite ease-in-out;
+  }
+}
+
+@keyframes pulseHint {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.9; }
+}
+
+/* Hide fallback grid if client network is visible */
+.logo-grid {
+  display: none !important;
 }
