@@ -972,7 +972,93 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   // ============================================================
-  // 22. REFRESH ScrollTrigger after layout settles
+  // 22. FOOTER MOTION AND MICRO-INTERACTIONS
+  // ============================================================
+  ;(function () {
+    var footer = document.querySelector('.footer');
+    if (!footer) return;
+
+    if (!isReduced) {
+      footer.classList.add('footer-animate-ready');
+
+      if ('IntersectionObserver' in window) {
+        var footerObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              footer.classList.add('footer-in-view');
+              footerObserver.disconnect();
+            }
+          });
+        }, { threshold: 0.16 });
+        footerObserver.observe(footer);
+      } else {
+        footer.classList.add('footer-in-view');
+      }
+    } else {
+      footer.classList.add('footer-in-view');
+    }
+
+    if (!isReduced && isHoverDevice) {
+      var footerRaf = null;
+      var footerX = 50;
+      var footerY = 20;
+
+      footer.addEventListener('mousemove', function (e) {
+        var rect = footer.getBoundingClientRect();
+        footerX = ((e.clientX - rect.left) / rect.width) * 100;
+        footerY = ((e.clientY - rect.top) / rect.height) * 100;
+
+        if (!footerRaf) {
+          footerRaf = requestAnimationFrame(function () {
+            footerRaf = null;
+            var tiltY = (footerX - 50) * 0.035;
+            var tiltX = (50 - footerY) * 0.025;
+            footer.style.setProperty('--footer-x', footerX.toFixed(2) + '%');
+            footer.style.setProperty('--footer-y', footerY.toFixed(2) + '%');
+            footer.style.setProperty('--footer-tilt-x', tiltX.toFixed(2) + 'deg');
+            footer.style.setProperty('--footer-tilt-y', tiltY.toFixed(2) + 'deg');
+          });
+        }
+      });
+
+      footer.addEventListener('mouseleave', function () {
+        footer.style.setProperty('--footer-x', '50%');
+        footer.style.setProperty('--footer-y', '20%');
+        footer.style.setProperty('--footer-tilt-x', '0deg');
+        footer.style.setProperty('--footer-tilt-y', '0deg');
+      });
+    }
+
+    footer.querySelectorAll('.footer-newsletter').forEach(function (newsletter) {
+      var input = newsletter.querySelector('input[type="email"]');
+      var btn = newsletter.querySelector('button');
+      if (!input || !btn) return;
+
+      btn.addEventListener('click', function () {
+        newsletter.classList.remove('is-error', 'is-success');
+
+        if (!input.value || !input.checkValidity()) {
+          newsletter.classList.add('is-error');
+          input.focus();
+          setTimeout(function () { newsletter.classList.remove('is-error'); }, 1300);
+          return;
+        }
+
+        var original = btn.textContent;
+        newsletter.classList.add('is-success');
+        btn.textContent = 'Subscribed';
+        input.value = '';
+
+        setTimeout(function () {
+          btn.textContent = original;
+          newsletter.classList.remove('is-success');
+        }, 2200);
+      });
+    });
+  })();
+
+  // ============================================================
+  // 23. REFRESH ScrollTrigger after layout settles
   // ============================================================
   if (hasGSAP) {
     setTimeout(function () { ScrollTrigger.refresh(); }, 400);
