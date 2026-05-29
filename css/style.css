@@ -264,6 +264,9 @@ section { position: relative; z-index: 10; }
 .hero.hero-transparent {
   background: transparent !important;
 }
+.hero.hero-transparent *:not(.hero-glass-shield):not(.hero-glass-shield *):not(.hero-card):not(.hero-card *):not(.hero-flashlight):not(.hero-grid-pattern):not(#webgl-canvas):not(#webgl-canvas *) {
+  /* Let particles show through non-shield elements */
+}
 /* WebGL particle canvas — fixed viewport, beneath all content */
 #webgl-canvas {
   position: fixed !important; top: 0; left: 0; width: 100vw; height: 100dvh;
@@ -288,7 +291,7 @@ section { position: relative; z-index: 10; }
 /* Grid pattern behind right column */
 .hero-grid-pattern {
   position: absolute; top: 0; right: 0; bottom: 0;
-  width: 55%; pointer-events: none; z-index: 1; opacity: 0.06;
+  width: 55%; pointer-events: none; z-index: 1; opacity: 0.03;
   background-image:
     linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px);
@@ -314,27 +317,38 @@ section { position: relative; z-index: 10; }
 /* ---- Left column: typography ---- */
 .hero-left { display: flex; flex-direction: column; position: relative; z-index: 1; }
 .hero-left::before {
-  content: ''; position: absolute;
-  inset: -60px -60px -40px -60px;
-  background: radial-gradient(circle at center, rgba(7,17,31,0.95) 0%, rgba(7,17,31,0.4) 50%, transparent 75%);
-  pointer-events: none; z-index: -1;
-  border-radius: 24px;
+  content: none;
 }
 .hero-glass-shield {
   position: relative;
   z-index: 20;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 2rem;
-  background: rgba(7,17,31,0.30);
-  backdrop-filter: blur(24px) saturate(1.25);
-  -webkit-backdrop-filter: blur(24px) saturate(1.25);
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.08);
+  background: rgba(7,17,31,0.18);
+  backdrop-filter: blur(32px) saturate(1.4);
+  -webkit-backdrop-filter: blur(32px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 8px 40px 0 rgba(0,0,0,0.45),
+    0 0 80px rgba(18,214,231,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 -1px 0 rgba(255,255,255,0.04);
   animation: hero-glass-float 6s ease-in-out infinite;
   will-change: transform;
 }
 .hero-glass-shield::before {
-  content: none !important;
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2rem;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(18,214,231,0.35), rgba(255,255,255,0.08) 40%, rgba(123,97,255,0.25) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.5;
 }
 .hero-glass-shield::after {
   content: '';
@@ -342,8 +356,8 @@ section { position: relative; z-index: 10; }
   inset: 1px;
   border-radius: calc(2rem - 1px);
   pointer-events: none;
-  background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent 34%, rgba(18,214,231,0.07) 100%);
-  opacity: 0.75;
+  background: linear-gradient(135deg, rgba(255,255,255,0.14), transparent 30%, rgba(18,214,231,0.05) 60%, rgba(123,97,255,0.04) 100%);
+  opacity: 0.7;
 }
 .hero-glass-shield > * {
   position: relative;
@@ -359,13 +373,18 @@ section { position: relative; z-index: 10; }
     padding: 1.4rem;
     border-radius: 1.5rem;
   }
+  .hero-glass-shield::before {
+    border-radius: 1.5rem;
+  }
   .hero-glass-shield::after {
     border-radius: calc(1.5rem - 1px);
   }
 }
 @keyframes hero-glass-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(0.3deg); }
+  66% { transform: translateY(-6px) rotate(-0.2deg); }
+  100% { transform: translateY(0) rotate(0deg); }
 }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -720,12 +739,12 @@ select.form-control { appearance: none; cursor: pointer; }
   --footer-tilt-y: 0deg;
   display: block !important;
   width: 100%;
-  min-height: clamp(430px, 42vh, 560px);
+  min-height: auto;
   margin-top: 0;
   padding: clamp(3rem, 6vw, 5.5rem) 0 clamp(1.5rem, 3vw, 2.25rem);
   position: relative;
   z-index: 30;
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
   color: #ffffff;
   visibility: visible !important;
@@ -996,7 +1015,8 @@ select.form-control { appearance: none; cursor: pointer; }
 @media (max-width: 640px) {
   .footer {
     min-height: auto;
-    padding: 3rem 0 calc(2.5rem + env(safe-area-inset-bottom, 0px));
+    padding: 3rem 0 calc(4rem + env(safe-area-inset-bottom, 0px));
+    overflow: visible;
   }
   .footer .container::before {
     left: 16px;
@@ -1017,6 +1037,12 @@ select.form-control { appearance: none; cursor: pointer; }
   .footer-bottom {
     flex-direction: column;
     text-align: center;
+    padding-bottom: 1rem;
+  }
+}
+@media (max-width: 480px) {
+  .footer {
+    padding: 2.5rem 0 calc(5rem + env(safe-area-inset-bottom, 0px));
   }
 }
 
