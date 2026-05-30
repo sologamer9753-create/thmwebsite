@@ -44,39 +44,26 @@ document.addEventListener('DOMContentLoaded', function () {
   // 0. LENIS — Smooth scroll (lightweight, zero wrapper req.)
   // ============================================================
   ;(function () {
-    if (isReduced) return;
-    
-    function initLenis() {
-      if (typeof Lenis === 'undefined') {
-        // Fallback or retry
-        setTimeout(initLenis, 1000); // Retry once if CDN is slow
-        return;
-      }
-      
-      var lenis = new Lenis({
-        duration: 1.2,
-        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-        smoothWheel: true,
-        smoothTouch: true, // Enable for mobile/touchpads
-        wheelMultiplier: 1.1,
-        touchMultiplier: 2
-      });
+    if (isReduced || typeof Lenis === 'undefined') return;
 
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
+    var lenis = new Lenis({
+      duration: 1.2,
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smooth: true,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
       requestAnimationFrame(raf);
-
-      // Store globally for anchor-link scrolling
-      window.__lenis = lenis;
-
-      if (hasGSAP) {
-        lenis.on('scroll', ScrollTrigger.update);
-      }
     }
-    
-    initLenis();
+    requestAnimationFrame(raf);
+
+    // Store globally for anchor-link scrolling
+    window.__lenis = lenis;
+
+    if (hasGSAP) {
+      lenis.on('scroll', ScrollTrigger.update);
+    }
   })();
 
   // ============================================================
