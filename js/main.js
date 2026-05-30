@@ -44,26 +44,39 @@ document.addEventListener('DOMContentLoaded', function () {
   // 0. LENIS — Smooth scroll (lightweight, zero wrapper req.)
   // ============================================================
   ;(function () {
-    if (isReduced || typeof Lenis === 'undefined') return;
+    if (isReduced) return;
+    
+    function initLenis() {
+      if (typeof Lenis === 'undefined') {
+        // Fallback or retry
+        setTimeout(initLenis, 1000); // Retry once if CDN is slow
+        return;
+      }
+      
+      var lenis = new Lenis({
+        duration: 1.2,
+        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        smoothWheel: true,
+        smoothTouch: true, // Enable for mobile/touchpads
+        wheelMultiplier: 1.1,
+        touchMultiplier: 2
+      });
 
-    var lenis = new Lenis({
-      duration: 1.2,
-      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-      smooth: true,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
       requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
 
-    // Store globally for anchor-link scrolling
-    window.__lenis = lenis;
+      // Store globally for anchor-link scrolling
+      window.__lenis = lenis;
 
-    if (hasGSAP) {
-      lenis.on('scroll', ScrollTrigger.update);
+      if (hasGSAP) {
+        lenis.on('scroll', ScrollTrigger.update);
+      }
     }
+    
+    initLenis();
   })();
 
   // ============================================================
@@ -1365,3 +1378,62 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 });
+
+  // ============================================================
+  // 24. SERVICES CLICK-TO-EXPAND & TYPEWRITER
+  // ============================================================
+  ;(function () {
+    var serviceCards = document.querySelectorAll('.service-card');
+    if (!serviceCards.length) return;
+
+    // Typewriter state
+    var typingIntervals = new Map();
+
+    function typeText(container, text) {
+      container.innerHTML = '<span class="typewriter-cursor"></span>';
+      var cursor = container.querySelector('.typewriter-cursor');
+      var i = 0;
+      
+      var interval = setInterval(function() {
+        if (i < text.length) {
+          var charSpan = document.createElement('span');
+          charSpan.textContent = text.charAt(i);
+          container.insertBefore(charSpan, cursor);
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 20); // 20ms per char for smooth fast typing
+      
+      return interval;
+    }
+
+    serviceCards.forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        var isExpanded = card.classList.contains('expanded');
+        
+        // Close all cards first
+        serviceCards.forEach(function(c) {
+          c.classList.remove('expanded');
+          var textContainer = c.querySelector('.typewriter-text');
+          if (textContainer) {
+            // Stop any ongoing typing
+            var existingInterval = typingIntervals.get(c);
+            if (existingInterval) clearInterval(existingInterval);
+            textContainer.innerHTML = '';
+          }
+        });
+
+        // If it wasn't expanded before, expand it now
+        if (!isExpanded) {
+          card.classList.add('expanded');
+          var textContainer = card.querySelector('.typewriter-text');
+          if (textContainer) {
+            var fullText = textContainer.getAttribute('data-text') || '';
+            var interval = typeText(textContainer, fullText);
+            typingIntervals.set(card, interval);
+          }
+        }
+      });
+    });
+  })();

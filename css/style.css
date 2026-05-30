@@ -2642,3 +2642,149 @@ h1, h2, h3 {
 .logo-grid {
   display: none !important;
 }
+
+
+/* ============================================================
+   FIXES FOR TEXT VISIBILITY ON DARK/GLASS CARDS
+   ============================================================ */
+
+/* 1. Home page feature cards (glass) */
+body.page-home .section .feature-card h3,
+body.page-home .section .feature-card span,
+body.page-home .section .feature-card *,
+body.page-home .section .feature-card {
+  color: #ffffff !important;
+}
+body.page-home .section .feature-card [style*="color"],
+body.page-home .section .feature-card p {
+  color: #b8c5d4 !important;
+}
+
+/* 2. Contact page glass details */
+body .section .contact-detail-glass,
+body .section .contact-detail-glass h3,
+body .section .contact-detail-glass h4,
+body .section .contact-detail-glass span,
+body .section .contact-detail-glass li {
+  color: #ffffff !important;
+}
+body .section .contact-detail-glass p,
+body .section .contact-detail-glass [style*="color"] {
+  color: rgba(199,208,217,0.75) !important;
+}
+
+/* ============================================================
+   NEW ANIMATIONS & INTERACTIONS (Home, Clients, Contact, Services)
+   ============================================================ */
+
+/* --- Home Feature Cards (Pulse & Hover) --- */
+.page-home .feature-card {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+}
+.page-home .feature-card:hover .f-icon {
+  animation: pulse-glow 1.5s infinite alternate;
+}
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(18,214,231,0.4); transform: scale(1); }
+  100% { box-shadow: 0 0 15px 5px rgba(18,214,231,0); transform: scale(1.1); }
+}
+
+/* --- Clients Masonry Cards (Lively Hover) --- */
+.masonry-item.tilt-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  position: relative;
+}
+.masonry-item.tilt-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0%; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--blue));
+  transition: width 0.4s ease;
+}
+.masonry-item.tilt-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(54,124,255,0.3);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1), var(--glow-blue);
+}
+.masonry-item.tilt-card:hover::after {
+  width: 100%;
+}
+.masonry-item.tilt-card .thumb {
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.masonry-item.tilt-card:hover .thumb {
+  transform: scale(1.08) translateY(-4px);
+}
+
+/* --- Contact Detail Cards (Interactive) --- */
+.contact-detail-glass {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.contact-detail-glass:hover {
+  transform: translateY(-5px);
+  border-color: rgba(18,214,231,0.4);
+  box-shadow: 0 10px 30px rgba(18,214,231,0.15);
+}
+.contact-detail-glass:active {
+  transform: translateY(-2px) scale(0.98);
+}
+.contact-detail-glass:hover .cd-icon {
+  transform: scale(1.15) rotate(5deg);
+  transition: transform 0.3s ease;
+}
+/* Ripple effect on click (added via JS later or just CSS pseudo) */
+.contact-detail-glass::before {
+  content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+  background: rgba(255,255,255,0.1); border-radius: 50%;
+  transform: translate(-50%, -50%); opacity: 0; transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+}
+.contact-detail-glass:active::before {
+  width: 300px; height: 300px; opacity: 1; transition: 0s;
+}
+
+/* --- Services Click-to-Expand Typewriter --- */
+.service-card {
+  cursor: pointer;
+}
+.service-expand {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.4s ease;
+  margin-top: 0;
+  border-top: 1px solid transparent;
+}
+.service-card.expanded {
+  transform: scale(1.02) !important; /* Overrides hover transform */
+  border-color: rgba(18,214,231,0.4) !important;
+  box-shadow: 0 15px 40px rgba(18,214,231,0.1) !important;
+  z-index: 10;
+}
+.service-card.expanded .service-expand {
+  max-height: 500px; /* arbitrary large enough height */
+  opacity: 1;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top-color: rgba(255,255,255,0.1);
+}
+.typewriter-text {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.85rem;
+  color: var(--accent);
+  line-height: 1.6;
+}
+.typewriter-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 1.1em;
+  background-color: var(--accent);
+  vertical-align: text-bottom;
+  animation: blink 0.7s infinite;
+  margin-left: 4px;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
