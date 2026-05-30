@@ -1012,19 +1012,29 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!isReduced) {
       footer.classList.add('footer-animate-ready');
 
+      // Helper to show the footer (idempotent)
+      var showFooter = function () {
+        if (!footer.classList.contains('footer-in-view')) {
+          footer.classList.add('footer-in-view');
+        }
+      };
+
       if ('IntersectionObserver' in window) {
         var footerObserver = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-              footer.classList.add('footer-in-view');
+              showFooter();
               footerObserver.disconnect();
             }
           });
-        }, { threshold: 0.16 });
+        }, { threshold: 0.01 }); // Fire when just 1% visible
         footerObserver.observe(footer);
       } else {
-        footer.classList.add('footer-in-view');
+        showFooter();
       }
+
+      // Failsafe: force footer visible after 3 seconds no matter what
+      setTimeout(showFooter, 3000);
     } else {
       footer.classList.add('footer-in-view');
     }
